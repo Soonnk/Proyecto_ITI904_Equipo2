@@ -24,7 +24,7 @@
 	});
 	
 	/* ..............................................
-    Gallery
+    Galería
     ................................................. */
 	
 	$('#slides').superslides({
@@ -77,7 +77,7 @@
     BaguetteBox
     ................................................. */
 	
-	baguetteBox.run('.tz-gallery', {
+	baguetteBox.run('.tz-Galería', {
 		animation: 'fadeIn',
 		noScrollbars: true
 	});
