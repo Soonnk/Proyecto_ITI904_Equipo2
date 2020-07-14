@@ -172,7 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,18 +292,18 @@
     <Content Include="Views\Galeria\Index.cshtml" />
     <Content Include="Views\Equipo\Index.cshtml" />
     <Content Include="Views\Contacto\Index.cshtml" />
-    <Content Include="Views\AccountViews\ConfirmEmail.cshtml" />
-    <Content Include="Views\AccountViews\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\AccountViews\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\AccountViews\ForgotPassword.cshtml" />
-    <Content Include="Views\AccountViews\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\AccountViews\Login.cshtml" />
-    <Content Include="Views\AccountViews\Register.cshtml" />
-    <Content Include="Views\AccountViews\ResetPassword.cshtml" />
-    <Content Include="Views\AccountViews\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\AccountViews\SendCode.cshtml" />
-    <Content Include="Views\AccountViews\VerifyCode.cshtml" />
-    <Content Include="Views\AccountViews\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
