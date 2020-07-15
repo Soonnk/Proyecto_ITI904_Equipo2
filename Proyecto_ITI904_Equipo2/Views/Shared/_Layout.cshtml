@@ -51,7 +51,7 @@
                         <li class="nav-item">@Html.ActionLink("Menú", "Index", "Menu", null, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("Acerca de", "Index", "Acerca", null, new { @class = "nav-link" })</li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Pages</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Otros sitios</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown-a">
                                 @Html.ActionLink("Reservación", "Index", "Home", null, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Stuff", "Index", "Equipo", null, new { @class = "dropdown-item" })
@@ -66,6 +66,7 @@
                             </div>
                         </li>*@
                         <li class="nav-item">@Html.ActionLink("Contáctanos", "Index", "Contacto", null, new { @class = "nav-link" })</li>
+                        @Html.Partial("_LoginPartial")
                     </ul>
                 </div>
             </div>
@@ -83,8 +84,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <h3>About Us</h3>
-                        <p>Integer cursus scelerisque ipsum id efficitur. Donec a dui fringilla, gravida lorem ac, semper magna. Aenean rhoncus ac lectus a interdum. Vivamus semper posuere dui, at ornare turpis ultrices sit amet. Nulla cursus lorem ut nisi porta, ac eleifend arcu ultrices.</p>
+                        <h3>Acerca de CongoMate</h3>
+                        @Html.Partial("_AboutAbstract")
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h3>Opening hours</h3>
@@ -149,6 +150,7 @@
         <script src="~/Scripts//form-validator.min.js"></script>
         <script src="~/Scripts//contact-form-script.js"></script>
         <script src="~/Scripts//custom.js"></script>
+        @RenderSection("Scripts",false)
     </div>
 </body>
 </html>

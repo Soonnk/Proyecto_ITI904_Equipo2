@@ -84,11 +84,13 @@
                 <div class="inner-column">
                     <h1><span>Congo Mate</span></h1>
                     <h4>Nuestra historia</h4>
-                    <p>Congo Mate surge debido a que muchas de las personas ahora consumen café en distintas horas, en distintos climas, pero suelen solo conocer un tipo de café y no se tienen el suficiente conocimiento sobre este tipo de café.</p>
+                    @*<p>Congo Mate surge debido a que muchas de las personas ahora consumen café en distintas horas, en distintos climas, pero suelen solo conocer un tipo de café y no se tienen el suficiente conocimiento sobre este tipo de café.</p>
                     <p>
                         Congo Mate tiene el objetivo de fortalecer y compartir con la gente las nuevas culturas y además de que se conoce esto como un producto nuevo para la gente de la zona, se les da alternativas de consumo además de que este producto se puede consumir de manera fría o caliente de igual manera puede ser satisfactorio para cualquier consumidor. Esta es la razón por la que nuestra empresa comienza para dar al consumidor una mejor alternativa que además deje de ser bastante rutinaria a la ya conocida taza de café.
-                    </p>
+                    </p>*@
+                    @Html.Partial("_AboutAbstract")
                     <a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Ordena hoy</a>
+                    @Html.ActionLink("Conoce más", "Index", "Acerca", null, new { @class = "btn btn-lg btn-circle btn-outline-new-white" })
                 </div>
             </div>
         </div>

@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @*<ul class="nav navbar-nav navbar-right">*@
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName()</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown-b">
+                <ul>
+                <li class="dropdown-item">
+                    @(Html.ActionLink("Administra tu cuenta", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link"}))
+                </li>
+                <li class="dropdown-item">
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Cerrar sesión</a>
+                </li>
+                </ul>
+            </div>
+        </li>
+        @*</ul>*@
+    }
+}
+else
+{
+    @*<ul class="nav navbar-nav navbar-right">*@
+        <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    @*</ul>*@
+}
+
