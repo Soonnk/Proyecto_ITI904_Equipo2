@@ -6,16 +6,21 @@
         @Html.AntiForgeryToken()
 
         @*<ul class="nav navbar-nav navbar-right">*@
+        <li class="nav-item">
+            <a href="~/Ventas/Carrito" class="nav-link">@Html.Raw(File.ReadAllText(Server.MapPath("~/images/icon_cart.svg")))</a>
+        </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName()</a>
+            @*<a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName()</a>*@
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">Angel</a>
             <div class="dropdown-menu" aria-labelledby="dropdown-b">
                 <ul>
-                <li class="dropdown-item">
-                    @(Html.ActionLink("Administra tu cuenta", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link"}))
-                </li>
-                <li class="dropdown-item">
-                    <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Cerrar sesión</a>
-                </li>
+                    <li class="dropdown-item">
+                        @(Html.ActionLink("Administra tu cuenta", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link"}))
+                    </li>
+
+                    <li class="dropdown-item">
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Cerrar sesión</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -25,7 +30,7 @@
 else
 {
     @*<ul class="nav navbar-nav navbar-right">*@
-        <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link active" })</li>
     @*</ul>*@
 }
 

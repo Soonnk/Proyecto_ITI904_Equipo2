@@ -217,6 +217,7 @@
     <Content Include="images\gallery-img-04.jpg" />
     <Content Include="images\gallery-img-05.jpg" />
     <Content Include="images\gallery-img-06.jpg" />
+    <Content Include="images\icon_cart.svg" />
     <Content Include="images\img-01.jpg" />
     <Content Include="images\img-02.jpg" />
     <Content Include="images\img-03.jpg" />
