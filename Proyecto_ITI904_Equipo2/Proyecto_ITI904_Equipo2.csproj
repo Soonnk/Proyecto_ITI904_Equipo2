@@ -210,6 +210,14 @@
     <Content Include="images\blog-img-07.jpg" />
     <Content Include="images\blog-img-08.jpg" />
     <Content Include="images\blog-img-09.jpg" />
+    <Content Include="images\CafeDeOlla.jpg" />
+    <Content Include="images\CafeDeOlla2.jpg" />
+    <Content Include="images\CafeDulce.jpg" />
+    <Content Include="images\CafeIrlandes.jpg" />
+    <Content Include="images\CafeTurco.jpg" />
+    <Content Include="images\Eiskaffee.jpg" />
+    <Content Include="images\Fondo.jpg" />
+    <Content Include="images\Fondo2.jpg" />
     <Content Include="images\footer-bg.jpg" />
     <Content Include="images\gallery-img-01.jpg" />
     <Content Include="images\gallery-img-02.jpg" />
@@ -229,6 +237,8 @@
     <Content Include="images\img-09.jpg" />
     <Content Include="images\inner-blog-img.jpg" />
     <Content Include="images\logo.png" />
+    <Content Include="images\Marocchino.jpg" />
+    <Content Include="images\Mazagran.jpg" />
     <Content Include="images\post-img-01.jpg" />
     <Content Include="images\post-img-02.jpg" />
     <Content Include="images\post-img-03.jpg" />
@@ -236,7 +246,6 @@
     <Content Include="images\profile-3.jpg" />
     <Content Include="images\profile-7.jpg" />
     <Content Include="images\qt-bg.jpg" />
-    <Content Include="images\slider-01.jpg" />
     <Content Include="images\slider-02.jpg" />
     <Content Include="images\slider-03.jpg" />
     <Content Include="images\stuff-img-01.jpg" />
