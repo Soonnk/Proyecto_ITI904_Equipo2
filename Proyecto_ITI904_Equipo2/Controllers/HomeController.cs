@@ -13,6 +13,11 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             return View();
         }
 
+        public ActionResult UnderConstruction()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
