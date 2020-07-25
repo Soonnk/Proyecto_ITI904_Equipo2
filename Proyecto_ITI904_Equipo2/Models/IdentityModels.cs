@@ -48,6 +48,22 @@ namespace Proyecto_ITI904_Equipo2.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            /*
+             * MAPEO USUARIOS_RECETAS
+             * Es necesario mapear manualmente esta relación debido a que de no hacerlo
+             * nos agrega un campo UserId a la receta (renacion 1:n) y para hacerlo procesar
+             * correctamente en modo automatico necesitariamos agregar a las recetas una lista
+             * de usuarios (inecesario y es un enfoque tonto)
+             */
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany<Recetas.Receta>(e => e.RecetasFavoritas)
+                .WithMany()
+                .Map(ru =>{
+                    ru.MapLeftKey("UserId");
+                    ru.MapRightKey("RecetaId");
+                    ru.ToTable("RecetasUsuarios");
+                });
         }
     }
 }
