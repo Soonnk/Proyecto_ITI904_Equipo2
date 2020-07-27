@@ -65,5 +65,7 @@ namespace Proyecto_ITI904_Equipo2.Models
                     ru.ToTable("RecetasUsuarios");
                 });
         }
+
+        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
     }
 }

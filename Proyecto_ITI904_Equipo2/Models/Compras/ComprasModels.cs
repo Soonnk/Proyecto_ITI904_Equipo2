@@ -41,6 +41,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         public string Nombre { get; set; }
         public string RFC { get; set; }
         public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public string ImageUrl { get; set; }
+        public bool Estatus { get; set; }
         /// <summary>
         /// Lista de materiales que el proveedor puede ofrecer
         /// </summary>

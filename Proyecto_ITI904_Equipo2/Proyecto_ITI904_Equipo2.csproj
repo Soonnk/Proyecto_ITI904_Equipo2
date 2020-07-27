@@ -170,6 +170,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaterialesController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\RecetasController.cs" />
+    <Compile Include="Controllers\TiposPreparacionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -334,6 +336,16 @@
     <Content Include="Views\Materiales\Details.cshtml" />
     <Content Include="Views\Materiales\Edit.cshtml" />
     <Content Include="Views\Materiales\Index.cshtml" />
+    <Content Include="Views\TiposPreparacion\Create.cshtml" />
+    <Content Include="Views\TiposPreparacion\Delete.cshtml" />
+    <Content Include="Views\TiposPreparacion\Details.cshtml" />
+    <Content Include="Views\TiposPreparacion\Edit.cshtml" />
+    <Content Include="Views\TiposPreparacion\Index.cshtml" />
+    <Content Include="Views\Recetas\Create.cshtml" />
+    <Content Include="Views\Recetas\Delete.cshtml" />
+    <Content Include="Views\Recetas\Details.cshtml" />
+    <Content Include="Views\Recetas\Edit.cshtml" />
+    <Content Include="Views\Recetas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
