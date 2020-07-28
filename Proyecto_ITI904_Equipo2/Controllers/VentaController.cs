@@ -88,7 +88,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                         Productos = ListaProductos
 
                     };
-                    db.Ventas.Add(NuevaVenta);
+                    context.Ventas.Add(NuevaVenta);
                     Session["Cantidades"] = null;
                     Session["Materiales"] = null;
                     Session["MaterialesAgregados"] = null;
