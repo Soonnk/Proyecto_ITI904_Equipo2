@@ -67,5 +67,7 @@ namespace Proyecto_ITI904_Equipo2.Models
         }
 
         public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
+
+        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Ventas.Producto> Productoes { get; set; }
     }
 }

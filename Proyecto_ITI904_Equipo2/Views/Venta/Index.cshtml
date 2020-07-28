@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<br />
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Existencia)
+        </th>
+        <th>
+            Agregar al carrito
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Existencia)
+        </td>
+        <td>
+            @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id))
+            {
+                <label>Elemento agregado al carrito</label>
+                <img src="~/images/mas.png" alt="Imagen" width="20px" height="20px" />
+            }
+            else
+            {
+                <form method="post" action="#">
+                    <input type="hidden" value="@item.Id" name="id" id="id" />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6" style="margin-bottom:50px">
+                                <input type="number" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
+                            </div>
+                            <div class="col-6">
+                                <input type="submit" value="Añadir a venta" class="btn btn-success btn-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+        </td>
+    </tr>
+}
+
+</table>
+<div class="container">
+    <form method="post" action="RealizarVenta">
+        <div class="col-lg-6">
+            <input class="form-control" type="date" name="FechaSolicitada" id="FechaSolicitada" />
+            @if (ViewBag.Total != null)
+            {
+                <h1>TOTAL: @ViewBag.Total</h1>
+            }
+        </div>
+        <div class="col-lg-6">
+            <input type="submit" value="Guardar" class="btn btn-success btn-sm" />
+        </div>
+    </form>
+</div>

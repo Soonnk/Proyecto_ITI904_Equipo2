@@ -173,6 +173,7 @@
     <Compile Include="Controllers\RecetasController.cs" />
     <Compile Include="Controllers\TiposPreparacionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,6 +249,7 @@
     <Content Include="images\inner-blog-img.jpg" />
     <Content Include="images\logo.png" />
     <Content Include="images\Marocchino.jpg" />
+    <Content Include="images\mas.png" />
     <Content Include="images\Mazagran.jpg" />
     <Content Include="images\post-img-01.jpg" />
     <Content Include="images\post-img-02.jpg" />
@@ -348,6 +350,8 @@
     <Content Include="Views\Recetas\Details.cshtml" />
     <Content Include="Views\Recetas\Edit.cshtml" />
     <Content Include="Views\Recetas\Index.cshtml" />
+    <Content Include="Views\Venta\Index.cshtml" />
+    <Content Include="Views\Venta\RealizarVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
