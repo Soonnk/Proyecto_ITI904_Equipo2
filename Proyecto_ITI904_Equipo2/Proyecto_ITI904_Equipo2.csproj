@@ -170,9 +170,9 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaterialesController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
     <Compile Include="Controllers\TiposPreparacionController.cs" />
-    <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -183,7 +183,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inventario\InventarioModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Proveedor\Proveedor.cs" />
     <Compile Include="Models\Recetas\RecetasModels.cs" />
     <Compile Include="Models\Ventas\VentasModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -352,11 +351,15 @@
     <Content Include="Views\Recetas\Index.cshtml" />
     <Content Include="Views\Venta\Index.cshtml" />
     <Content Include="Views\Venta\RealizarVenta.cshtml" />
+    <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\Proveedores\Delete.cshtml" />
+    <Content Include="Views\Proveedores\Details.cshtml" />
+    <Content Include="Views\Proveedores\Edit.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\Proveedor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

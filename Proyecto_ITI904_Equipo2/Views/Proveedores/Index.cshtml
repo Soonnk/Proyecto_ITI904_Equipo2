@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<br />
+
+<b>@Html.ActionLink("Mostrar proveedores no disponibles", "Index", new { todos = 1 }) </b>
+<br />
+<b>@Html.ActionLink("Ocultar proveedores no disponibles", "Index", new { }) </b>
+@*<input type="checkbox" name="Estatus" id="Estatus" value="1" onchange="javascript:mostrarInactivos()" />*@
+<input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+
+<table class="table" id="TablaProveedor">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RFC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nota)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <!--<tr id="datos" style="display: none;">-->
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td id="ValueEstatus">
+                @Html.DisplayFor(modelItem => item.Estatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nota)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Inhabilitar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+
+@*<script type="text/javascript">
+        function mostrarInactivos() {
+            CheckBoton = document.getElementById("Estatus");
+            ValueEstatus = document.getElementById("ValueEstatus");
+            TdFila = document.getElementById("datos");
+
+            if (CheckBoton.checked) {
+                TdFila.style.display = 'block';
+            }
+            else {
+                TdFila.style.display = 'none';
+            }
+        }
+    </script>*@
+
+
+<script type="text/javascript">
+    document.querySelector("#buscar").onkeyup = function () {
+        $TableFilter("#TablaProveedor", this.value);
+    }
+
+    $TableFilter = function (id, value) {
+        var rows = document.querySelectorAll(id + ' tbody tr');
+
+        for (var i = 0; i < rows.length; i++) {
+            var showRow = false;
+
+            var row = rows[i];
+            row.style.display = 'none';
+
+            for (var x = 0; x < row.childElementCount; x++) {
+                if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                row.style.display = null;
+            }
+        }
+    }
+</script>
