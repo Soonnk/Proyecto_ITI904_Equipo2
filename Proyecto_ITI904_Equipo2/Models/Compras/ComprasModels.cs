@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         /// <summary>
         /// Persona que se encargó de solicitar la Compra
         /// </summary>
+        
         public virtual ApplicationUser Encargado { get; set; }
         public virtual Proveedor Proveedor { get; set; }
         public virtual ICollection<DetalleCompra> Materiales { get; set; }
@@ -20,7 +22,7 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         public bool Recibida { get; set; }
 
         public DateTime FechaSolicitud { get; set; }
-        public DateTime FechaRecepción { get; set; }
+        public DateTime FechaRecepción { get; set; }   
     }
 
     public class DetalleCompra

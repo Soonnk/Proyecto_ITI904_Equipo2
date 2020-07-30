@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
@@ -52,6 +54,12 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             else
             {
                 var materialSeleccionado = db.Materiales.Find(id);
+                if (materialSeleccionado?.Existencia < cantidad)
+                {
+                    ViewBag.Total = CalcularTotal();
+                    ViewBag.Agregados = Session["IdMaterialesAgregados"];
+                    return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
+                }
                 Materiales = Session["Materiales"] as List<Material>;
                 if (Materiales == null)
                 {
@@ -59,10 +67,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 }
                 Materiales.Add(materialSeleccionado);
                 Session["Materiales"] = Materiales;
-                if (materialSeleccionado?.Existencia < cantidad)
-                {
-                    return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
-                }
+                
                 AgregarMaterialALista(id, cantidad);
                 ViewBag.Total = CalcularTotal();
                 ViewBag.Agregados = Session["IdMaterialesAgregados"];
@@ -71,7 +76,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         }
         // POST: Ventas/Create
         [HttpPost]
-        public ActionResult RealizarVenta(DateTime? FechaSolicitada)
+        public async Task<ActionResult> RealizarVenta(DateTime? FechaSolicitada)
         {
             try
             {
@@ -85,6 +90,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 //{
 
                 //}
+
                 var usuario = db.Users.Where(x => x.Id == Id).FirstOrDefault();
 
                 if (FechaSolicitada == null)
@@ -94,27 +100,30 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 List<DetalleVenta> ListaProductos = new List<DetalleVenta>();
                 Cantidades = Session["Cantidades"] as List<int>;
                 Materiales = Session["Materiales"] as List<Material>;
-                for (int i = 0; i < Materiales?.Count; i++)
-                {
-                    Producto pro = new Producto();
-                    pro.Cantidad = Cantidades[i];
-                    pro.Precio = Materiales[i].Precio;
-                    pro.Costo = Materiales[i].Costo;
-                    pro.Material = Materiales[i];
-                    ListaProductos.Add(pro);
-                }
+                
 
                 Venta NuevaVenta = new Venta
                 {
-                    Cliente = usuario,
+                    Cliente_Id = usuario.Id,
                     EmpleadoResponsable = null,
                     EstadoPedido = EstadosDePedido.Pedido,
                     FechaPedido = DateTime.Now,
                     FechaSolicitada = Convert.ToDateTime(FechaSolicitada),
-                    Productos = ListaProductos
-
+                    FechaEntrega = DateTime.Now,
                 };
                 db.Ventas.Add(NuevaVenta);
+                await db.SaveChangesAsync();
+                var UltimaVenta = db.Ventas.Max(x => x.Id);
+                for (int i = 0; i < Materiales?.Count; i++)
+                {
+                    string query = $@"INSERT INTO DetalleVentas 
+                                      (Cantidad, Precio, Costo,  Venta_Id) VALUES
+                                      ({Cantidades[i]}, {Materiales[i].Costo}, {Materiales[i].Precio}, {UltimaVenta})";
+                    db.Database.ExecuteSqlCommand(query);
+                    query = $@"UPDATE Materials SET Existencia = {Materiales[i].Existencia - Cantidades[i]} where Id = {Materiales[i].Id}";
+                    db.Database.ExecuteSqlCommand(query);
+                }
+                await db.SaveChangesAsync();
                 Session["Cantidades"] = null;
                 Session["Materiales"] = null;
                 Session["IdMaterialesAgregados"] = null;

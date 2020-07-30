@@ -22,8 +22,10 @@ namespace Proyecto_ITI904_Equipo2.Models.Ventas
         /// IdentityUser en el mismo DbContex, además, manejarlo así nos permitirá
         /// dar la opción a los empleados de comprar sin necesidad de otro registro
         /// </remarks>
+        [ForeignKey("Cliente_Id")]
         public virtual ApplicationUser Cliente { get; set; }
 
+        [ForeignKey("EmpleadoResponsable_Id")]
         public virtual ApplicationUser EmpleadoResponsable { get; set; }
 
         /// <summary>
@@ -44,6 +46,10 @@ namespace Proyecto_ITI904_Equipo2.Models.Ventas
         public EstadosDePedido EstadoPedido { get; set; }
 
         public virtual ICollection<DetalleVenta> Productos { get; set;}
+
+        public string Cliente_Id { get; set; }
+
+        public string EmpleadoResponsable_Id { get; set; }
     }
 
     public abstract class DetalleVenta
@@ -52,6 +58,7 @@ namespace Proyecto_ITI904_Equipo2.Models.Ventas
         public virtual double Cantidad { get; set; }
         public virtual double Precio { get; set; }
         public virtual double Costo { get; set; }
+        
     }
 
     [Table("Productos")]

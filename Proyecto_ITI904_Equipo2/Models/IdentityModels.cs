@@ -33,6 +33,7 @@ namespace Proyecto_ITI904_Equipo2.Models
         public DbSet<Compras.Proveedor> Proveedores { get; set; }
         public DbSet<Inventario.Material> Materiales { get; set; }
         public DbSet<Recetas.Receta> Recetas { get; set; }
+        public DbSet<Ventas.DetalleVenta> DetalleVenta { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
