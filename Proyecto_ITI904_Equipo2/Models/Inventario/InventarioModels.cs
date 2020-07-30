@@ -55,4 +55,10 @@ namespace Proyecto_ITI904_Equipo2.Models.Inventario
 
         public virtual ICollection<Compras.Proveedor> Proveedores { get; set; }
     }
+
+    public class ProveedorMaterials
+    {
+        public int Proveedor_Id { get; set; }
+        public int Material_Id { get; set; }
+    }
 }
