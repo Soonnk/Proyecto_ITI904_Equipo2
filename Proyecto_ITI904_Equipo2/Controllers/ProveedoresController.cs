@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Compras;
+using Proyecto_ITI904_Equipo2.Models.Inventario;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
@@ -143,9 +147,6 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             return View(proveedor);
         }
 
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -153,6 +154,46 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public ActionResult MostrarProveedoresMateriales(int? id)
+        {
+            if (id != null)
+            {
+                var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id = " + id + "");
+                int[] idMaterial = new int[listaProvMate.Count()]; // Arreglo que guardará los Id
+                int val = 0;
+
+                foreach (var item in listaProvMate)
+                { // Guardar los ID de materiales del proveedor
+                    idMaterial[val] = item.Material_Id;
+                    val++;
+                }
+
+                if (listaProvMate.Count() <= 0)
+                { // Regresa la vista cuando no tienen datos
+                    return View();
+                }
+                else
+                { // Regresa dos o más materiales que tenga el proveedor
+                  //  var listaMate = db.Database.SqlQuery<Material>("Select * from Materials where Id in @Ids", new SqlParameter("@Ids", idMaterial));
+                    var listaMate = db.Materiales.Where(x => idMaterial.Contains(x.Id));
+
+                    //return View(listaMate.ToList());
+                    return PartialView("MostrarProveedoresMateriales", listaMate.ToList());
+                }
+            }
+            else
+            {
+                return View();
+            }
+            
+            //var listaMateriales = System.Data.Entity.Infrastructure.DbRawSqlQuery<Material>();
+            //for (int i = 0; i < idProveedor.Count(); i++)
+            //{
+            //    listaMateriales += db.Database.SqlQuery<Proveedor>("Select * from Materials where Id =  @Id", new SqlParameter("@Id", idProveedor[i]));
+            //}
         }
     }
 }

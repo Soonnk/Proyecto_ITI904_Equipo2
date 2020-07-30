@@ -15,8 +15,11 @@
 <b>@Html.ActionLink("Mostrar proveedores no disponibles", "Index", new { todos = 1 }) </b>
 <br />
 <b>@Html.ActionLink("Ocultar proveedores no disponibles", "Index", new { }) </b>
-@*<input type="checkbox" name="Estatus" id="Estatus" value="1" onchange="javascript:mostrarInactivos()" />*@
+<br />
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+<br />
+
+<b>@Html.ActionLink("Agregar proveedor", "Create") </b>
 
 <table class="table" id="TablaProveedor">
     <tr>
@@ -46,7 +49,6 @@
 
     @foreach (var item in Model)
     {
-        <!--<tr id="datos" style="display: none;">-->
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -77,23 +79,6 @@
         </tr>
     }
 </table>
-
-
-@*<script type="text/javascript">
-        function mostrarInactivos() {
-            CheckBoton = document.getElementById("Estatus");
-            ValueEstatus = document.getElementById("ValueEstatus");
-            TdFila = document.getElementById("datos");
-
-            if (CheckBoton.checked) {
-                TdFila.style.display = 'block';
-            }
-            else {
-                TdFila.style.display = 'none';
-            }
-        }
-    </script>*@
-
 
 <script type="text/javascript">
     document.querySelector("#buscar").onkeyup = function () {
