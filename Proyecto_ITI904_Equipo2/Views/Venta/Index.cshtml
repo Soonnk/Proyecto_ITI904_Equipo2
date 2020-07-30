@@ -45,8 +45,20 @@
         <td>
             @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id))
             {
-                <label>Elemento agregado al carrito</label>
-                <img src="~/images/mas.png" alt="Imagen" width="20px" height="20px" />
+                <form method="post" action="#">
+                    <input type="hidden" value="@item.Id" name="id" id="id" />
+                    <input type="hidden" name="cantidad" id="cantidad" value="-1" />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6" style="margin-bottom:50px">
+                                <label>Elemento agregado al carrito</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="submit" value="Quitar" name ="btnOpcion" class="btn btn-success btn-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
             }
             else
             {
@@ -58,7 +70,7 @@
                                 <input type="number" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
                             </div>
                             <div class="col-6">
-                                <input type="submit" value="Añadir a venta" class="btn btn-success btn-sm" />
+                                <input type="submit" value="Añadir" name ="btnOpcion" class="btn btn-success btn-sm" />
                             </div>
                         </div>
                     </div>
@@ -71,15 +83,23 @@
 </table>
 <div class="container">
     <form method="post" action="~/Venta/RealizarVenta">
-        <div class="col-lg-6">
-            <input class="form-control" type="date" name="FechaSolicitada" id="FechaSolicitada" />
-            @if (ViewBag.Total != null)
-            {
-                <h1>TOTAL: @ViewBag.Total</h1>
-            }
-        </div>
-        <div class="col-lg-6">
-            <input type="submit" value="Guardar" class="btn btn-success btn-sm" />
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>Fecha solicitada de entrega</h1>
+                <input class="form-control" type="date" name="FechaSolicitada" id="FechaSolicitada" />
+                <br />
+                <br />
+                @if (ViewBag.Total != null)
+                {
+                    <h1>TOTAL: @ViewBag.Total</h1>
+                }
+            </div>
+            <div class="col-lg-6">
+                @if (ViewBag.Total != null)
+                {
+                    <input type="submit" value="Guardar" class="btn btn-success btn-sm pull-right" />
+                }
+            </div>
         </div>
     </form>
 </div>
