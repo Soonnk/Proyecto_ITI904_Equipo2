@@ -356,7 +356,8 @@
     <Content Include="Views\Proveedores\Details.cshtml" />
     <Content Include="Views\Proveedores\Edit.cshtml" />
     <Content Include="Views\Proveedores\Index.cshtml" />
-    <Content Include="Views\Proveedores\MostrarProveedoresMateriales.cshtml" />
+    <Content Include="Views\Proveedores\_MostrarProveedoresMateriales.cshtml" />
+    <Content Include="Views\Proveedores\_MostrarMateriales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
