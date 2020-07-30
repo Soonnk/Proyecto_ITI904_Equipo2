@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
+<input type="hidden" name="name" value="@ViewBag.idProveedor" /> <!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
+
 
 <table class="table">
     <tr>
@@ -21,29 +23,35 @@
         <th>
             @Html.DisplayNameFor(model => model.Existencia)
         </th>
+        <th>
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Nombre)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Descripcion)
-    </td>
-    <td>
-        $ @Html.DisplayFor(modelItem => item.Precio)
-    </td>
-    <td>
-        $ @Html.DisplayFor(modelItem => item.Costo)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DisponibleAPublico)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Existencia)
-    </td> 
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.Costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisponibleAPublico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Existencia)
+            </td>
+            <td>
+                @Html.ActionLink("Quitar material", "QuitarMaterialProveedor", new { idMaterial = item.Id, @ViewBag.idProveedor })
+            </td>
+        </tr>
+    }
 
 </table>

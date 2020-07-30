@@ -162,6 +162,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         {
             if (id != null)
             {
+                ViewBag.idProveedor = id;
                 var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id = " + id + "");
                 int[] idMaterial = new int[listaProvMate.Count()]; // Arreglo que guardará los Id
                 int val = 0;
@@ -197,16 +198,21 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
         public ActionResult InsertarProveedoresMateriales(int idP, int idM)
         {
-            // Esta opción no funciona :'(
-            //db.Database.ExecuteSqlCommand("Insert into ProveedorMaterials values (@idProveedor, @idMateriales) ",
-            //                                                        new SqlParameter("@idProveedor", idP),
-            //                                                        new SqlParameter("@idMateriales", idM));
-            ProveedorMaterials proveedorMaterials = new ProveedorMaterials();
-            proveedorMaterials.Material_Id = idM;
-            proveedorMaterials.Proveedor_Id = idP;
-            //db.ProveedorMaterials.Add(proveedorMaterials); // Esta es necesaria de LEY
+            // Esta opción si funciona :D
+            db.Database.ExecuteSqlCommand("Insert into ProveedorMaterials values (@idProveedor, @idMateriales) ",
+                                                                    new SqlParameter("@idProveedor", idP),
+                                                                    new SqlParameter("@idMateriales", idM));
             db.SaveChanges();
-            return View("_MostrarProveedoresMateriales", db.Materiales.ToList()); // Definir
+            return View("Index", db.Proveedores.ToList()); // Regresa al menú principal de proveedores
+        }
+
+        public ActionResult QuitarMaterialProveedor(int idProveedor, int idMaterial)
+        {
+            db.Database.ExecuteSqlCommand("delete from ProveedorMaterials where Proveedor_Id = @idProveedor and Material_Id = @idMaterial ",
+                                                                    new SqlParameter("@idProveedor", idProveedor),
+                                                                    new SqlParameter("@idMaterial", idMaterial));
+            db.SaveChanges();
+            return View("Index", db.Proveedores.ToList());
         }
     }
 }
