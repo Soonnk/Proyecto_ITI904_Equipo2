@@ -157,10 +157,12 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         }
 
 
+        /*Métodos para mostrar los materiales del proveedor e ingresar nuevos materiales que venda*/
         public ActionResult MostrarProveedoresMateriales(int? id)
         {
             if (id != null)
             {
+                ViewBag.idProveedor = id;
                 var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id = " + id + "");
                 int[] idMaterial = new int[listaProvMate.Count()]; // Arreglo que guardará los Id
                 int val = 0;
@@ -173,27 +175,44 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
                 if (listaProvMate.Count() <= 0)
                 { // Regresa la vista cuando no tienen datos
-                    return View();
+                    return View(); // No funciona 
                 }
                 else
-                { // Regresa dos o más materiales que tenga el proveedor
-                  //  var listaMate = db.Database.SqlQuery<Material>("Select * from Materials where Id in @Ids", new SqlParameter("@Ids", idMaterial));
+                { // Regresa los materiales que tenga el proveedor
                     var listaMate = db.Materiales.Where(x => idMaterial.Contains(x.Id));
 
-                    //return View(listaMate.ToList());
-                    return PartialView("MostrarProveedoresMateriales", listaMate.ToList());
+                    return PartialView("_MostrarProveedoresMateriales", listaMate.ToList());
                 }
             }
             else
             {
                 return View();
             }
-            
-            //var listaMateriales = System.Data.Entity.Infrastructure.DbRawSqlQuery<Material>();
-            //for (int i = 0; i < idProveedor.Count(); i++)
-            //{
-            //    listaMateriales += db.Database.SqlQuery<Proveedor>("Select * from Materials where Id =  @Id", new SqlParameter("@Id", idProveedor[i]));
-            //}
+        }
+
+        public ActionResult MostrarMateriales(int idProv)
+        { // Regresamos la lista entera de los materiales y guardamos en un ViewBag el Id del proveedor actual, de modo que tengamos su Id siempre
+            ViewBag.idProveedor = idProv;
+            return View("_MostrarMateriales", db.Materiales.ToList());
+        }
+
+        public ActionResult InsertarProveedoresMateriales(int idP, int idM)
+        {
+            // Esta opción si funciona :D
+            db.Database.ExecuteSqlCommand("Insert into ProveedorMaterials values (@idProveedor, @idMateriales) ",
+                                                                    new SqlParameter("@idProveedor", idP),
+                                                                    new SqlParameter("@idMateriales", idM));
+            db.SaveChanges();
+            return View("Index", db.Proveedores.ToList()); // Regresa al menú principal de proveedores
+        }
+
+        public ActionResult QuitarMaterialProveedor(int idProveedor, int idMaterial)
+        {
+            db.Database.ExecuteSqlCommand("delete from ProveedorMaterials where Proveedor_Id = @idProveedor and Material_Id = @idMaterial ",
+                                                                    new SqlParameter("@idProveedor", idProveedor),
+                                                                    new SqlParameter("@idMaterial", idMaterial));
+            db.SaveChanges();
+            return View("Index", db.Proveedores.ToList());
         }
     }
 }
