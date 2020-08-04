@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<br />
+<br />
+<br />
+<br />
+
+<h1 style="text-align:center"><b>Lista de productos</b></h1>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div name="BarraNavegacion">
+            <!--Barra de navegación que muestra las otras vistas que tiene este módulo-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <b><a class="nav-link">@Html.ActionLink("Compras efectuadas ", "MostrarCompras")  |</a></b>
+                        </li>
+                        <li>
+
+                        </li>
+                        <li class="nav-item">
+                            <b><a class="nav-link">@Html.ActionLink("Carrito de compras ", "MostrarCarritoCompras")  <a/></b>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col-lg-2" id="Proveedores">
+        @Html.Action("MostrarProveedores")
+    </div>
+
+    <div class="col-lg-10" id="ProveedoresMateriales">
+        @{ Html.RenderAction("MostrarProveedoresMateriales"); }
+    </div>
+
+    <div class="col-lg-12">
+
+    </div>
+</div>
+
+<!--Script de JS que sirve para mostrar las listas de proveedores y darle al método MPM el id del proveedor seleccionado, de esta forma
+    solo traerá los materiales que dicho proveedor nos puede ofrecer, facilitando la búsqueda de los objetos que se quieran comprar-->
+@section scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                url: "@Url.Content("~/Compras/MostrarProveedores")"
+            }).done(function (data) {
+                $('#Proveedores').html(data);
+            }).fail(function () {
+                alert("Error");
+            });
+        });
+
+        $('#Proveedores').on('click', 'a[data-url]', function () {
+            var dataURL = $(this).data('url');
+            $.ajax({
+                url: dataURL
+            }).done(function (data) {
+                $('#ProveedoresMateriales').html(data);
+            }).fail(function () {
+                alert("error");
+            });
+            $('#Proveedores a').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+}

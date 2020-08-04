@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
+
+<!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
+
+@{
+    if (Model == null)
+    {
+        <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+        <input type="hidden" name="name" value="@ViewBag.Agregados" />
+        <h1>Lo sentimos</h1>
+        <h3>De momento no hay productos que este proveedor nos surta</h3>
+    }
+    else
+    {
+        <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+        <input type="hidden" name="name" value="@ViewBag.Agregados" /> 
+        <h4 style="text-align:center"><b>Productos que ofrecen</b></h4>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Existencia)
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        $ @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Existencia)
+                    </td>
+                    <td>
+                        @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id)) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
+                        { // Si se encuentra dentro entonces manda mensaje
+                            <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+                                <input type="hidden" value="@item.Id" name="idM" id="idM" />
+                                <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                                <input type="hidden" name="cantidad" id="cantidad" value="-1" />
+                                <div class="row">
+                                    <div class="col-lg-12" style="margin-bottom:50px">
+                                        <label>Elemento agregado al carrito</label>
+                                        <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+                                <input type="hidden" value="@item.Id" name="idM" id="idM" />
+                                <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                                <div class="row">
+                                    <div class="col-lg-12" style="margin-bottom:50px">
+                                        <input type="text" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
+                                        <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
