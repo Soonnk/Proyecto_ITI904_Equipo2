@@ -358,6 +358,7 @@
     <Content Include="Views\Proveedores\Index.cshtml" />
     <Content Include="Views\Proveedores\_MostrarProveedoresMateriales.cshtml" />
     <Content Include="Views\Proveedores\_MostrarMateriales.cshtml" />
+    <Content Include="Views\Recetas\_IngredienteRecetaTR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
