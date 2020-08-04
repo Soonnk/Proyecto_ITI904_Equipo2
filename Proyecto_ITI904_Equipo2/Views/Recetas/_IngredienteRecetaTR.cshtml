@@ -1,0 +1,19 @@
+﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.IngredienteDeReceta
+
+    <tr>
+        <td>
+            @Model.Material.Id
+            <input type="hidden" name="Ingredientes[@ViewBag.Index].Material_Id" value="@Model.Material.Id" />
+            <input type="hidden" name="Ingredientes[@ViewBag.Index].Estatus" value="A" />
+        </td>
+        <td>
+            @Model.Material.Nombre
+        </td>
+        <td>
+            <input type="text" value="@Model.Cantidad" name="Ingredientes[@ViewBag.Index].Cantidad" />
+            @Model.Material.UnidadVenta
+        </td>
+        <td>
+            <input type="button" class="btn btn-danger" onclick="deleteIngrediente('@ViewBag.Index')" value="X" />
+        </td>
+    </tr>

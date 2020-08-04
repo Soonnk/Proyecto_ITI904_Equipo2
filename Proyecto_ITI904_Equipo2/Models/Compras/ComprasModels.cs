@@ -14,6 +14,10 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         /// </summary>
         
         public virtual ApplicationUser Encargado { get; set; }
+
+        public int Proveedor_Id { get; set; }
+
+        [ForeignKey("Proveedor_Id")]
         public virtual Proveedor Proveedor { get; set; }
         public virtual ICollection<DetalleCompra> Materiales { get; set; }
         /// <summary>
@@ -28,6 +32,10 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
     public class DetalleCompra
     {
         public int Id { get; set; }
+
+        public int Material_Id { get; set; }
+        
+        [ForeignKey("Material_Id")]
         public Inventario.Material Material { get; set; }
         public double Cantidad { get; set; }
         public double Costo { get; set; }

@@ -1,0 +1,15 @@
+﻿@using Proyecto_ITI904_Equipo2.Models
+@using Proyecto_ITI904_Equipo2.Models.Recetas
+@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
+@{ 
+    var db = new ApplicationDbContext();
+    var tipos = db.TipoPreparacions.ToList();
+    <div class="form-group radio-inline">
+   @foreach (TipoPreparacion tipo in tipos)
+    {
+        <input type="radio" name="Preparacion_Id" id="Preparacion@(tipo.Id)" value="@tipo.Id" class="radio" @(Model != null && Model.Preparacion_Id==tipo.Id ? "checked" : "")/>
+        <label for="Preparacion@(tipo.Id)" class="radio">@tipo.Nombre</label>
+        <br />
+    }
+    </div>
+}
