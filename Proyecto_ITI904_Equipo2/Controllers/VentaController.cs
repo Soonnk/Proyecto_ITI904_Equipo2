@@ -134,6 +134,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 return RedirectToAction("Index");
             }
         } // ==================== LOGICA DE NEGOCIO =================
+
         public double CalcularTotal()
         {
             List<int> ids = Session["IdMaterialesAgregados"] as List<int>;

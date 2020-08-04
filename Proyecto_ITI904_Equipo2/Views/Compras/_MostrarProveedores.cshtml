@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
+
+<h4 style="text-align:center"><b>Proveedores actuales</b></h4>
+
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <a data-url="@Url.Content(string.Format("~/Compras/MostrarProveedoresMateriales/{0}", item.Id))"
+            class="list-group-item">
+            @item.Nombre
+        </a>
+    }
+</div>

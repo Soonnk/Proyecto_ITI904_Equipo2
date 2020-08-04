@@ -163,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AcercaController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ContactoController.cs" />
     <Compile Include="Controllers\EquipoController.cs" />
     <Compile Include="Controllers\GaleriaController.cs" />
@@ -358,6 +359,15 @@
     <Content Include="Views\Proveedores\Index.cshtml" />
     <Content Include="Views\Proveedores\_MostrarProveedoresMateriales.cshtml" />
     <Content Include="Views\Proveedores\_MostrarMateriales.cshtml" />
+    <Content Include="Views\Compras\Create.cshtml" />
+    <Content Include="Views\Compras\Delete.cshtml" />
+    <Content Include="Views\Compras\Details.cshtml" />
+    <Content Include="Views\Compras\Edit.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Compras\_MostrarCompras.cshtml" />
+    <Content Include="Views\Compras\_MostrarProveedoresMateriales.cshtml" />
+    <Content Include="Views\Compras\_MostrarProveedores.cshtml" />
+    <Content Include="Views\Compras\_MostrarCarritoCompras.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
