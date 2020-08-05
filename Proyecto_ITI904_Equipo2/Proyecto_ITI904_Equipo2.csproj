@@ -327,6 +327,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.mapify.js" />
     <Content Include="Scripts\jquery.superslides.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -339,6 +341,7 @@
     <Content Include="Scripts\picker.js" />
     <Content Include="Scripts\picker.time.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\recetas.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
