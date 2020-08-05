@@ -1,4 +1,5 @@
-﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
+﻿@using Proyecto_ITI904_Equipo2.Services;
+@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
 
 @{
     ViewBag.Title = "Create";
@@ -6,10 +7,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Receta</h4>
         <hr />
@@ -21,22 +22,51 @@
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            <input type="file" class="form-control" name="ImagenSubida" />
+            @Html.ValidationMessageFor(model => model.Imagen)
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Instrucciones, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Instrucciones, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Instrucciones, new { @class = "form-control", rows = "5" })
                 @Html.ValidationMessageFor(model => model.Instrucciones, "", new { @class = "text-danger" })
             </div>
         </div>
+        <!--RENDERIZADO DE LA LISTA DE TIPOS DE PREPARACIóN-->
+        @Html.Partial("../TiposPreparacion/_TiposPreparacionSelector")
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TiempoPreparacionAlmacenado, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TiempoPreparacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TiempoPreparacionAlmacenado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TiempoPreparacionAlmacenado, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TiempoPreparacion, new { htmlAttributes = new { @class = "form-control col-md-5", type = "timepicker" } })
+                @Html.ValidationMessageFor(model => model.TiempoPreparacion, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <!--INICIA ESPACIO PARA INGREDIENTES DE RECETA-->
+        <h4>Ingredientes</h4>
+
+        <div class="container col-lg-6 col-md-12 col-sm-12" id="IngredientesReceta">
+            <table>
+                <thead>
+                    <tr>
+                        <td colspan="2"><input type="text" name="name" id="materialName" /></td>
+                        <td><input type="text" name="cantidad" id="materialCantidad" /></td>
+                        <td><input type="button" class="btn btn-sm" value="Agregar" onclick="requestIngrediente()" /></td>
+                    </tr>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody id="tblIngredientes">
+                </tbody>
+            </table>
+        </div>
+        <!--TERMINA ESPACIO PARA INGREDIENTES DE RECETA-->
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -49,3 +79,38 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery_ui")
+    <script>
+        /*Cargamos la lista de autocompletado para la caja de texto*/
+        $("#materialName").autocomplete({ source: @RecetasServices.GetMaterialsAsJSON() });
+
+        var counter = 0;
+
+        function requestIngrediente() {
+            $.ajax({
+                url: "@Url.Action("LoadIngrediente")",
+                method: "POST",
+                data: {
+                    name: $("#materialName").val(),
+                    cantidad: $("#materialCantidad").val(),
+                    index: counter
+                },
+                success: function (data) {
+                    $("#tblIngredientes").append(data);
+                    $("#materialName").val("");
+                    $("#materialCantidad").val("");
+                },
+                error: function (data) {
+                    alert("No se ha podido agregar el ingrediente");
+                }
+            });
+        }
+
+        function deleteIngrediente(ingrediente) {
+            $("#Ingredientes\\[" + ingrediente + "\\]").css('display','none');
+            $("#Ingredientes\\[" + ingrediente + "\\]\\.Estatus").attr("value", "D");
+        }
+    </script>
+}

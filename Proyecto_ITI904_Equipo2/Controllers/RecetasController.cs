@@ -48,8 +48,23 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Instrucciones,TiempoPreparacionAlmacenado")] Receta receta)
+        //public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Instrucciones,TiempoPreparacionAlmacenado")] Receta receta)
+        public async Task<ActionResult> Create(Receta receta)
         {
+            foreach (var item in receta.Ingredientes)
+            {
+                item.Cantidad /= 1000;
+            }
+
+            var file = Request.Files[0];
+
+
+            //byte[] bytes = new byte[imagenSubida.ContentLength];
+
+            //imagenSubida.InputStream.Read(bytes, 0, imagenSubida.ContentLength);
+
+            //receta.Imagen = bytes;
+
             if (ModelState.IsValid)
             {
                 db.Recetas.Add(receta);
@@ -80,11 +95,51 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Nombre,Instrucciones,TiempoPreparacionAlmacenado")] Receta receta)
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,Nombre,Instrucciones,TiempoPreparacionAlmacenado")] Receta receta)
+        public async Task<ActionResult> Edit(Receta receta)
         {
             if (ModelState.IsValid)
             {
+                foreach (var item in receta.Ingredientes)
+                {
+                    item.Cantidad /= 1000;
+                }
+
+                receta.Preparacion = db.TipoPreparacions.Find(receta.Preparacion_Id);
+
                 db.Entry(receta).State = EntityState.Modified;
+
+                foreach (var ingrediente in receta.Ingredientes.ToList())
+                {
+                    IngredienteDeReceta i; // Declaramos un ingrediente que nos ayudará en caso de tener que buscarlo
+                    switch (ingrediente.Estatus)
+                    {
+                        case 'E':
+                            /*
+                             * Si el ingrediente esta marcado como editado lo buscamos en la base de datos e indicamos que fue editado
+                             */
+                            i = await db.IngredienteDeRecetas.FindAsync(ingrediente.Id);
+                            db.Entry(i).State = EntityState.Modified;
+                            break;
+                        case 'D':
+                            /*
+                             * Si el ingrediente esta marcado como borrado lo buscamos en la base de datos e indicamos que fue borrado
+                             */
+                            if (ingrediente.Id == 0) break; // si el objeto fue borrado pero no tiene id nunca estuvo en la base de datos por lo que lo ignoramos
+                            i = await db.IngredienteDeRecetas.FindAsync(ingrediente.Id);
+                            db.Entry(i).State = EntityState.Deleted;
+                            break;
+                        case 'A':
+                        default:
+                            /*
+                             * Si el producto fue agregado lo añadimos al schema. Si no se sabe cual es su estatus directamente asumimos
+                             * que es nuevo
+                             */
+                            db.IngredienteDeRecetas.Add(ingrediente);
+                            break;
+                    }
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -115,6 +170,23 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             db.Recetas.Remove(receta);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> LoadIngrediente(string name, int index, double? cantidad)
+        {
+            IngredienteDeReceta ing = new IngredienteDeReceta();
+            ing.Id = 0;
+            ing.Material = await db.Materiales.FirstOrDefaultAsync<Models.Inventario.Material>(x => x.Nombre == name);
+            ing.Cantidad = cantidad ?? 1.0;
+
+            ViewBag.Index = index;
+
+            return PartialView("_IngredienteRecetaTR", ing);
+        }
+
+        public ActionResult ListMaterialsAsJSON()
+        {
+            return Json(db.Materiales.Select(x => x.Descripcion), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

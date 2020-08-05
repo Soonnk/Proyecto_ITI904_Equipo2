@@ -26,7 +26,10 @@
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Descripción)
+            <p>
+                @(item.Descripción != null ? item.Descripción.Substring(0, 100) + "..." : "")
+            </p>
+            @*@Html.DisplayFor(modelItem => item.Descripción)*@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

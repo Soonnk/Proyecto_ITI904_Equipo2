@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="~/Content/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="~/Content/custom.css">
+    @Styles.Render("~/bundles/jquery_ui/base")
     <style type="text/css">
         .congo-cart {
             display: block;
@@ -83,7 +84,9 @@
     <!-- End header -->
 
     <div class="container body-content" >
+        <div class="main-render-body">
         @RenderBody()
+        </div>
         <hr />
 
 
