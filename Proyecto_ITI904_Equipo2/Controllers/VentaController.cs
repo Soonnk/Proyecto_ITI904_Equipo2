@@ -117,10 +117,21 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 for (int i = 0; i < Materiales?.Count; i++)
                 {
                     string query = $@"INSERT INTO DetalleVentas 
-                                      (Cantidad, Precio, Costo,  Venta_Id) VALUES
-                                      ({Cantidades[i]}, {Materiales[i].Costo}, {Materiales[i].Precio}, {UltimaVenta})";
+                                      (Cantidad, Precio, Costo,  Venta_Id) 
+                                        OUTPUT INSERTED.Id 
+                                        VALUES
+                                      ({Cantidades[i]}, {Materiales[i].Precio},  {Materiales[i].Costo}, {UltimaVenta})";
                     db.Database.ExecuteSqlCommand(query);
                     query = $@"UPDATE Materials SET Existencia = {Materiales[i].Existencia - Cantidades[i]} where Id = {Materiales[i].Id}";
+                    db.Database.ExecuteSqlCommand(query);
+                }
+                await db.SaveChangesAsync();
+                var e = db.Database.SqlQuery<int>("SELECT MAX(Id) FROM DetalleVentas").FirstOrDefault();
+                for (int i = 0; i < Materiales?.Count; i++)
+                {
+                    string query = $@"INSERT INTO Productos 
+                                (Id, Material_Id) VALUES
+                                ({e}, {Materiales[i].Id})";
                     db.Database.ExecuteSqlCommand(query);
                 }
                 await db.SaveChangesAsync();
