@@ -1,4 +1,5 @@
-﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
+﻿@using Proyecto_ITI904_Equipo2.Services;
+@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
 
 @{
     ViewBag.Title = "Edit";
@@ -9,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Receta</h4>
         <hr />
@@ -27,19 +28,68 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Instrucciones, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Instrucciones, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Instrucciones, new { @class = "form-control", rows = "5" })
                 @Html.ValidationMessageFor(model => model.Instrucciones, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        @Html.Partial("../TiposPreparacion/_TiposPreparacionSelector")
+
         <div class="form-group">
-            @Html.LabelFor(model => model.TiempoPreparacionAlmacenado, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TiempoPreparacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TiempoPreparacionAlmacenado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TiempoPreparacionAlmacenado, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TiempoPreparacion, new { htmlAttributes = new { @class = "form-control col-md-5", id = "timepicker" } })
+                @Html.ValidationMessageFor(model => model.TiempoPreparacion, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <!--INICIA ESPACIO PARA INGREDIENTES DE RECETA-->
+        <h4>Ingredientes</h4>
+
+        <div class="container col-lg-6 col-md-12 col-sm-12" id="IngredientesReceta">
+            <table>
+                <thead>
+                    <tr>
+                        <td colspan="2"><input type="text" name="name" id="materialName" /></td>
+                        <td><input type="text" name="cantidad" id="materialCantidad" /></td>
+                        <td><input type="button" class="btn btn-sm" value="Agregar" onclick="requestIngrediente()" /></td>
+                    </tr>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody id="tblIngredientes">
+                    @{int count = 0;}
+
+                    @foreach (var ingrediente in Model?.Ingredientes)
+                    {
+                        <tr id="Ingredientes[@count]">
+                            <td>
+                                @ingrediente.Material.Id
+                                <input type="hidden" name="Ingredientes[@count].Material_Id" value="@ingrediente.Material.Id" />
+                                <input type="hidden" name="Ingredientes[@count].Id" value="@ingrediente.Id" />
+                                <input type="hidden" name="Ingredientes[@count].Estatus" id="Ingredientes[@count].Estatus" value="E" />
+                            </td>
+                            <td>
+                                @ingrediente.Material.Nombre
+                            </td>
+                            <td>
+                                <input type="text" value="@(ingrediente.Cantidad*1000)" name="Ingredientes[@count].Cantidad" />
+                                @ingrediente.Material.UnidadVenta
+                            </td>
+                            <td>
+                                <input type="button" class="btn btn-sm btn-danger" onclick="deleteIngrediente('@count')" value="X" />
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--TERMINA ESPACIO PARA INGREDIENTES DE RECETA-->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -51,3 +101,38 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery_ui")
+    <script>
+        /*Cargamos la lista de autocompletado para la caja de texto*/
+        $("#materialName").autocomplete({ source: @RecetasServices.GetMaterialsAsJSON() });
+
+        var counter = @(Model.Ingredientes?.Count ?? 0);
+
+        function requestIngrediente() {
+            $.ajax({
+                url: "@Url.Action("LoadIngrediente")",
+                method: "POST",
+                data: {
+                    name: $("#materialName").val(),
+                    cantidad: $("#materialCantidad").val(),
+                    index: counter
+                },
+                success: function (data) {
+                    $("#tblIngredientes").append(data);
+                    $("#materialName").val("");
+                    $("#materialCantidad").val("");
+                },
+                error: function (data) {
+                    alert("No se ha podido agregar el ingrediente");
+                }
+            });
+        }
+
+        function deleteIngrediente(ingrediente) {
+            $("#Ingredientes\\[" + ingrediente + "\\]").css('display','none');
+            $("#Ingredientes\\[" + ingrediente + "\\]\\.Estatus").attr("value", "D");
+        }
+    </script>
+}

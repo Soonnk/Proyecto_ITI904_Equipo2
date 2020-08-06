@@ -307,8 +307,10 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
 
 
-        public ActionResult AgregarNuevaCompra()
+        public ActionResult AgregarNuevaCompra(Compra compra)
         {
+
+            int i = 0;
             //var idProveedor = Convert.ToInt32(Session["IdProveedor"].ToString());
 
             //db.Database.ExecuteSqlCommand("Insert into Compras " +

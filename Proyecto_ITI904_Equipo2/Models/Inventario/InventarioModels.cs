@@ -53,6 +53,16 @@ namespace Proyecto_ITI904_Equipo2.Models.Inventario
 
         public double Existencia { get; set; }
 
+        /// <summary>
+        /// Unidad para almcenamiento, generalmente seran Kg o L
+        /// </summary>
+        public string UnidadInventario { get; set; }
+
+        /// <summary>
+        /// Unidad mostrada al cliente, generamente seran g o ml
+        /// </summary>
+        public string UnidadVenta { get; set; }
+
         public virtual ICollection<Compras.Proveedor> Proveedores { get; set; }
     }
 

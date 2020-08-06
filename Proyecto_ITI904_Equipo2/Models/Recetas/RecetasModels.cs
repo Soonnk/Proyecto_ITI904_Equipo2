@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -18,7 +19,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
     public class Receta 
     {
         public int Id { get; set; }
-        public TipoPreparacion Preparacion { get; set; }
+        public int Preparacion_Id { get; set; }
+        [ForeignKey("Preparacion_Id")]
+        public virtual TipoPreparacion Preparacion { get; set; }
         public string Nombre { get; set; }
 
         public string Instrucciones { get; set; }
@@ -41,10 +44,14 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
         /// el tipo <see cref="TimeSpan"/> para operar fechas de forma más estándar
         /// </remarks>
         [NotMapped]
+        [Display(Name = "Tiempo de Preparación")]
+        [RegularExpression("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]", ErrorMessage = "El tiempo debe estar en formato HH:MM:SS")]
         public TimeSpan TiempoPreparacion { 
             get => new TimeSpan(TiempoPreparacionAlmacenado);
             set => this.TiempoPreparacionAlmacenado = value.Ticks;
         }
+
+        public string Imagen { get; set; }
 
         public virtual ICollection<IngredienteDeReceta> Ingredientes { get; set; }
 
@@ -104,20 +111,34 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
     /// </exception>
     public class IngredienteDeReceta
     {
+        public IngredienteDeReceta()
+        {
+            this.Estatus = 'E';
+        }
+
         public long Id { get; set; }
-        public Inventario.Material Material { get; set; }
+
+        public int Material_Id { get; set; }
+
+        [ForeignKey("Material_Id")]
+        public virtual Inventario.Material Material { get; set; }
         public double Cantidad { get; set; }
 
         [NotMapped]
         public double Costo {
-            get => this.Material.Costo;
+            get => this.Material?.Costo ?? 0;
             set => throw new InvalidOperationException("Los ingredientes de recetas no pueden alterar el Costo de su material");
         }
         [NotMapped]
         public double Precio { 
-            get => this.Material.Precio; 
+            get => this.Material?.Precio ?? 0; 
             set => throw new InvalidOperationException("Los ingredientes de recetas no pueden alterar el Precio de su material");
         }
+        /// <summary>
+        /// Permite saber si la el ingrediente será eliminado, o agregado a la receta
+        /// </summary>
+        [NotMapped]
+        public char Estatus { get; set; }
     }
 
     /// <summary>
