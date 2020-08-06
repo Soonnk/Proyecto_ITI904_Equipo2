@@ -139,7 +139,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         #region Métodos de vistas
         public ActionResult Index()
         { // Regresa los proveedores actuales en el sistema
-            return View("Index", db.Proveedores.ToList());
+            return View("Index");
         }
 
         public ActionResult MostrarProveedores()
@@ -185,13 +185,13 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             }
             else
             {
-                if (cantidad == null && idM == null && btnOpcion == null)
+                if (cantidad == null && idM == null)
                 { // Visualización
                     var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id =" + id + "");
                     // Condicional 2.1 Verifica si la consulta regresó Ids o no
                     if (listaProvMate.Count() == 0)
                     { // Regresa la vista cuando no tienen datos
-                        return PartialView("_MostrarProveedoresMateriales");
+                        return View("_MostrarProveedoresMateriales");
                     }
                     else
                     { // Regresa los materiales que tenga el proveedor
@@ -212,7 +212,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                             De forma que obtenga los datos para comparar si el material ha sido agregado o no
                          */
                         var listaMate = db.Materiales.Where(x => Materiales.Contains(x.Id));
-                        return PartialView("_MostrarProveedoresMateriales", listaMate.ToList());
+                        return View("_MostrarProveedoresMateriales", listaMate.ToList());
                     }
                 }
                 else
@@ -234,12 +234,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     else
                     {
                         var materialSeleccionado = db.Materiales.Find(idM);
-                        if (materialSeleccionado?.Existencia < cantidad)
-                        {
-                            ViewBag.Total = CalcularTotal();
-                            ViewBag.Agregados = Session["IdMaterialesAgregados"];
-                            return RedirectToAction("Index");
-                        }
+
                         Materiales = Session["Materiales"] as List<Material>;
                         if (Materiales == null)
                         {
@@ -291,7 +286,6 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 Cantidades.Add(Convert.ToInt32(cantidad));
                 Session["IdMaterialesAgregados"] = ListaMateriales;
                 Session["Cantidades"] = Cantidades;
-
             }
         }
 
@@ -313,8 +307,10 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
 
 
-        public ActionResult AgregarNuevaCompra()
+        public ActionResult AgregarNuevaCompra(Compra compra)
         {
+
+            int i = 0;
             //var idProveedor = Convert.ToInt32(Session["IdProveedor"].ToString());
 
             //db.Database.ExecuteSqlCommand("Insert into Compras " +

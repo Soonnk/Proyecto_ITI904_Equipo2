@@ -1,6 +1,6 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.IngredienteDeReceta
 
-    <tr>
+    <tr id="Ingredientes[@ViewBag.Index]">
         <td>
             @Model.Material.Id
             <input type="hidden" name="Ingredientes[@ViewBag.Index].Material_Id" value="@Model.Material.Id" />
@@ -14,6 +14,6 @@
             @Model.Material.UnidadVenta
         </td>
         <td>
-            <input type="button" class="btn btn-danger" onclick="deleteIngrediente('@ViewBag.Index')" value="X" />
+            <input type="button" class="btn btn-sm btn-danger" onclick="deleteIngrediente('@ViewBag.Index')" value="X"/>
         </td>
     </tr>
