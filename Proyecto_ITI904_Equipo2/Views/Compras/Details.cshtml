@@ -1,50 +1,48 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Compra
 
-@{
-    ViewBag.Title = "Details";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Details</h2>
+<h1 style="text-align:center"><b>Detalle de la Compra</b></h1>
 
 <div>
-    <h4>Compra</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Recibida)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recibida)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaSolicitud)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaSolicitud)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRecepción)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaRecepción)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor_Id)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FechaSolicitud)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FechaRecepción)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FechaRecepción)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Proveedor
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Proveedor_Id)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Recibida)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Recibida)
+            </td>
+        </tr>
+    </table>
+        @Html.ActionLink("Modificar", "Edit", new { id = Model.Id })
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Salir", "MostrarCompras")
 </p>

@@ -11,14 +11,8 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <b><a class="nav-link">@Html.ActionLink("Carrito de compras ", "MostrarCarritoCompras")  |<a /></b>
-                        </li>
-                        <li>
-
-                        </li>
                         <li class="nav-item">
-                            <b><a class="nav-link">@Html.ActionLink("Lista de productos", "Index") <a /></b>
+                            <b><a class="nav-link">@Html.ActionLink("Lista de proveedores", "Index") <a /></b>
                         </li>
                     </ul>
                 </div>
@@ -58,9 +52,9 @@
                         @Html.DisplayFor(modelItem => item.Proveedor_Id)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
                     </td>
                 </tr>
             }

@@ -1,66 +1,65 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Inventario.Material
 
-@{
-    ViewBag.Title = "Details";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Details</h2>
+<h1 style="text-align:center"><b>Detalles del material</b></h1>
 
-<div>
-    <h4>Material</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Nombre)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Precio)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Costo)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisponibleAPublico)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.DisponibleAPublico)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Existencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Existencia)
+                </td>
+            </tr>
+        </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Costo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Costo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DisponibleAPublico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DisponibleAPublico)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Existencia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Existencia)
-        </dd>
-
-    </dl>
+    </div>
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Salir", "Index")
 </p>

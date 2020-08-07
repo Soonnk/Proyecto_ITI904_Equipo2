@@ -2,15 +2,6 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<br />
-<br />
-<br />
-<br />
-
 <h1 style="text-align:center"><b>Proveedores</b></h1>
 
 <b>@Html.ActionLink("Mostrar proveedores no disponibles", "Index", new { todos = 1 }) </b>
@@ -43,7 +34,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Nota)
         </th>
-        <th></th>
+        <th>
+            Acciones
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -72,8 +65,10 @@
             </td>
             <td>
                 @Html.ActionLink("Modificar", "Edit", new { id = item.Id })
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id })
-                @Html.ActionLink("Inhabilitar", "Delete", new { id = item.Id })
+                <br />
+                @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id })
+                <br />
+                @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

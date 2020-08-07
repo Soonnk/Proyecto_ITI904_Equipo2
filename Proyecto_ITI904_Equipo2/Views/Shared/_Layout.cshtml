@@ -98,35 +98,35 @@
                         <h3>Acerca de CongoMate</h3>
                         @Html.Partial("_AboutAbstract")
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h3>Opening hours</h3>
-                        <p><span class="text-color">Monday: </span>Closed</p>
-                        <p><span class="text-color">Tue-Wed :</span> 9:Am - 10PM</p>
-                        <p><span class="text-color">Thu-Fri :</span> 9:Am - 10PM</p>
-                        <p><span class="text-color">Sat-Sun :</span> 5:PM - 10PM</p>
+                    <div class="col-lg-2 col-md-6">
+                        <h3>Horarios</h3>
+                        @*<p><span class="text-color">Monday: </span>Closed</p>*@
+                        <p><span class="text-color">Lunes a Viernes :</span> 10:Am - 10:Pm</p>
+                        <p><span class="text-color">Sábado:</span> 8:Am - 10:Pm</p>
+                        <p><span class="text-color">Domingo :</span> 8:Am - 4:Pm</p>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h3>Contact information</h3>
-                        <p class="lead">Ipsum Street, Lorem Tower, MO, Columbia, 508000</p>
+                        <h3>Información de contacto</h3>
+                        <p class="lead">Vicente Guerrero, Purísima del Rincón, Gto, México, 36414</p>
                         <p class="lead"><a href="#">+01 2000 800 9999</a></p>
                         <p><a href="#"> administrativo@congomate.com</a></p>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h3>Subscribe</h3>
+                    <div class="col-lg-3 col-md-5">
+                        <h3>Suscríbete</h3>
                         <div class="subscribe_form">
                             <form class="subscribe_form">
-                                <input name="EMAIL" id="subs-email" class="form_input" placeholder="Email Address..." type="email">
-                                <button type="submit" class="submit">SUBSCRIBE</button>
+                                <input name="EMAIL" id="subs-email" class="form_input" placeholder="Correo electrónico... " type="email">
+                                <button type="submit" class="submit">Suscribete</button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>
-                        <ul class="list-inline f-social">
+                        @*<ul class="list-inline f-social">
                             <li class="list-inline-item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                             <li class="list-inline-item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                             <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
                             <li class="list-inline-item"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        </ul>
+                        </ul>*@
                     </div>
                 </div>
             </div>
@@ -136,8 +136,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <p class="company-name">
-                                All Rights Reserved. &copy; @DateTime.Now.Year <a href="#">Yamifood Restaurant</a> Design By :
-                                <a href="https://html.design/">html design</a>
+                                Todos los derechos reservados. &copy; @DateTime.Now.Year <a href="#">CongoMate</a>@*<a href="https://html.design/">html design</a>*@
                             </p>
                         </div>
                     </div>
@@ -147,7 +146,7 @@
         </footer>
         <!-- End Footer -->
 
-        <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+        <a href="#" id="back-to-top" title="Volver arriba" style="display: none;">&uarr;</a>
 
         <!-- ALL JS FILES -->
         <script src="~/Scripts//jquery-3.2.1.min.js"></script>

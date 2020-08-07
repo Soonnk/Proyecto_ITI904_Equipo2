@@ -1,84 +1,79 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-@{
-    ViewBag.Title = "Details";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Details</h2>
+<h1 style="text-align:center"><b>Detalles del proveedor</b></h1>
 
 <div class="row">
-    <div class="col-lg-3">
-        <div>
-            <h4>Proveedor</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
+    <div class="col-lg-12">
+        <table class="table">
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Nombre)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Nombre)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.RFC)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.RFC)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Telefono)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Telefono)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Direccion)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Direccion)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.ImageUrl)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.ImageUrl)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Estatus)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Estatus)
-                </dd>
-
-                <dt>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Nota)
-                </dt>
-
-                <dd>
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Nota)
-                </dd>
+                </td>
+            </tr>
+        </table>
 
-            </dl>
+        <div>
+            <h1 style="text-align:center"><b>Materiales que proporciona</b></h1>
+            <hr />
+            @{Html.RenderAction("MostrarProveedoresMateriales"); }
         </div>
-    </div>
-
-    <div class="col-lg-9">
-        <h1>Materiales que proporciona</h1>
-        <hr />
-        @{Html.RenderAction("MostrarProveedoresMateriales"); }
 
     </div>
 </div>
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+    
+<p>
+    @Html.ActionLink("Salir", "Index")
+</p>

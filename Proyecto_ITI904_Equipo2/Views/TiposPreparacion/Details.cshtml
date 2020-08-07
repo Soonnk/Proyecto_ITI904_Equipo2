@@ -1,34 +1,34 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion
 
-@{
-    ViewBag.Title = "Details";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Details</h2>
+<h1 style="text-align:center"><b>Detalles del tipo de preparación</b></h1>
 
-<div>
-    <h4>TipoPreparacion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripción)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripción)
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Nombre)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Descripción)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Descripción)
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Salir", "Index")
 </p>
