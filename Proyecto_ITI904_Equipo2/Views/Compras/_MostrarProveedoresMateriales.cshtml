@@ -4,28 +4,28 @@
 
 <!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
 
-<br />
-<br />
-<br />
-<br />
 
-@{
-    if (Model == null)
-    {
-        <input type="hidden" name="name" value="@ViewBag.idProveedor" />
-        <input type="hidden" name="name" value="@ViewBag.Agregados" />
-        <h1>Lo sentimos</h1>
-        <h3>De momento no hay productos que este proveedor nos surta</h3>
-    }
-    else
-    {
-        <input type="hidden" name="name" value="@ViewBag.idProveedor" />
-        <input type="hidden" name="name" value="@ViewBag.Agregados" />
+@if (Model == null)
+{
+    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+    <input type="hidden" name="name" value="@ViewBag.Agregados" />
+    <h1>Lo sentimos</h1>
+    <br />
+    <h3>De momento no hay productos que este proveedor nos surta</h3>
+}
+else
+{
+    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+    <input type="hidden" name="name" value="@ViewBag.Agregados" />
 
-        <h3 style="text-align:center"><b>Productos que ofrecen</b></h3>
+    <h1 style="text-align:center"><b>Productos que ofrece</b></h1>
 
+    <div class="row">
         <table class="table">
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
@@ -33,18 +33,23 @@
                     @Html.DisplayNameFor(model => model.Descripcion)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Precio)
+                    Unidad de medición
                 </th>
                 <th>
-                    Cantidad
+                    Costo por unidad
                 </th>
                 <th>
+                    Cantiades a pedir
                 </th>
             </tr>
 
             @foreach (var item in Model)
             {
                 <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
@@ -52,7 +57,10 @@
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </td>
                     <td>
-                        $ @Html.DisplayFor(modelItem => item.Precio)
+                        @Html.DisplayFor(modelItem => item.UnidadInventario)
+                    </td>
+                    <td>
+                        <input type="text" name="costo" id="costo" onkeyup="PasarValor();" />
                     </td>
                     <td>
                         @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id)) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
@@ -61,12 +69,9 @@
                                 <input type="hidden" value="@item.Id" name="idM" id="idM" />
                                 <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
                                 <input type="hidden" name="cantidad" id="cantidad" value="-1" />
-                                <div class="row">
-                                    <div class="col-lg-12" style="margin-bottom:50px">
-                                        <label>Elemento agregado al carrito</label>
-                                        <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
-                                    </div>
-                                </div>
+
+                                <label>Elemento agregado al carrito</label>
+                                <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
                             </form>
                         }
                         else
@@ -74,18 +79,26 @@
                             <form method="post" action="~/Compras/MostrarProveedoresMateriales">
                                 <input type="hidden" value="@item.Id" name="idM" id="idM" />
                                 <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
-                                <div class="row">
-                                    <div class="col-lg-12" style="margin-bottom:50px">
-                                        <input type="text" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
-                                        <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
-                                    </div>
-                                </div>
+                                <input type="hidden" name="costoMaterial" id="costoMaterial" value="" />
+
+                                <input type="text" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
+                                <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
                             </form>
                         }
                     </td>
                 </tr>
             }
-
         </table>
-    }
+        <form method="post" action="~/Compras/MostrarCarritoCompras">
+            <input type="submit" name="realizarCompra" id="realizarCompra" value="RealizarCompra" />
+        </form>
+    </div>
 }
+
+
+
+    <script type="text/javascript">
+        function PasarValor() {
+            document.getElementById("costoMaterial").value = document.getElementById("costo").value;
+        }
+    </script>

@@ -2,20 +2,14 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<br />
-<br />
-<br />
-<br />
-
 <h1 style="text-align:center"><b>Compras efectuadas</b></h1>
-
 
 <div class="row">
     <div class="col-lg-12">
         <div name="BarraNavegacion">
             <!--Barra de navegación que muestra las otras vistas que tiene este módulo-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <b><a class="nav-link">@Html.ActionLink("Carrito de compras ", "MostrarCarritoCompras")  |<a /></b>
@@ -30,9 +24,7 @@
                 </div>
             </nav>
         </div>
-    </div>
 
-    <div class="col-lg-12">
         <table class="table">
             <tr>
                 <th>
@@ -43,6 +35,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FechaRecepción)
+                </th>
+                <th>
+                    Proveedor
                 </th>
                 <th></th>
             </tr>
@@ -60,6 +55,9 @@
                         @Html.DisplayFor(modelItem => item.FechaRecepción)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Proveedor_Id)
+                    </td>
+                    <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                         @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
@@ -68,5 +66,6 @@
             }
 
         </table>
+
     </div>
 </div>

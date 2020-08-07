@@ -35,7 +35,7 @@
             @Html.DisplayNameFor(model => model.Direccion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageUrl)
+            Imagen
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Estatus)
@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
+                <img src="@Url.Content(item.ImageUrl)" alt="Imagen" width="200px" height="200px" />
             </td>
             <td id="ValueEstatus">
                 @Html.DisplayFor(modelItem => item.Estatus)
