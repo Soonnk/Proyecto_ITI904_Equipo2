@@ -12,6 +12,7 @@ using Proyecto_ITI904_Equipo2.Models.Recetas;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
+    [Authorize(Roles = "Empleado,Admin")]
     public class RecetasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -58,6 +59,10 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
             var file = Request.Files[0];
 
+            byte[] bytes = new byte[file.ContentLength];
+            var i = file.InputStream.Read(bytes, 0, file.ContentLength);
+
+            receta.Imagen = Convert.ToBase64String(bytes);
 
             //byte[] bytes = new byte[imagenSubida.ContentLength];
 

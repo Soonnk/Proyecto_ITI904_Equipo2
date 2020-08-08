@@ -7,7 +7,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Recetas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="file" class="form-control" name="ImagenSubida" />
+            <input name="Image" class="fa-file-image-o" type="file">
             @Html.ValidationMessageFor(model => model.Imagen)
         </div>
         <div class="form-group">
@@ -47,7 +47,7 @@
         <!--INICIA ESPACIO PARA INGREDIENTES DE RECETA-->
         <h4>Ingredientes</h4>
 
-        <div class="container col-lg-6 col-md-12 col-sm-12" id="IngredientesReceta">
+        <div id="IngredientesReceta">
             <table>
                 <thead>
                     <tr>
@@ -67,6 +67,11 @@
             </table>
         </div>
         <!--TERMINA ESPACIO PARA INGREDIENTES DE RECETA-->
+        <span id="lblPrecio">Basado en el precio de los ingredientes el precio sugerido es: $0</span>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Precio)
+            @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { id = "Precio", onchange = "updatePrecio()" } })
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -101,6 +106,8 @@
                     $("#tblIngredientes").append(data);
                     $("#materialName").val("");
                     $("#materialCantidad").val("");
+                    counter++;
+                    updatePrecio();
                 },
                 error: function (data) {
                     alert("No se ha podido agregar el ingrediente");
@@ -111,6 +118,18 @@
         function deleteIngrediente(ingrediente) {
             $("#Ingredientes\\[" + ingrediente + "\\]").css('display','none');
             $("#Ingredientes\\[" + ingrediente + "\\]\\.Estatus").attr("value", "D");
+            updatePrecio();
+        }
+
+        function updatePrecio() {
+            var total = 0;
+            for (var i = 0; i < counter; i++) {
+                var ingCosto = $("[name = 'Ingredientes["+i+"].Costo']")
+                var ingCantidad = $("[name = 'Ingredientes[" + i + "].Cantidad']")
+                total += ingCosto.val() * (ingCantidad.val()/1000)
+            }
+
+            $("#lblPrecio").html = "Basado en el precio de los ingredientes el precio sugerido es: $" + total.toFixed(2)
         }
     </script>
 }

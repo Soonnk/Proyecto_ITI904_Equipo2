@@ -46,8 +46,8 @@
 
 <body>
     <!-- Start header -->
-    <header class="top-navbar"  >
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+    <header class="top-navbar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img src="@Url.Content("~/images/logo.png")" alt="" />
@@ -68,12 +68,12 @@
                             </div>
                         </li>
                         @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="blog.html">blog</a>
-                <a class="dropdown-item" href="blog-details.html">blog Single</a>
-            </div>
-        </li>*@
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                                    <a class="dropdown-item" href="blog.html">blog</a>
+                                    <a class="dropdown-item" href="blog-details.html">blog Single</a>
+                                </div>
+                            </li>*@
                         <li class="nav-item">@Html.ActionLink("Contáctanos", "Index", "Contacto", null, new { @class = "nav-link" })</li>
                         @Html.Partial("_LoginPartial")
                     </ul>
@@ -83,9 +83,26 @@
     </header>
     <!-- End header -->
 
-    <div class="container body-content" >
+    <!-- Start Sidebar -->
+   @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Empleado")))
+    {
+    <div id="mySidenav" class="sidenav">
+        @Html.ActionLink("Ventas", "Index", "Venta", null, null)
+        @Html.ActionLink("Compras", "Index", "Compras", null, null)
+        @Html.ActionLink("Recetas", "Index", "Recetas", null, null)
+        @Html.ActionLink("Inventario","Index", "Materiales", null, null)
+        @Html.ActionLink("Proveedores", "Index", "Proveedores", null, null)
+    </div>
+
+    <!-- Use any element to open the sidenav -->
+    <span onclick="openNav()" id="NavBarDisplayer">open</span>
+
+    }
+    <!-- End Sidebar -->
+
+    <div class="container body-content">
         <div class="main-render-body">
-        @RenderBody()
+            @RenderBody()
         </div>
         <hr />
 
@@ -161,7 +178,7 @@
         <script src="~/Scripts//form-validator.min.js"></script>
         <script src="~/Scripts//contact-form-script.js"></script>
         <script src="~/Scripts//custom.js"></script>
-        @RenderSection("Scripts",false)
+        @RenderSection("Scripts", false)
     </div>
 </body>
 </html>
