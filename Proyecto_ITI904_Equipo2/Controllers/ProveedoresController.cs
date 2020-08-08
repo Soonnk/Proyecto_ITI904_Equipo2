@@ -157,6 +157,9 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         }
 
 
+
+
+
         /*Métodos para mostrar los materiales del proveedor e ingresar nuevos materiales que venda*/
         public ActionResult MostrarProveedoresMateriales(int? id)
         {
@@ -175,7 +178,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
                 if (listaProvMate.Count() <= 0)
                 { // Regresa la vista cuando no tienen datos
-                    return View(); // No funciona 
+                    return PartialView("_MostrarProveedoresMateriales"); // No funciona 
                 }
                 else
                 { // Regresa los materiales que tenga el proveedor

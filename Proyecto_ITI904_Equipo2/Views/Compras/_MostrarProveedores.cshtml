@@ -1,11 +1,15 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-<h4 style="text-align:center"><b>Proveedores actuales</b></h4>
 @{var count = 0;}
 
-<table class="table">
+<h4 style="text-align:center"><b>Proveedores actuales</b></h4>
+
+<br />
+<input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+<br />
+
+<table class="table" id="TablaProveedor">
     @{bool placed = false;}
 
     @foreach (var item in Model)
@@ -39,3 +43,32 @@
         count++;
     }
 </table>
+
+
+<script type="text/javascript">
+    document.querySelector("#buscar").onkeyup = function () {
+        $TableFilter("#TablaProveedor", this.value);
+    }
+
+    $TableFilter = function (id, value) {
+        var rows = document.querySelectorAll(id + ' tbody td');
+
+        for (var i = 0; i < rows.length; i++) {
+            var showRow = false;
+
+            var row = rows[i];
+            row.style.display = 'none';
+
+            for (var x = 0; x < row.childElementCount; x++) {
+                if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                row.style.display = null;
+            }
+        }
+    }
+</script>
