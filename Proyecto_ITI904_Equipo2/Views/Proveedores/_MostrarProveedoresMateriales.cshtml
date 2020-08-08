@@ -2,57 +2,71 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<input type="hidden" name="name" value="@ViewBag.idProveedor" /> <!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Costo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DisponibleAPublico)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Existencia)
-        </th>
-        <th>
-        </th>
-    </tr>
+@if (Model == null)
+{
+    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+    <input type="hidden" name="name" value="@ViewBag.Agregados" />
+    <h1>Lo sentimos</h1>
+    <br />
+    <h3>De momento no hay productos que este proveedor nos surta</h3>
+}
+else
+{
+    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+    <input type="hidden" name="name" value="@ViewBag.Agregados" />
+    <!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
 
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                $ @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                $ @Html.DisplayFor(modelItem => item.Costo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisponibleAPublico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Existencia)
-            </td>
-            <td>
-                @Html.ActionLink("Quitar material", "QuitarMaterialProveedor", new { idMaterial = item.Id, @ViewBag.idProveedor })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Costo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisponibleAPublico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Existencia)
+            </th>
+            <th>
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    $ @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    $ @Html.DisplayFor(modelItem => item.Costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisponibleAPublico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Existencia)
+                </td>
+                <td>
+                    @Html.ActionLink("Quitar material", "QuitarMaterialProveedor", new { idMaterial = item.Id, @ViewBag.idProveedor })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
