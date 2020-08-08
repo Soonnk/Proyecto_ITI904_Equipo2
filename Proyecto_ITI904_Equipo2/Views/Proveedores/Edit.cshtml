@@ -1,17 +1,15 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-@{
-    ViewBag.Title = "Edit";
-}
-<div class="row">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-    <div class="col-lg-3">
+<div class="row">
+    <div class="col-lg-5">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h1>Proveedor</h1>
+                <h1 style="text-align:center"><b>Proveedor</b></h1>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
@@ -76,15 +74,15 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Guardar cambios" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
         }
     </div>
 
-    <div class="col-lg-9">
-        <h1>Materiales que proporciona</h1>
+    <div class="col-lg-7">
+        <h1 style="text-align:center"><b>Materiales que proporciona</b></h1>
         <hr />
         @{Html.RenderAction("MostrarProveedoresMateriales"); }
         <hr />
@@ -93,7 +91,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Salir", "Index")
 </div>
 
 @section Scripts {

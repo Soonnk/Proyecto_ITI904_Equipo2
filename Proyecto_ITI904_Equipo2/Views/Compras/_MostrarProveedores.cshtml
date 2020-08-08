@@ -1,13 +1,41 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
 
-<h4 style="text-align:center"><b>Proveedores actuales</b></h4>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<div class="list-group">
+<h4 style="text-align:center"><b>Proveedores actuales</b></h4>
+@{var count = 0;}
+
+<table class="table">
+    @{bool placed = false;}
+
     @foreach (var item in Model)
     {
-        <a data-url="@Url.Content(string.Format("~/Compras/MostrarProveedoresMateriales/{0}", item.Id))"
-            class="list-group-item">
-            @item.Nombre
-        </a>
+
+        if (count % 3 == 0)
+        {
+            @Html.Raw("<tr>");
+            placed = true;
+        }
+        <td class="col-md-4">
+            <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+                <input type="hidden" name="id" id="id" value="@item.Id" />
+                <b>@Html.DisplayFor(modelItem => item.Nombre)</b>
+                <br />
+                <br />
+                <img src="@Url.Content(item.ImageUrl)" alt="Imagen" width="100px" height="100px" />
+                <br />
+                <br />
+                @Html.DisplayFor(modelItem => item.Nota)
+                <br />
+                <input type="submit" value="RealizarPedido" name="btnOpcion" class="btn btn-success btn-sm" />
+            </form>
+        </td>
+
+        if (count % 3 == 2 && placed)
+        {
+            @Html.Raw("</tr>");
+            placed = false;
+        }
+        count++;
     }
-</div>
+</table>

@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-@ViewBag.idProveedor;
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 @{int? idP = ViewBag.idProveedor; }
+
+<h1 style="text-align:center"><b>Agregar materiales</b></h1>
+
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />
 
@@ -56,6 +60,10 @@
     }
 
 </table>
+
+<div>
+    @Html.ActionLink("Salir", "Index")
+</div>
 
 <script type="text/javascript">
     document.querySelector("#buscar").onkeyup = function () {

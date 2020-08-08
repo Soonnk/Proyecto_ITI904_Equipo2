@@ -1,80 +1,79 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-@{
-    ViewBag.Title = "Delete";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Delete</h2>
+<h1 style="text-align:center"><b>Dar baja proveedor</b></h1>
 
-<h3>¿Seguro que quieres inhabilitar a este proveedor</h3>
-<div>
-    <h4>Proveedor</h4>
+<h3 style="text-align:center"><b>¿Seguro que quieres inhabilitar a este proveedor</b></h3>
+<div class="row">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RFC)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RFC)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nota)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nota)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+    <table class="table">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Nombre)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.RFC)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.RFC)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Telefono)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Direccion)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ImageUrl)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Estatus)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Estatus)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Nota)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Nota)
+            </td>
+        </tr>
+    </table>
 </div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Dar Baja" class="btn btn-default" />
+        <br />
+        @Html.ActionLink("Salir", "Index")
+    </div>
+}

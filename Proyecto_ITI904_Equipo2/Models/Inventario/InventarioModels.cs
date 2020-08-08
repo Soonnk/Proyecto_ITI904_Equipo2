@@ -41,7 +41,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Inventario
         /// describir de donde viene, que nivel de tostado, etc.
         /// </remarks>
         public string Descripcion { get; set; }
-        
+
+        public double Contenido { get; set; }
+
         public double Precio { get; set; }
         public double Costo { get; set; }
 

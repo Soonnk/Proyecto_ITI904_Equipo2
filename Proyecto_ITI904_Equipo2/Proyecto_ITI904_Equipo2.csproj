@@ -243,6 +243,12 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="images\ImgNueva04.png" />
+    <Content Include="images\ImgNueva05.png" />
+    <Content Include="images\ImgNueva06.png" />
+    <Content Include="images\ImgNueva07.png" />
+    <Content Include="images\ImgNueva08.png" />
+    <Content Include="images\ImgNueva09.png" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Content\responsive.css" />
@@ -290,6 +296,9 @@
     <Content Include="images\img-07.jpg" />
     <Content Include="images\img-08.jpg" />
     <Content Include="images\img-09.jpg" />
+    <Content Include="images\ImgNueva01.png" />
+    <Content Include="images\ImgNueva02.png" />
+    <Content Include="images\ImgNueva03.png" />
     <Content Include="images\inner-blog-img.jpg" />
     <Content Include="images\logo.png" />
     <Content Include="images\Marocchino.jpg" />
@@ -409,12 +418,13 @@
     <Content Include="Views\Compras\Create.cshtml" />
     <Content Include="Views\Compras\Delete.cshtml" />
     <Content Include="Views\Compras\Details.cshtml" />
-    <Content Include="Views\Compras\Edit.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />
-    <Content Include="Views\Compras\_MostrarCompras.cshtml" />
-    <Content Include="Views\Compras\_MostrarProveedoresMateriales.cshtml" />
-    <Content Include="Views\Compras\_MostrarProveedores.cshtml" />
+    <Content Include="Views\Recetas\_IngredienteRecetaTR.cshtml" />
+    <Content Include="Views\Compras\Edit.cshtml" />
     <Content Include="Views\Compras\_MostrarCarritoCompras.cshtml" />
+    <Content Include="Views\Compras\_MostrarCompras.cshtml" />
+    <Content Include="Views\Compras\_MostrarProveedores.cshtml" />
+    <Content Include="Views\Compras\_MostrarProveedoresMateriales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

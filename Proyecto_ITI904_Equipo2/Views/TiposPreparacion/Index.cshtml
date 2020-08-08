@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion>
 
-@{
-    ViewBag.Title = "Index";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Index</h2>
+<h1 style="text-align:center"><b>Tipos de preparación</b></h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar nueva preparación", "Create")
 </p>
 <table class="table">
     <tr>
@@ -20,23 +18,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            <p>
-                @(item.Descripción != null ? item.Descripción.Substring(0, 100) + "..." : "")
-            </p>
-            @*@Html.DisplayFor(modelItem => item.Descripción)*@
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <p>
+                    @(item.Descripción != null ? item.Descripción.Substring(0, 100) + "..." : "")
+                </p>
+                @*@Html.DisplayFor(modelItem => item.Descripción)*@
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

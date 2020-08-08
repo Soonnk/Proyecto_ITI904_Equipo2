@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-@{
-    ViewBag.Title = "Index";
-}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h1 style="text-align:center"><b>Materiales</b></h1>
+
+<h4><b>@Html.ActionLink("Añadir material", "Create")</b></h4>
+<br />
+
 <table class="table">
     <tr>
         <th>
@@ -53,9 +52,9 @@
                 @Html.DisplayFor(modelItem => item.Existencia)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
