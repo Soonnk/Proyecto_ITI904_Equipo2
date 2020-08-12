@@ -1,82 +1,99 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 @{var i = 0;}
 
-<h1 style="text-align:center"><b>Productos seleccionados</b></h1>
+<h1 style="text-align:center"><b>Orden de compra</b></h1>
 
 <div class="row">
 
     <div class="col-lg-12">
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Descripcion)
-                    </th>
-                    <th>
-                        Cantidad
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Costo)
-                    </th>
-                    <th>
-                        SubTotal
-                    </th>
-                    <th>
-                        Opciones
-                    </th>
-                </tr>
-            
-               @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Descripcion)
-                        </td>
-                        <td>
-                            @ViewBag.Cantidades[i]
-                        </td>
-                        <td>
-                            $ @Html.DisplayFor(modelItem => item.Precio)
-                        </td>
-                    
-                        <td>
-                            $ @(Convert.ToDouble(Html.DisplayFor(modelItem => item.Precio).ToString()) * @ViewBag.Cantidades[i])
-                        </td>
-                        <td>
-                            @Html.ActionLink("Quitar", "")
-                        </td>
-                    </tr>
-                     i++;
-                }
+        <table class="table">
+            <tr>
+                <th width="10%">
+                    Cantidad
+                </th>
+                <th width="20%">
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th width="40%">
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
 
+                <th width="10%">
+                    Precio unitario
+                </th>
+                <th width="10%">
+                    Importe
+                </th>
+                <th width="10%">
+                    Opciones
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
                     <td>
-                        <h4>Total:</h4>
+                        @ViewBag.Cantidades[i]
                     </td>
                     <td>
-                        <h4>$ @ViewBag.TotalCompras</h4>
+                        @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
-                    <td> </td>
-                </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.Contenido)
+                        @Html.DisplayFor(modelItem => item.UnidadInventario)
+                    </td>
 
-            </table>
+                    <td>
+                        $ @ViewBag.Costos[i]
+                    </td>
+
+                    <td>
+                        $ @(Convert.ToDouble(@ViewBag.Costos[i] * @ViewBag.Cantidades[i]))
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                i++;
+            }
+
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>
+                    <h4>Total:</h4>
+                </td>
+                <td>
+                    <h4>$ @ViewBag.TotalCompras</h4>
+                </td>
+            </tr>
+
+        </table>
     </div>
 
-    <form method="get" action="~/Compras/AgregarNuevaCompra">
-        <input type="submit" name="comprar" id="comprar" value="Comprar" />
+    <form method="post" action="~/Compras/AgregarNuevaCompra">
+        <button type="submit" class="btn btn-primary btn-lg" >
+            Confirmar Compra
+        </button>
+    </form>
+
+    <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+        <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+        <!--Botón con el cual podemos realizar cambios de último momento antes de realizar compra-->
+        <button type="submit" class="btn btn-primary btn-lg">
+            Regresar a la lista
+        </button>
+    </form>
+    <form method="post" action="~/Compras/CancelarCompra">
+        <!--Botón con el cual se puede cancelar la orden de compra-->
+        <button type="submit" class="btn btn-primary btn-lg">
+            Cancelar compra
+        </button>
     </form>
 </div>
-
-<p>
-    @Html.ActionLink("Salir", "Index")
-</p>

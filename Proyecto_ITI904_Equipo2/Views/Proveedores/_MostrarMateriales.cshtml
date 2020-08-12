@@ -4,7 +4,9 @@
 
 @{int? idP = ViewBag.idProveedor; }
 
-<h1 style="text-align:center"><b>Agregar materiales</b></h1>
+<h1 style="text-align:center"><b>Agregar material al proveedor</b></h1>
+
+<h3><b>@Html.ActionLink("Añadir nuevo material", "MoverAControladorMateriales", new { idProveedor = ViewBag.idProveedor})</b></h3>
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />

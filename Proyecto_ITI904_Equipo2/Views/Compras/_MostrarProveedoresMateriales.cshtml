@@ -7,39 +7,43 @@
 
 @if (Model == null)
 {
-    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
-    <input type="hidden" name="name" value="@ViewBag.Agregados" />
-    <h1>Lo sentimos</h1>
-    <br />
-    <h3>De momento no hay productos que este proveedor nos surta</h3>
+    <div class="alert alert-warning" role="alert">
+        <h1>Lo sentimos</h1>
+        <br />
+        <h3>De momento no hay productos que este proveedor nos surta</h3>
+    </div>
+    <div class="alert alert-warning" role="alert">
+        This is a warning alert—check it out!
+    </div>
 }
 else
 {
-    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
+    <input type="hidden" name="name" id="id" value="@ViewBag.idProveedor" />
     <input type="hidden" name="name" value="@ViewBag.Agregados" />
 
     <h1 style="text-align:center"><b>Productos que ofrece</b></h1>
+    <br />
 
     <div class="row">
         <table class="table">
             <tr>
-                <th>
+                <th style="width: 3%">
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
-                <th>
+                <th style="width: 25%">
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
-                <th>
+                <th style="width: 35%">
                     @Html.DisplayNameFor(model => model.Descripcion)
                 </th>
-                <th>
+                <th style="width: 7%">
+                    Contenido
+                </th>
+                <th style="width: 9%">
                     Unidad de medición
                 </th>
-                <th>
-                    Costo por unidad
-                </th>
-                <th>
-                    Cantiades a pedir
+                <th style="width: 21%">
+
                 </th>
             </tr>
 
@@ -57,10 +61,10 @@ else
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UnidadInventario)
+                        @Html.DisplayFor(modelItem => item.Contenido)
                     </td>
                     <td>
-                        <input type="text" name="costo" id="costo" onkeyup="PasarValor();" />
+                        @Html.DisplayFor(modelItem => item.UnidadInventario)
                     </td>
                     <td>
                         @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id)) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
@@ -79,10 +83,29 @@ else
                             <form method="post" action="~/Compras/MostrarProveedoresMateriales">
                                 <input type="hidden" value="@item.Id" name="idM" id="idM" />
                                 <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
-                                <input type="hidden" name="costoMaterial" id="costoMaterial" value="" />
-
-                                <input type="text" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
-                                <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                <table>
+                                    <tr>
+                                        <td width="25%">
+                                            <label>Costo </label>
+                                        </td>
+                                        <td width="100%">
+                                            <input type="text" name="costoMaterial" id="costoMaterial" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%">
+                                            <label width="25%">Cantidad </label>
+                                        </td>
+                                        <td width="100%">
+                                            <input type="text" name="cantidad" id="cantidad" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="100%">
+                                            <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                        </td>
+                                    </tr>
+                                </table>
                             </form>
                         }
                     </td>
@@ -90,6 +113,7 @@ else
             }
         </table>
         <form method="post" action="~/Compras/MostrarCarritoCompras">
+            <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
             <input type="submit" name="realizarCompra" id="realizarCompra" value="RealizarCompra" />
         </form>
     </div>
@@ -99,8 +123,8 @@ else
     @Html.ActionLink("Salir", "Index")
 </p>
 
-    <script type="text/javascript">
-        function PasarValor() {
-            document.getElementById("costoMaterial").value = document.getElementById("costo").value;
-        }
-    </script>
+<style>
+    input {
+        box-sizing: border-box;
+    }
+</style>

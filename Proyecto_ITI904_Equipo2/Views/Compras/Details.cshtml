@@ -12,35 +12,37 @@
                 @Html.DisplayNameFor(model => model.FechaSolicitud)
             </td>
             <td>
-                @Html.DisplayFor(model => model.FechaSolicitud)
-            </td>
-        </tr>
-        <tr>
-            <td>
                 @Html.DisplayNameFor(model => model.FechaRecepción)
             </td>
-            <td>
-                @Html.DisplayFor(model => model.FechaRecepción)
-            </td>
-        </tr>
-        <tr>
             <td>
                 Proveedor
             </td>
             <td>
-                @Html.DisplayFor(model => model.Proveedor_Id)
+                @Html.DisplayNameFor(model => model.Recibida)
             </td>
+            <td>
+                Generar Pdf
+            </td>
+            
         </tr>
         <tr>
             <td>
-                @Html.DisplayNameFor(model => model.Recibida)
+                @Html.DisplayFor(model => model.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FechaRecepción)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Proveedor_Id)
             </td>
             <td>
                 @Html.DisplayFor(model => model.Recibida)
             </td>
+            <td>
+                @Html.ActionLink("Orden de compra", "pdf")
+            </td>
         </tr>
     </table>
-        @Html.ActionLink("Modificar", "Edit", new { id = Model.Id })
 </div>
 
 <p>

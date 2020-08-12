@@ -68,7 +68,9 @@
         <div>
             <h1 style="text-align:center"><b>Materiales que proporciona</b></h1>
             <hr />
-            @{Html.RenderAction("MostrarProveedoresMateriales"); }
+            <!--Añadimos el id del modelo y que det es igual a 1 para que no muestre la opción de quitar material
+                al momento de mostrar los detalles y evitar que los quiten ahí-->
+            @{Html.RenderAction("MostrarProveedoresMateriales", new { Model.Id, det = 1}); }
         </div>
 
     </div>

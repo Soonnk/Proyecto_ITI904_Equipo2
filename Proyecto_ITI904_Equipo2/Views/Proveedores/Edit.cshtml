@@ -71,20 +71,23 @@
                         @Html.ValidationMessageFor(model => model.Nota, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Guardar cambios" class="btn btn-primary" />
-                    </div>
-                </div>
             </div>
         }
+
+        @*<form action="~/Proveedores/Edit" method="post">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar cambios" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>*@
     </div>
+
 
     <div class="col-lg-7">
         <h1 style="text-align:center"><b>Materiales que proporciona</b></h1>
         <hr />
-        @{Html.RenderAction("MostrarProveedoresMateriales"); }
+        @{Html.RenderAction("MostrarProveedoresMateriales", new { Model.Id }); }
         <hr />
         @Html.ActionLink("Agregar nuevos materiales", "MostrarMateriales", new { idProv = Model.Id })
     </div>

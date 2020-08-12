@@ -26,3 +26,126 @@
         </div>
     </div>
 </div>
+
+
+
+@*Codigo en donde hice el intento de mostrar advertencias después aceptar los botones
+    <form>  
+<!-- formulario de alta -->
+<!-- este es el submit que quiero emplear -->
+<button id="submit" class="btn btn-lg btn-secondary btn-block" type="button">Enviar</button>
+</form>
+
+<!-- modal a mostrar -->
+<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="memberModalLabel">Modal</h4>
+            </div>
+            <div class="modal-body">
+                <b>Soy el modal</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="cerrar" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //$(document).ready(function () {
+    //    $('#submit').on('click', function (e) {
+    //        e.preventDefault();
+    //        $('#myModal').modal('show');
+    //    });
+
+    //});
+
+    $(document).ready(function () {
+
+        //$("#myModal").modal("show");
+
+
+        $("#submit").click(function () {
+            $("#myModal").modal("show");
+        });
+        $("#cerrar").click(function () {
+            $("#myModal").modal("hide");
+        });
+        $("#myModal").on('hidden.bs.modal', function () {
+            alert("Esta accion se ejecuta al cerrar el modal")
+        });
+
+    });
+
+    $.ajax({
+        // edit to add steve's suggestion.
+        //url: "/ControllerName/ActionName",
+        url: '<%= Url.Action("ActionName", "ControllerName") %>',
+        success: function (data) {
+            // your data could be a View or Json or what ever you returned in your action method
+            // parse your data here
+            alert(data);
+        }
+    });
+
+</script>
+
+
+    <!--Pruebas de Modals-->
+    <button class="btn btn-default" id="btn-confirm">Confirm</button>
+
+    <div class="modal" tabindex="-1" role="dialog" id="mi-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="modal-btn-si">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-btn-no">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" role="alert" id="result"></div>
+
+    <script>
+        var modalConfirm = function (callback) {
+
+            $("#btn-confirm").on("click", function () {
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+            });
+        };
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                //Acciones si el usuario confirma
+                $("#result").html("CONFIRMADO");
+            } else {
+                //Acciones si el usuario no confirma
+                $("#result").html("NO CONFIRMADO");
+            }
+        });
+    </script>
+
+    <!--Pruebas de Modals-->
+*@

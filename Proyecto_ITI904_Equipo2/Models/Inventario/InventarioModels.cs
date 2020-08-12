@@ -65,6 +65,13 @@ namespace Proyecto_ITI904_Equipo2.Models.Inventario
         /// </summary>
         public string UnidadVenta { get; set; }
 
+        /// <summary>
+        /// Columna que indica si el material está asignado a un proveedor (True) o no (False)
+        /// Se usa para evitar mostrar aquellos datos que ya tienen proveedor cuando se estén asignando
+        /// nuevos materiales a uno que no tiene o que tiene varios.
+        /// </summary>
+        public bool EnUso { get; set; }
+
         public virtual ICollection<Compras.Proveedor> Proveedores { get; set; }
     }
 

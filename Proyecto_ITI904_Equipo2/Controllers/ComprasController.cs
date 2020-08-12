@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Compras;
 using Proyecto_ITI904_Equipo2.Models.Inventario;
@@ -23,8 +26,6 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         public double subTotal = 0;
         public double totalCompra = 0;
         private ApplicationDbContext db = new ApplicationDbContext();
-        Proveedor proveedor = null;
-        Compra compra = null;
 
 
         #region Metodos generados por default
@@ -64,7 +65,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             {
                 db.Entry(compra).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MostrarCompras");
             }
             return View(compra);
         }
@@ -124,17 +125,29 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             return View("_MostrarCompras", db.Compras.ToList());
         }
 
-        public ActionResult MostrarCarritoCompras()
+        public ActionResult MostrarCarritoCompras(int? id)
         {
-            ViewBag.TotalCompras = Session["TotalCompra"];
+            if (Session["IdMaterialesAgregados"] == null && Session["TotalCompra"] == null &&
+                Session["MaterialesAgregados"] == null)
+            {
+                return View("Index");
+            }
+            else
+            {
+                ViewBag.idProveedor = id;
+                ViewBag.TotalCompras = Session["TotalCompra"];
 
-            var cantidades = Session["Cantidades"] as List<int>;
-            ViewBag.Cantidades = cantidades;
+                var costos = Session["Costos"] as List<int>;
+                ViewBag.Costos = costos;
 
-            var materialesId = Session["IdMaterialesAgregados"] as List<int>;
-            var materialesSeleccionados = db.Materiales.Where(x => materialesId.Contains(x.Id));
-            Session["MaterialesAgregados"] = materialesSeleccionados; // Guardamos la lista de los materiales para usarlos al momento de crear los detalles de compra
-            return View("_MostrarCarritoCompras", materialesSeleccionados.ToList());
+                var cantidades = Session["Cantidades"] as List<int>;
+                ViewBag.Cantidades = cantidades;
+
+                var materialesId = Session["IdMaterialesAgregados"] as List<int>;
+                var materialesSeleccionados = db.Materiales.Where(x => materialesId.Contains(x.Id));
+                Session["MaterialesAgregados"] = materialesSeleccionados; // Guardamos la lista de los materiales para usarlos al momento de crear los detalles de compra
+                return View("_MostrarCarritoCompras", materialesSeleccionados.ToList());
+            }
         }
         #endregion
 
@@ -195,15 +208,31 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                         QuitarDeLista(idM);
                         ViewBag.Total = CalcularTotal(costoMaterial);
                         ViewBag.Agregados = Session["IdMaterialesAgregados"];
-                        return RedirectToAction("Index");
+
+
+                        var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id = " + id + "");
+
+                        int[] MaterialesLista = new int[listaProvMate.Count()]; // Arreglo que guardará los Id
+                        int val = 0;
+
+                        foreach (var item in listaProvMate)
+                        { // Guardar los ID de materiales del proveedor
+                            MaterialesLista[val] = item.Material_Id;
+                            val++;
+                        }
+                        var listaMate = db.Materiales.Where(x => MaterialesLista.Contains(x.Id));
+
+                        return View("_MostrarProveedoresMateriales", listaMate.ToList());
                     }
                     else
                     {
                         Materiales = Session["Materiales"] as List<Material>;
+                        Costos = Session["Costos"] as List<int>;
 
-                        if (Materiales == null)
+                        if (Materiales == null || Costos == null)
                         {
                             Materiales = new List<Material>();
+                            Costos = new List<int>();
                         }
 
                         var materialSeleccionado = db.Materiales.Find(idM);
@@ -212,10 +241,16 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                         Session["Materiales"] = Materiales;
 
                         AgregarMaterialALista(idM, cantidad);
+                        
+                        //Abro - Guardamos el costo que agregamos de cada material
+                        Costos.Add(Convert.ToInt32(costoMaterial));
+                        Session["Costos"] = Costos;
+                        //Cierro - Guardamos el costo que agregamos de cada material
+
+                        // Guardar el total y pasarlo al carrito
                         Session["TotalCompra"] = CalcularTotal(costoMaterial);
 
-
-                        /*Parte para pasarle los datos a la vista*/ /*Hacerlo metodo*/ 
+                        /*Parte para pasarle los datos a la vista*/ /*Hacerlo metodo*/
                         ViewBag.idProveedor = id;
 
                         var listaProvMate = db.Database.SqlQuery<ProveedorMaterials>("Select * from ProveedorMaterials where Proveedor_Id = " + id + "");
@@ -237,7 +272,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 }
             }
         }
-
+        
         public double CalcularTotal(int? costo)
         {
             List<int> ids = Session["IdMaterialesAgregados"] as List<int>;
@@ -332,6 +367,19 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             Session["IdMaterialesAgregados"] = null;
 
             return RedirectToAction("Index", "Compras"); 
+        }
+
+        public ActionResult CancelarCompra()
+        {
+            Session["Costos"] = null;
+            Session["Cantidades"] = null;
+            Session["Materiales"] = null;
+            Session["IdProveedor"] = null;
+            Session["TotalCompra"] = null;
+            Session["MaterialesAgregados"] = null;
+            Session["IdMaterialesAgregados"] = null;
+
+            return View("Index");
         }
         #endregion
 

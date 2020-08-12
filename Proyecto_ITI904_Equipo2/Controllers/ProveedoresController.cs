@@ -20,16 +20,18 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Proveedores
-        public ActionResult Index(int? todos)
+        public ActionResult Index(int? mostrar)
         {
             var vista = db.Database.SqlQuery<Proveedor>("Select * from Proveedors where Estatus = 1");
 
-            if (todos == 1)
+            if (mostrar == 1)
             {
+                ViewBag.Ocultar = 0;
                 return View(db.Proveedores.ToList());
             }
             else
             {
+                ViewBag.Ocultar = 1;
                 return View(vista.ToList());
             }
         }
@@ -161,7 +163,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
 
         /*Métodos para mostrar los materiales del proveedor e ingresar nuevos materiales que venda*/
-        public ActionResult MostrarProveedoresMateriales(int? id)
+        public ActionResult MostrarProveedoresMateriales(int? id, int? det)
         {
             if (id != null)
             {
@@ -184,7 +186,17 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 { // Regresa los materiales que tenga el proveedor
                     var listaMate = db.Materiales.Where(x => idMaterial.Contains(x.Id));
 
-                    return PartialView("_MostrarProveedoresMateriales", listaMate.ToList());
+                    if (det == null || det == 0)
+                    {
+                        return PartialView("_MostrarProveedoresMateriales", listaMate.ToList());
+                    }
+                    else
+                    {
+                        /* La variable det nos ayudará a restringirle al programa cuando puede eliminar los
+                         materiales del proveedor y cuando no*/
+                        ViewBag.Detalle = det;
+                        return PartialView("_MostrarProveedoresMateriales", listaMate.ToList());
+                    }
                 }
             }
             else
@@ -196,7 +208,8 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         public ActionResult MostrarMateriales(int idProv)
         { // Regresamos la lista entera de los materiales y guardamos en un ViewBag el Id del proveedor actual, de modo que tengamos su Id siempre
             ViewBag.idProveedor = idProv;
-            return View("_MostrarMateriales", db.Materiales.ToList());
+            var vista = db.Database.SqlQuery<Material>("Select * from Materials where EnUso = 0");
+            return View("_MostrarMateriales", vista.ToList());
         }
 
         public ActionResult InsertarProveedoresMateriales(int idP, int idM)
@@ -206,7 +219,12 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                                                                     new SqlParameter("@idProveedor", idP),
                                                                     new SqlParameter("@idMateriales", idM));
             db.SaveChanges();
-            return View("Index", db.Proveedores.ToList()); // Regresa al menú principal de proveedores
+
+            Proveedor proveedor = db.Proveedores.Find(idP); // Arreglo que guardará los Id
+
+
+            return View("Edit", proveedor);
+            //return View("Index", db.Proveedores.ToList()); // Regresa al menú principal de proveedores
         }
 
         public ActionResult QuitarMaterialProveedor(int idProveedor, int idMaterial)
@@ -215,7 +233,21 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                                                                     new SqlParameter("@idProveedor", idProveedor),
                                                                     new SqlParameter("@idMaterial", idMaterial));
             db.SaveChanges();
-            return View("Index", db.Proveedores.ToList());
+
+            Proveedor proveedor = db.Proveedores.Find(idProveedor); // Arreglo que guardará los Id
+
+
+            return View("Edit", proveedor);
+        }
+
+        public ActionResult MoverAControladorMateriales(int? idProveedor)
+        {
+            /* Método para redirigir de proveedores a materiales sin tener que hacer la vista y
+               un controlador de nuevo, le paso el idProveedor para que cuando regrese a la vista
+               de editar de proveedores pueda mostrar la vista que tenía desde un inicio*/
+            @ViewBag.vistaProveedor = idProveedor;
+            /*Pasamos el id al método get de Create*/
+            return RedirectToAction("Create", "Materiales", new { vistaProveedor = idProveedor });
         }
     }
 }
