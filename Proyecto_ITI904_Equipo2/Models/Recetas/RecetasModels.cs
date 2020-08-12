@@ -55,6 +55,19 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
 
         public virtual ICollection<IngredienteDeReceta> Ingredientes { get; set; }
 
+        public double Precio { get; set; }
+
+        [NotMapped]
+        public double Costo {
+            get {
+                double costo = 0;
+                foreach (var ing in this.Ingredientes)
+                {
+                    costo += ing.Costo;
+                }
+                return costo;
+            }
+        }
     }
 
     /// <summary>
@@ -132,7 +145,7 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
         [NotMapped]
         public double Precio { 
             get => this.Material?.Precio ?? 0; 
-            set => throw new InvalidOperationException("Los ingredientes de recetas no pueden alterar el Precio de su material");
+            set { }// No se pretende que la receta pueda establecer el precio de los materiales
         }
         /// <summary>
         /// Permite saber si la el ingrediente será eliminado, o agregado a la receta

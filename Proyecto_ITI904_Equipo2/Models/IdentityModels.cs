@@ -35,7 +35,8 @@ namespace Proyecto_ITI904_Equipo2.Models
         public DbSet<Recetas.Receta> Recetas { get; set; }
         public DbSet<Ventas.DetalleVenta> DetalleVenta { get; set; }
         public DbSet<Recetas.IngredienteDeReceta> IngredienteDeRecetas { get; set; }
-
+        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
+        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Ventas.Producto> Productoes { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -67,9 +68,24 @@ namespace Proyecto_ITI904_Equipo2.Models
                     ru.ToTable("RecetasUsuarios");
                 });
         }
+    }
 
-        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
+    public class ApplicationContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
+        protected override void Seed(ApplicationDbContext context)
+        {
+            base.Seed(context);
 
-        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Ventas.Producto> Productoes { get; set; }
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            IdentityResult roleResult;
+
+            if (!RoleManager.RoleExists("Admin")) roleResult = RoleManager.Create(new IdentityRole("Admin"));
+
+            if (!RoleManager.RoleExists("Empleado")) roleResult = RoleManager.Create(new IdentityRole("Empleado"));
+            
+            if (!RoleManager.RoleExists("Cliente")) roleResult = RoleManager.Create(new IdentityRole("Cliente"));
+        }
     }
 }

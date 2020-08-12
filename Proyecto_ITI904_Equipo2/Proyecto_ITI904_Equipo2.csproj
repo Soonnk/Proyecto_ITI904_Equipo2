@@ -714,8 +714,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Views\Acerca\Index.cshtml" />
@@ -769,6 +767,7 @@
     <Content Include="Views\Proveedores\_MostrarMateriales.cshtml" />
     <Content Include="Views\TiposPreparacion\_TiposPreparacionSelector.cshtml" />
     <Content Include="Views\Recetas\_IngredienteRecetaTR.cshtml" />
+    <Content Include="Views\Compras\Create.cshtml" />
     <Content Include="Views\Compras\Delete.cshtml" />
     <Content Include="Views\Compras\Details.cshtml" />
     <Content Include="Views\Compras\Index.cshtml" />

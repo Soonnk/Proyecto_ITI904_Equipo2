@@ -1,6 +1,8 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+@{
+    ViewBag.Title = "Create";
+}
 
 <h1 style="text-align:center"><b>Añadir nuevo tipo de preparación</b></h1>
 
@@ -37,5 +39,5 @@
 }
 
 <div>
-    @Html.ActionLink("Salir", "Index")
+    @Html.ActionLink("Regresar a la lista de Tipos", "Index")
 </div>
