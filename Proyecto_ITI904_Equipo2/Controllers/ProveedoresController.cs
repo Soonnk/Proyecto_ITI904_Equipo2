@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Proyecto_ITI904_Equipo2.Models;
@@ -19,7 +22,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Proveedores
+        
         public ActionResult Index(int? mostrar)
         {
             var vista = db.Database.SqlQuery<Proveedor>("Select * from Proveedors where Estatus = 1");
@@ -36,7 +39,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             }
         }
 
-        // GET: Proveedores/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Proveedor proveedor = db.Proveedores.Find(id);
+
             if (proveedor == null)
             {
                 return HttpNotFound();
@@ -51,7 +55,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             return View(proveedor);
         }
 
-        // GET: Proveedores/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -62,19 +66,36 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,RFC,Telefono,Direccion,ImageUrl,Estatus,Nota")] Proveedor proveedor)
+        public ActionResult Create(Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
-                db.Proveedores.Add(proveedor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Request.Files.Count > 0)
+                { // Condicional que verifica si el usuario ingresó imagen del proveedor
+                    var file = Request.Files[0];
+
+                    byte[] bytes = new byte[file.ContentLength];
+                    var i = file.InputStream.Read(bytes, 0, file.ContentLength);
+
+                    proveedor.ImageUrl = Convert.ToBase64String(bytes);
+
+                    db.Proveedores.Add(proveedor);
+                    db.SaveChanges();
+                    return RedirectToAction("Details", "Proveedores", new { proveedor.Id });
+                }
+                else
+                { // Esto es en caso de que no seleccione alguna imagen
+                    proveedor.ImageUrl = "~/images/defaultProveedor.png";
+                    db.Proveedores.Add(proveedor);
+                    db.SaveChanges();
+                    return RedirectToAction("Details", "Proveedores", new { proveedor.Id });
+                }
             }
 
             return View(proveedor);
         }
 
-        // GET: Proveedores/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,18 +115,37 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,RFC,Telefono,Direccion,ImageUrl,Estatus,Nota")] Proveedor proveedor)
+        public ActionResult Edit(Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(proveedor).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (proveedor.ImageUrl == null)
+                {
+                    if (Request.Files.Count > 0)
+                    { // Condicional que verifica si el usuario ingresó imagen del proveedor
+                        var file = Request.Files[0];
+
+                        byte[] bytes = new byte[file.ContentLength];
+                        var i = file.InputStream.Read(bytes, 0, file.ContentLength);
+
+                        proveedor.ImageUrl = Convert.ToBase64String(bytes);
+
+                        db.Entry(proveedor).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    db.Entry(proveedor).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             return View(proveedor);
         }
 
-        // GET: Proveedores/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -135,13 +175,14 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // POST: Proveedores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string nota)
         {
             Proveedor proveedor = db.Proveedores.Find(id);
 
             if (ModelState.IsValid)
             {
                 proveedor.Estatus = false;
+                proveedor.Nota += nota;
                 db.Entry(proveedor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -220,8 +261,10 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                                                                     new SqlParameter("@idMateriales", idM));
             db.SaveChanges();
 
-            Proveedor proveedor = db.Proveedores.Find(idP); // Arreglo que guardará los Id
+            db.Database.ExecuteSqlCommand("Update Materials set EnUso = 1 where Id = " + idM);
+            db.SaveChanges();
 
+            Proveedor proveedor = db.Proveedores.Find(idP); // Arreglo que guardará los Id
 
             return View("Edit", proveedor);
             //return View("Index", db.Proveedores.ToList()); // Regresa al menú principal de proveedores
@@ -232,6 +275,9 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             db.Database.ExecuteSqlCommand("delete from ProveedorMaterials where Proveedor_Id = @idProveedor and Material_Id = @idMaterial ",
                                                                     new SqlParameter("@idProveedor", idProveedor),
                                                                     new SqlParameter("@idMaterial", idMaterial));
+            db.SaveChanges();
+
+            db.Database.ExecuteSqlCommand("Update Materials set EnUso = 0 where Id = " + idMaterial);
             db.SaveChanges();
 
             Proveedor proveedor = db.Proveedores.Find(idProveedor); // Arreglo que guardará los Id

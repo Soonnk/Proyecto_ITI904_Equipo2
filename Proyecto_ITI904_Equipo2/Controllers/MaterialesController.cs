@@ -52,7 +52,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Existencia")] Material material, int? vistaIdProveedor)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Contenido, UnidadInventario, UnidadVenta")] Material material, int? vistaIdProveedor)
         {
             if (ModelState.IsValid)
             {

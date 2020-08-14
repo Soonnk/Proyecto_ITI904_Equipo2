@@ -68,6 +68,8 @@ namespace Proyecto_ITI904_Equipo2.Models
                     ru.ToTable("RecetasUsuarios");
                 });
         }
+
+        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Compras.DetalleCompra> DetalleCompras { get; set; }
     }
 
     public class ApplicationContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>

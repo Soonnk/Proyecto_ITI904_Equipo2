@@ -4,76 +4,81 @@
 
 <h1 style="text-align:center"><b>Dar baja proveedor</b></h1>
 
-<h3 style="text-align:center"><b>¿Seguro que quieres inhabilitar a este proveedor</b></h3>
-<div class="row">
-    <hr />
-    <table class="table">
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Nombre)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.RFC)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.RFC)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Telefono)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Direccion)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.ImageUrl)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Estatus)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Estatus)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Nota)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Nota)
-            </td>
-        </tr>
-    </table>
-</div>
-
-@using (Html.BeginForm()) 
+<h3 style="text-align:center"><b>¿Seguro que quieres inhabilitar a este proveedor?</b></h3>
+@using (Html.BeginForm("Delete", "Proveedores", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Dar Baja" class="btn btn-default" />
-        <br />
-        @Html.ActionLink("Salir", "Index")
+    <div class="row">
+        <hr />
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.RFC)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.RFC, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </td>
+                <td>
+                    <img src="@Url.Content("data:image/png;base64," + Model.ImageUrl)" alt="Imagen" width="150px" height="150px" />
+                    @*@Html.DisplayFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Estatus, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Escriba la razón de del por qué se da de baja
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Nota, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+            </tr>
+        </table>
     </div>
+
+    <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+        <i class="glyphicon glyphicon-minus"></i> Dar baja
+    </button>
 }
+
+<form action="~/Proveedores/Index" method="post">
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        <i class="glyphicon glyphicon-log-out"></i> Salir
+    </button>
+</form>

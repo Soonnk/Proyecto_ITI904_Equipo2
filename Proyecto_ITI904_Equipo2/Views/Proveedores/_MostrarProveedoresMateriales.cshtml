@@ -55,7 +55,15 @@ else
                     <!--Dependiendo del valor de detalle se mostrará la opción de quitar el material o no-->
                     @if (ViewBag.Detalle == 1) { }
                     else
-                    {@Html.ActionLink("Quitar material", "QuitarMaterialProveedor", new { idMaterial = item.Id, @ViewBag.idProveedor })}
+                    {
+                        <form action="~/Proveedores/QuitarMaterialProveedor" method="post">
+                            <input type="hidden" name="idMaterial" id="idMaterial" value="@item.Id" />
+                            <input type="hidden" name="idProveedor" id="idProveedor" value="@ViewBag.idProveedor" />
+                            <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+                                <i class="glyphicon glyphicon-minus"></i> Quitar material
+                            </button>
+                        </form>
+                    }
                 </td>
             </tr>
         }

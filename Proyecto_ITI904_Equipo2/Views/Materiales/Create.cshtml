@@ -1,10 +1,6 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Inventario.Material
 
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
+<h2>Añadir materiales</h2>
 
 <form action="~/Materiales/Create" method="post">
     <input type="hidden" name="vistaIdProveedor" id="vistaIdProveedor" value="@ViewBag.vistaProveedor" />
@@ -57,10 +53,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Existencia, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Contenido, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Existencia, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Existencia, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Contenido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contenido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UnidadInventario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnidadInventario, new { htmlAttributes = new { @class = "form-control", @placeholder = " Kilogramo, Litro y/o Pieza(s)" } })
+                @Html.ValidationMessageFor(model => model.UnidadInventario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UnidadVenta, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnidadVenta, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnidadVenta, "", new { @class = "text-danger" })
             </div>
         </div>
 

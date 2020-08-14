@@ -44,7 +44,7 @@
                     @Html.DisplayNameFor(model => model.ImageUrl)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.ImageUrl)
+                    <img src="@Url.Content("data:image/png;base64," + Model.ImageUrl)" alt="Imagen" width="150px" height="150px" />
                 </td>
             </tr>
             <tr>
@@ -75,7 +75,11 @@
 
     </div>
 </div>
-    
-<p>
-    @Html.ActionLink("Salir", "Index")
-</p>
+   
+<br />
+
+<form action="~/Proveedores/Index" method="post">
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        <i class="glyphicon glyphicon-log-out"></i> Salir
+    </button>
+</form>

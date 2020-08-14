@@ -26,7 +26,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         public bool Recibida { get; set; }
 
         public DateTime FechaSolicitud { get; set; }
-        public DateTime FechaRecepción { get; set; }   
+        public DateTime FechaRecepción { get; set; }
+
+        public bool Estatus { get; set; }
     }
 
     public class DetalleCompra

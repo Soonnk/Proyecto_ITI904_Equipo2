@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <!--Guarda el valor del proveedor actual para eliminar el material que no quiere o no vende más-->
 
@@ -21,8 +23,15 @@ else
     <input type="hidden" name="name" id="id" value="@ViewBag.idProveedor" />
     <input type="hidden" name="name" value="@ViewBag.Agregados" />
 
-    <h1 style="text-align:center"><b>Productos que ofrece</b></h1>
-    <br />
+    if(ViewBag.Detalle == 1)
+    {
+
+    }
+    else
+    {
+        <h1 style="text-align:center"><b>Productos que ofrece</b></h1>
+        <br />
+    }
 
     <div class="row">
         <table class="table">
@@ -67,64 +76,120 @@ else
                         @Html.DisplayFor(modelItem => item.UnidadInventario)
                     </td>
                     <td>
-                        @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id)) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
-                        { // Si se encuentra dentro entonces manda mensaje
-                            <form method="post" action="~/Compras/MostrarProveedoresMateriales">
-                                <input type="hidden" value="@item.Id" name="idM" id="idM" />
-                                <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
-                                <input type="hidden" name="cantidad" id="cantidad" value="-1" />
-
-                                <label>Elemento agregado al carrito</label>
-                                <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
-                            </form>
+                        @if (ViewBag.Detalle == 1)
+                        {
                         }
                         else
                         {
-                            <form method="post" action="~/Compras/MostrarProveedoresMateriales">
-                                <input type="hidden" value="@item.Id" name="idM" id="idM" />
-                                <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
-                                <table>
-                                    <tr>
-                                        <td width="25%">
-                                            <label>Costo </label>
-                                        </td>
-                                        <td width="100%">
-                                            <input type="text" name="costoMaterial" id="costoMaterial" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="25%">
-                                            <label width="25%">Cantidad </label>
-                                        </td>
-                                        <td width="100%">
-                                            <input type="text" name="cantidad" id="cantidad" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="100%">
-                                            <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
+                        if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id)) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
+                            { // Si se encuentra dentro entonces manda mensaje
+                                <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+                                    <input type="hidden" value="@item.Id" name="idM" id="idM" />
+                                    <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                                    <input type="hidden" name="cantidad" id="cantidad" value="-1" />
+
+                                    <label>Elemento agregado al carrito</label>
+                                    <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" action="~/Compras/MostrarProveedoresMateriales">
+                                    <input type="hidden" value="@item.Id" name="idM" id="idM" />
+                                    <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                                    <table>
+                                        <tr>
+                                            <td width="25%">
+                                                <label>Costo </label>
+                                            </td>
+                                            <td width="100%">
+                                                <input type="text" name="costoMaterial" id="costoMaterial" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="25%">
+                                                <label width="25%">Cantidad </label>
+                                            </td>
+                                            <td width="100%">
+                                                <input type="text" name="cantidad" id="cantidad" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%">
+                                                <input type="submit" value="Agregar" name="btnOpcion" class="btn btn-success btn-sm" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            }
                         }
                     </td>
                 </tr>
             }
         </table>
-        <form method="post" action="~/Compras/MostrarCarritoCompras">
-            <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
-            <input type="submit" name="realizarCompra" id="realizarCompra" value="RealizarCompra" />
-        </form>
     </div>
 }
 
-<p>
-    @Html.ActionLink("Salir", "Index")
-</p>
+@if (ViewBag.Detalle == 1)
+{
 
-<style>
-    input {
-        box-sizing: border-box;
-    }
-</style>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            @if (ViewBag.Agregados == null)
+            { // Si no tiene ningún producto agregado entonces se va al inicio sin preguntar
+                <form method="post" action="~/Compras/Index">
+                    <input type="submit" class="btn btn-lg btn-danger btn-block" value="Salir" />
+                </form>
+            }
+            else
+            { // En caso de que si tengo algo, generará el modal
+                <form>
+                    <button id="submit" class="btn btn-lg btn-danger btn-block" type="button" data-toggle="modal" data-target="#myModal">Salir</button>
+                </form>
+            }
+        </div>
+        <div class="col-lg-6 col-md-6">
+            @if (ViewBag.Agregados != null) //Aqui va la condicional que nos diga si el id se encuentra en el Session ahora mismo
+            {
+                <form method="post" action="~/Compras/MostrarCarritoCompras">
+                    <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Realizar Compra" />
+                </form>
+            }
+            else
+            {
+                <form method="post" action="~/Compras/MostrarCarritoCompras">
+                    <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" disabled value="Realizar Compra" />
+                    @*<input type="submit" name="realizarCompra" id="realizarCompra" value="RealizarCompra" class="btn btn-lg btn-primary btn-block" disabled />*@
+                </form>
+            }
+        </div>
+    </div>
+}
+
+
+<!-- modal a mostrar -->
+<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="memberModalLabel">Advertencia</h4>
+            </div>
+            <div class="modal-body">
+                <b>Tienes compras seleccionadas, ¿Estás seguro de querer salir?</b>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="~/Compras/Index">
+                    <input type="submit" class="btn btn-danger" name="name" value="Salir" />
+                </form>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Seguir comprando</button>
+            </div>
+
+        </div>
+    </div>
+</div>

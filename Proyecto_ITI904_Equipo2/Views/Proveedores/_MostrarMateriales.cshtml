@@ -6,7 +6,14 @@
 
 <h1 style="text-align:center"><b>Agregar material al proveedor</b></h1>
 
-<h3><b>@Html.ActionLink("Añadir nuevo material", "MoverAControladorMateriales", new { idProveedor = ViewBag.idProveedor})</b></h3>
+<form action="~/Proveedores/MoverAControladorMateriales" method="post">
+    <input type="hidden" name="idProveedor" id="idProveedor" value="@ViewBag.idProveedor" />
+    <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+        <i class="glyphicon glyphicon-plus"></i> Añadir nuevo material
+    </button>
+</form>
+
+
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />
@@ -56,7 +63,13 @@
                 @Html.DisplayFor(modelItem => item.Existencia)
             </td>
             <td>
-                @Html.ActionLink("Agregar material al proveedor", "InsertarProveedoresMateriales", new { idP, idM = item.Id })
+                <form action="~/Proveedores/InsertarProveedoresMateriales" method="post">
+                    <input type="hidden" name="idP" id="idP" value="@idP" />
+                    <input type="hidden" name="idM" id="idM" value="@item.Id" />
+                    <button type="submit" name="btnOpcion" class="btn btn-primary btn-sm">
+                        <i class="glyphicon glyphicon-ok-sign"></i> Agregar material al proveedor
+                    </button>
+                </form>
             </td>
         </tr>
     }
@@ -64,8 +77,15 @@
 </table>
 
 <div>
-    @Html.ActionLink("Salir", "Index")
+    @Html.ActionLink("Salir", "Edit", new { id = ViewBag.idProveedor })
 </div>
+
+<form action="~/Proveedores/Edit" method="post">
+    <input type="hidden" name="id" id="id" value="@idP" />
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        <i class="glyphicon glyphicon-log-out"></i> Salir
+    </button>
+</form>
 
 <script type="text/javascript">
     document.querySelector("#buscar").onkeyup = function () {

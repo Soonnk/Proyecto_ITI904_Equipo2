@@ -7,11 +7,23 @@
 
 @if (ViewBag.Ocultar == 1)
 {
-    <h3><b>@Html.ActionLink("Mostrar proveedores no disponibles", "Index", new { mostrar = 1 }) </b></h3>
+    @*<h3><b>@Html.ActionLink("Mostrar proveedores no disponibles", "Index", new { mostrar = 1 }) </b></h3>*@
+    <form action="~/Proveedores/Index" method="post">
+        <input type="hidden" name="mostrar" id="mostrar" value="1" />
+        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+            <i class="glyphicon glyphicon-eye-open"></i> Mostrar proveedores no disponibles
+        </button>
+    </form>
 }
 else
 {
-    <h3><b>@Html.ActionLink("Ocultar proveedores no disponibles", "Index", new { mostrar = 0 }) </b></h3>
+    @*<h3><b>@Html.ActionLink("Ocultar proveedores no disponibles", "Index", new { mostrar = 0 }) </b></h3>*@
+    <form action="~/Proveedores/Index" method="post">
+        <input type="hidden" name="mostrar" id="mostrar" value="0" />
+        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+            <i class="glyphicon glyphicon-eye-close"></i> Ocultar proveedores no disponibles
+        </button>
+    </form>
 }
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
@@ -58,16 +70,26 @@ else
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td width="20%">
-                <img src="@Url.Content(item.ImageUrl)" alt="Imagen" width="150px" height="150px" />
+                <img src="@Url.Content("data:image/png;base64," + item.ImageUrl)" alt="Imagen" width="150px" height="150px" />
             </td>
             <td width="26%">
                 @Html.DisplayFor(modelItem => item.Nota)
             </td>
             <td width="9%">
                 @Html.ActionLink("Modificar", "Edit", new { id = item.Id })
-                <br />
-                @Html.ActionLink("Ver detalles", "Details", new { id = item.Id })
-                <br />
+
+                @*<form action="~/Proveedores/Edit" method="post">
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+                        <i class="glyphicon glyphicon-pencil"></i> Modificar
+                    </button>
+                </form>*@
+                <form action="~/Proveedores/Details" method="post">
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                        <i class="glyphicon glyphicon-exclamation-sign"></i> . Detalles
+                    </button>
+                </form>
                 <!--Con esto evitamos dar de baja los proveedores que ya estén dados de baja-->
                 @if (item.Estatus == false)
                 {
@@ -75,6 +97,13 @@ else
                 else
                 {
                     @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+
+                    @*<form action="~/Proveedores/Delete" method="post">
+                        <input type="hidden" name="id" id="id" value="@item.Id" />
+                        <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+                            <i class="glyphicon glyphicon-minus"></i> .. Dar baja
+                        </button>
+                    </form>*@
                 }
             </td>
         </tr>

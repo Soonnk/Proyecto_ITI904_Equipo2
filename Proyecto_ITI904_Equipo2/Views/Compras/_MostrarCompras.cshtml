@@ -10,16 +10,29 @@
             <!--Barra de navegación que muestra las otras vistas que tiene este módulo-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <b><a class="nav-link">@Html.ActionLink("Lista de proveedores", "Index") <a /></b>
-                        </li>
-                    </ul>
+                    <form action="~/Compras/Index" method="post">
+                        <input type="hidden" name="mostrar" id="mostrar" value="1" />
+                        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                            <i class="glyphicon glyphicon-th"></i> Lista de proveedores
+                        </button>
+                    </form>
                 </div>
             </nav>
         </div>
 
-        <table class="table">
+        @if (ViewBag.Ocultar == 1)
+        {
+            <h3><b>@Html.ActionLink("Mostrar compras sin realizar", "MostrarCompras", new { mostrar = 1 }) </b></h3>
+        }
+        else
+        {
+            <h3><b>@Html.ActionLink("Mostrar compras realizadas", "MostrarCompras", new { mostrar = 0 }) </b></h3>
+        }
+
+        <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+        <br />
+
+        <table class="table" id="TablaCompras">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Recibida)
@@ -52,9 +65,42 @@
                         @Html.DisplayFor(modelItem => item.Proveedor_Id)
                     </td>
                     <td>
-                        @Html.ActionLink("Recepción de productos", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+                        @if (item.Recibida == true)
+                        {
+                            <form action="~/Compras/Details" method="post">
+                                <input type="hidden" name="id" id="id" value="@item.Id" />
+                                <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i> Mostrar detalles
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Recepción de productos", "Edit", new { id = item.Id })
+
+                            @*<form action="~/Compras/Edit" method="post">
+                <input type="hidden" name="id" id="id" value="@item.Id" />
+                <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+                    <i class="glyphicon glyphicon-pencil"></i> Recepción de productos
+                </button>
+            </form>*@
+
+                            <form action="~/Compras/Details" method="post">
+                                <input type="hidden" name="id" id="id" value="@item.Id" />
+                                <input type="hidden" name="det" id="det" value="1" />
+                                <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i> . Detalles
+                                </button>
+                            </form>
+
+                            @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+                            @*<form action="~/Compras/Delete" method="post">
+                <input type="hidden" name="id" id="id" value="@item.Id" />
+                <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+                    <i class="glyphicon glyphicon-minus"></i> .. Dar baja
+                </button>
+            </form>*@
+                        }
                     </td>
                 </tr>
             }
@@ -63,3 +109,31 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+    document.querySelector("#buscar").onkeyup = function () {
+        $TableFilter("#TablaCompras", this.value);
+    }
+
+    $TableFilter = function (id, value) {
+        var rows = document.querySelectorAll(id + ' tbody tr');
+
+        for (var i = 0; i < rows.length; i++) {
+            var showRow = false;
+
+            var row = rows[i];
+            row.style.display = 'none';
+
+            for (var x = 0; x < row.childElementCount; x++) {
+                if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                row.style.display = null;
+            }
+        }
+    }
+</script>
