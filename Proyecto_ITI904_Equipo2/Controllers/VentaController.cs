@@ -136,6 +136,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     string query = $@"INSERT INTO Productos 
                                 (Id, Material_Id) VALUES
                                 ({e}, {Materiales[i].Id})";
+                    e++;
                     db.Database.ExecuteSqlCommand(query);
                 }
                 await db.SaveChangesAsync();
