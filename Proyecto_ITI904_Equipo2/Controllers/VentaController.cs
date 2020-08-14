@@ -118,6 +118,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 db.Ventas.Add(NuevaVenta);
                 await db.SaveChangesAsync();
                 var UltimaVenta = db.Ventas.Max(x => x.Id);
+                var e = db.Database.SqlQuery<int>("SELECT MAX(Id) FROM DetalleVentas").FirstOrDefault();
                 for (int i = 0; i < Materiales?.Count; i++)
                 {
                     string query = $@"INSERT INTO DetalleVentas 
@@ -130,7 +131,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     db.Database.ExecuteSqlCommand(query);
                 }
                 await db.SaveChangesAsync();
-                var e = db.Database.SqlQuery<int>("SELECT MAX(Id) FROM DetalleVentas").FirstOrDefault();
+                
                 for (int i = 0; i < Materiales?.Count; i++)
                 {
                     string query = $@"INSERT INTO Productos 
