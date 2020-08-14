@@ -1,10 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<br />
-<br />
-<br />
-<br />
 <!-- Start slides -->
 <div id="slides" class="cover-slides">
     <ul class="slides-container">
@@ -13,25 +9,25 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="m-b-20"><strong>Conóce<br> Congo Mate</strong></h1>
+                        <h1 class="m-b-20"><strong>Conoce<br> Congo Mate</strong></h1>
                         <p class="m-b-40">
                             Una experiencia internacional, sin salir de tu ciudad
                         </p>
-                        <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Reservation</a></p>
+                        <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="~/Views/Account/Register.cshtml">Regístrate</a></p>
                     </div>
                 </div>
             </div>
         </li>
         <li class="text-center">
-            <img src="~/images/Fondo2.jpg" alt="">
+            <img src="~/images/Mazagran.jpg" alt="">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="m-b-20"><strong>Conóce<br> Congo Mate</strong></h1>
+                        <h1 class="m-b-20"><strong>Conoce<br> Congo Mate</strong></h1>
                         <p class="m-b-40">
-                            Una experiencia internacional, sin salir de tu ciudad
+                            Exquisitos sabores de todo el mundo para el dleite de tu paladar, con nosotros
                         </p>
-                        <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Reservation</a></p>
+                        <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="~/Views/Account/Register.cshtml">Regístrate</a></p>
                     </div>
                 </div>
             </div>
@@ -141,7 +137,10 @@
                     <img src="~/images/CafeDeOlla.jpg" alt="Image" height="212" width="340">
                     <div class="why-text">
                         <h4>Cafe de olla</h4>
-                        <p>Un café muy tradicional.</p>
+                        <p>
+                            Un café muy tradicional. este cafe cuenta con la calidad que las personas les gusta
+                            y tiene un sabor estupendo
+                        </p>
                         <h5> $7.79</h5>
                     </div>
                 </div>
@@ -152,7 +151,10 @@
                     <img src="~/images/Eiskaffee.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Eiskaffee</h4>
-                        <p>Café de internacional.</p>
+                        <p>
+                            Café creado en italia y se toma como una bebida fria, este café refresca mucho a las personas y la crema que
+                            se añade muestra un sabor unico.
+                        </p>
                         <h5> $9.79</h5>
                     </div>
                 </div>
@@ -163,7 +165,10 @@
                     <img src="~/images/CafeIrlandes.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Cafe Irlandes</h4>
-                        <p>Café con una pequeña cantidad de whisky.</p>
+                        <p>
+                            Café con una pequeña cantidad de whisky.Este es un cafe muy tracional por su combinacion con alcohol y cafe
+                            sabores que son muy poco comunes de encontrar
+                        </p>
                         <h5> $10.79</h5>
                     </div>
                 </div>
@@ -174,7 +179,10 @@
                     <img src="~/images/CafeTurco.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Cafe turco</h4>
-                        <p>Sed id magna vitae eros sagittis euismod.</p>
+                        <p>
+                            Café realizado en la forma tracional calentado en arena para obtener el sabor que lo caracteriza
+                            Sin duda un cafe cambiara tus gustos.
+                        </p>
                         <h5> $15.79</h5>
                     </div>
                 </div>
@@ -185,7 +193,10 @@
                     <img src="~/images/Marocchino.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Marocchino</h4>
-                        <p>Sed id magna vitae eros sagittis euismod.</p>
+                        <p>
+                            Café tradicional italiano que se sirve con canela para dar un sabor dulce a la bebida.
+                            Este café es de los mas tomados en italia.
+                        </p>
                         <h5> $18.79</h5>
                     </div>
                 </div>
@@ -196,7 +207,10 @@
                     <img src="~/images/CafeDeOlla2.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Café de olla</h4>
-                        <p>Sed id magna vitae eros sagittis euismod.</p>
+                        <p>
+                            Este café es muy tradicional en mexico, muchas personas acompañan este café con alguna pieza de pan para
+                            endulzar mas su bebida.
+                        </p>
                         <h5> $20.79</h5>
                     </div>
                 </div>
@@ -207,40 +221,58 @@
                     <img src="~/images/Mazagran.jpg" alt="Image" height="215" width="340">
                     <div class="why-text">
                         <h4>Special Dinner 1</h4>
-                        <p>Sed id magna vitae eros sagittis euismod.</p>
+                        <p>
+                            Café frio que muestra que se puede combinar el ron y el café de una forma que a las personas les agrade
+                        </p>
                         <h5> $25.79</h5>
                     </div>
                 </div>
             </div>
-
-            @* <div class="col-lg-4 col-md-6 special-grid dinner">
-            <div class="gallery-single fix">
-                <img src="~/images/img-07.jpg" class="img-fluid" alt="Image">
-                <div class="why-text">
-                    <h4>Special Dinner 2</h4>
-                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                    <h5> $22.79</h5>
+            <div class="col-lg-4 col-md-6 special-grid dinner">
+                <div class="gallery-single fix">
+                    <img src="~/images/img-07.jpg" class="img-fluid" alt="Image">
+                    <div class="why-text">
+                        <h4>Café bombón</h4>
+                        <p>
+                            es una mezcla de cafe con leche condenzada que deja ver de manera clara la distribución de estos dos elementos.
+                            Este café hace honor a su nombre al parecer un bombón ingerible
+                        </p>
+                        <h5> $22.79</h5>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4 col-md-6 special-grid dinner">
-            <div class="gallery-single fix">
-                <img src="~/images/img-09.jpg" class="img-fluid" alt="Image">
-                <div class="why-text">
-                    <h4>Special Dinner 3</h4>
-                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                    <h5> $24.79</h5>
+            <div class="col-lg-4 col-md-6 special-grid dinner">
+                <div class="gallery-single fix">
+                    <img src="~/images/img-08.jpg" class="img-fluid" alt="Image">
+                    <div class="why-text">
+                        <h4>Café affogato</h4>
+                        <p>
+                            Café frio que muestra que todo se puede combinar. este café incluye una bola de helado en su centro
+                            y una cantidad de café que puede ser bebida o combinada con la gran cantidad de helado que poseé
+                        </p>
+                        <h5> $24.79</h5>
+                    </div>
                 </div>
             </div>
-        </div>*@
+            <div class="col-lg-4 col-md-6 special-grid dinner">
+                <div class="gallery-single fix">
+                    <img src="~/images/img-09.jpg" class="img-fluid" alt="Image">
+                    <div class="why-text">
+                        <h4>Café americano</h4>
+                        <p>
+                            Si usted prefiere algo mas clasico y menos dulce este cafe es el adecuado para usted, un cafe tradicional americano                        </p>
+                        <h5> $24.79</h5>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
 <!-- End Menu -->
 <!-- Start Gallery -->
-<div class="gallery-box">
+<<div class="gallery-box">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -350,7 +382,7 @@
                 <div class="overflow-hidden">
                     <h4>Phone</h4>
                     <p class="lead">
-                        +01 123-456-4590
+                        477-578-1453
                     </p>
                 </div>
             </div>

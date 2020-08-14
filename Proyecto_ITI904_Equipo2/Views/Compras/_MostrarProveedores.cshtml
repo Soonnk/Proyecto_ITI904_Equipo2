@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 @{var count = 0;}
 
 <h4 style="text-align:center"><b>Proveedores actuales</b></h4>
@@ -22,16 +23,20 @@
         }
         <td class="col-md-4">
             <form method="post" action="~/Compras/MostrarProveedoresMateriales">
-                <input type="hidden" name="id" id="id" value="@item.Id" />
-                <b>@Html.DisplayFor(modelItem => item.Nombre)</b>
-                <br />
-                <br />
-                <img src="@Url.Content(item.ImageUrl)" alt="Imagen" width="100px" height="100px" />
-                <br />
-                <br />
-                @Html.DisplayFor(modelItem => item.Nota)
-                <br />
-                <input type="submit" value="RealizarPedido" name="btnOpcion" class="btn btn-success btn-sm" />
+                <div class="list-group">
+                    <div>
+                        <input type="hidden" name="id" id="id" value="@item.Id" />
+                        <b>@Html.DisplayFor(modelItem => item.Nombre, new { htmlAttributes = new { @class = "form-control ", @readonly = "readonly", @style = "text-align:center" } })</b>
+                    </div>
+                    <div class="list-group-item">
+                        <img class="mx-auto d-block" src="@Url.Content("data:image/png;base64," + item.ImageUrl)" alt="Imagen" width="150px" height="150px" />
+                    </div>
+                    <div class="list-group-item text-center">
+                        <button type="submit" name="btnOpcion" class="btn btn-success btn-sm">
+                            <i class="glyphicon glyphicon-credit-card"></i> Realizar pedido
+                        </button>
+                    </div>
+                </div>
             </form>
         </td>
 
@@ -43,7 +48,6 @@
         count++;
     }
 </table>
-
 
 <script type="text/javascript">
     document.querySelector("#buscar").onkeyup = function () {

@@ -2,47 +2,58 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<h1 style="text-align:center"><b>Detalle de la Compra</b></h1>
+<h1 style="text-align:center"><b>Detalles de la Compra</b></h1>
 
 <div>
-    <hr />
+    <br />
     <table class="table">
         <tr>
             <td>
                 @Html.DisplayNameFor(model => model.FechaSolicitud)
             </td>
             <td>
-                @Html.DisplayFor(model => model.FechaSolicitud)
-            </td>
-        </tr>
-        <tr>
-            <td>
                 @Html.DisplayNameFor(model => model.FechaRecepción)
             </td>
-            <td>
-                @Html.DisplayFor(model => model.FechaRecepción)
-            </td>
-        </tr>
-        <tr>
             <td>
                 Proveedor
             </td>
             <td>
-                @Html.DisplayFor(model => model.Proveedor_Id)
+                @Html.DisplayNameFor(model => model.Recibida)
             </td>
+            <td>
+                Generar Pdf
+            </td>
+
         </tr>
         <tr>
             <td>
-                @Html.DisplayNameFor(model => model.Recibida)
+                @Html.DisplayFor(model => model.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FechaRecepción)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Proveedor.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(model => model.Recibida)
             </td>
+            <td>
+                @Html.ActionLink("Orden de compra", "pdf")
+            </td>
         </tr>
     </table>
-        @Html.ActionLink("Modificar", "Edit", new { id = Model.Id })
+
+    <br />
+
+    <div>
+        @{Html.RenderAction("MostrarDetCompra", new { id = Model.Id }); }
+    </div>
 </div>
 
-<p>
-    @Html.ActionLink("Salir", "MostrarCompras")
-</p>
+<form action="~/Compras/MostrarCompras" method="post">
+    <input type="hidden" name="mostrar" id="mostrar" value="0" />
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        <i class="glyphicon glyphicon-log-out"></i> Salir
+    </button>
+</form>

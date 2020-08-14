@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+<input type="hidden" name="Detalles" id="Detalles" value="@ViewBag.Detalle" />
 
 @if (Model == null)
 {
-    <input type="hidden" name="name" value="@ViewBag.idProveedor" />
-    <input type="hidden" name="name" value="@ViewBag.Agregados" />
-    <h1>Lo sentimos</h1>
-    <br />
-    <h3>De momento no hay productos que este proveedor nos surta</h3>
+    <div class="alert alert-warning" role="alert">
+        <h1>Lo sentimos</h1>
+        <br />
+        <h3>De momento no hay productos que este proveedor nos surta</h3>
+    </div>
 }
 else
 {
@@ -29,15 +29,10 @@ else
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Costo)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DisponibleAPublico)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Existencia)
-            </th>
-            <th>
+                Acciones
             </th>
         </tr>
 
@@ -54,19 +49,23 @@ else
                     $ @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td>
-                    $ @Html.DisplayFor(modelItem => item.Costo)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.DisponibleAPublico)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Existencia)
-                </td>
-                <td>
-                    @Html.ActionLink("Quitar material", "QuitarMaterialProveedor", new { idMaterial = item.Id, @ViewBag.idProveedor })
+                    <!--Dependiendo del valor de detalle se mostrará la opción de quitar el material o no-->
+                    @if (ViewBag.Detalle == 1) { }
+                    else
+                    {
+                        <form action="~/Proveedores/QuitarMaterialProveedor" method="post">
+                            <input type="hidden" name="idMaterial" id="idMaterial" value="@item.Id" />
+                            <input type="hidden" name="idProveedor" id="idProveedor" value="@ViewBag.idProveedor" />
+                            <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+                                <i class="glyphicon glyphicon-minus"></i> Quitar material
+                            </button>
+                        </form>
+                    }
                 </td>
             </tr>
         }
-
     </table>
 }

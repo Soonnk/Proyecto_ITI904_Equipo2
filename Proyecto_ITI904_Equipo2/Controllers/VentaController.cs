@@ -31,6 +31,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             {
                 ViewBag.Total = CalcularTotal();
                 ViewBag.Agregados = Session["IdMaterialesAgregados"];
+                ViewBag.Cantidades = Session["Cantidades"]; 
                 return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
             }
             return View(db.Materiales.ToList().Where(x=> x.DisponibleAPublico==true));
@@ -42,6 +43,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             {
                 ViewBag.Total = CalcularTotal();
                 ViewBag.Agregados = Session["IdMaterialesAgregados"];
+                ViewBag.Cantidades = Session["Cantidades"];
                 return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
             }
             else if (id != null && cantidad == -1 && btnOpcion == "Quitar")
@@ -58,6 +60,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 {
                     ViewBag.Total = CalcularTotal();
                     ViewBag.Agregados = Session["IdMaterialesAgregados"];
+                    ViewBag.Cantidades = Session["Cantidades"];
                     return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
                 }
                 Materiales = Session["Materiales"] as List<Material>;
@@ -71,6 +74,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 AgregarMaterialALista(id, cantidad);
                 ViewBag.Total = CalcularTotal();
                 ViewBag.Agregados = Session["IdMaterialesAgregados"];
+                ViewBag.Cantidades = Session["Cantidades"];
                 return View(db.Materiales.ToList().Where(x => x.DisponibleAPublico == true));
             }
         }
@@ -132,6 +136,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     string query = $@"INSERT INTO Productos 
                                 (Id, Material_Id) VALUES
                                 ({e}, {Materiales[i].Id})";
+                    e++;
                     db.Database.ExecuteSqlCommand(query);
                 }
                 await db.SaveChangesAsync();

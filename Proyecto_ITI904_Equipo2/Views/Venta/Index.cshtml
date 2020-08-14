@@ -4,7 +4,7 @@
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />
-<table class="table" id="TablaMaterial">
+<table class="table blueTable" id="TablaMaterial">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Existencia)
             </td>
             <td>
-                @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id))
+                @if (ViewBag.Agregados != null && ViewBag.Agregados.Contains(item.Id) )
                 {
                     <form method="post" action="#">
                         <input type="hidden" value="@item.Id" name="id" id="id" />
@@ -48,7 +48,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-6" style="margin-bottom:50px">
-                                    <label>Elemento agregado al carrito</label>
+                                    <label> @ViewBag.Cantidades[ViewBag.Agregados.IndexOf(item.Id)] Elemento(s) agregado al carrito</label>
                                 </div>
                                 <div class="col-6">
                                     <input type="submit" value="Quitar" name="btnOpcion" class="btn btn-success btn-sm" />
@@ -126,4 +126,14 @@
             }
         }
     }
+    n = new Date();
+    //Año
+    y = n.getFullYear();
+    //Mes
+    m = n.getMonth() + 1;
+    //Día
+    d = n.getDate();
+
+    //Lo ordenas a gusto.
+    document.getElementById("FechaSolicitada").innerHTML = d + "/" + m + "/" + y;
 </script>

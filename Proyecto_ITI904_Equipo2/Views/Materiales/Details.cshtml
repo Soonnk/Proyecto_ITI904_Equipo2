@@ -28,7 +28,7 @@
                     @Html.DisplayNameFor(model => model.Precio)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Precio)
+                    $ @Html.DisplayFor(model => model.Precio)
                 </td>
             </tr>
             <tr>
@@ -36,7 +36,7 @@
                     @Html.DisplayNameFor(model => model.Costo)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Costo)
+                    $ @Html.DisplayFor(model => model.Costo)
                 </td>
             </tr>
             <tr>
@@ -49,10 +49,42 @@
             </tr>
             <tr>
                 <td>
+                    @Html.DisplayNameFor(model => model.Contenido)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Contenido)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Unidad de medición
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UnidadInventario)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Unidad de venta
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UnidadVenta)
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Existencia)
                 </td>
                 <td>
                     @Html.DisplayFor(model => model.Existencia)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Material en uso
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.EnUso)
                 </td>
             </tr>
         </table>

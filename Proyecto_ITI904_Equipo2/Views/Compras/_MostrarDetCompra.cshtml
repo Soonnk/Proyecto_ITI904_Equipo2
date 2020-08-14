@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.DetalleCompra>
+
+@{ var i = 0;}
+
+<h3 style="text-align:center"><b>Materiales pedidos</b></h3>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Material.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Material.Contenido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Material.UnidadInventario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Costo)
+        </th>
+        <th>
+            Importe
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material.Contenido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material.UnidadInventario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.Costo)
+            </td>
+            <td>
+                $ @ViewBag.Importe[i]
+            </td>
+        </tr>
+        i++;
+    }
+
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+            <b>Total:</b>
+        </td>
+        <td>
+            <b>$ @ViewBag.Total</b>
+        </td>
+    </tr>
+</table>
+
+

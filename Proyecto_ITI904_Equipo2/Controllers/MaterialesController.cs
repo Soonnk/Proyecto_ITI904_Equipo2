@@ -38,8 +38,12 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         }
 
         // GET: Materiales/Create
-        public ActionResult Create()
+        public ActionResult Create(int? vistaProveedor)
         {
+            /*Aquí le pasamos el id del proveedor desde el action link de mostrar materiales 
+              del controlador de proveedores, de forma que le pasemos por medio de un viewBag
+              a la vista de create el id del proveedor para no perderlo*/
+            ViewBag.vistaProveedor = vistaProveedor;
             return View();
         }
 
@@ -48,15 +52,26 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Existencia")] Material material)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Contenido, UnidadInventario, UnidadVenta")] Material material, int? vistaIdProveedor)
         {
             if (ModelState.IsValid)
             {
-                db.Materiales.Add(material);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+                if (vistaIdProveedor > 0 && vistaIdProveedor != null)
+                {
+                    db.Materiales.Add(material);
+                    await db.SaveChangesAsync();
 
+                    /*Creamos esta condicional de forma de que cuando se use este método desde materiales
+                      sin usarlo desde proveedores*/
+                    return RedirectToAction("Edit", "Proveedores", new { id = vistaIdProveedor });
+                }
+                else
+                {
+                    db.Materiales.Add(material);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
             return View(material);
         }
 

@@ -12,8 +12,11 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         /// <summary>
         /// Persona que se encargó de solicitar la Compra
         /// </summary>
-        
+
+        [ForeignKey("Encargado_Id")]
         public virtual ApplicationUser Encargado { get; set; }
+
+        public string Encargado_Id { get; set; }
 
         public int Proveedor_Id { get; set; }
 
@@ -26,7 +29,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Compras
         public bool Recibida { get; set; }
 
         public DateTime FechaSolicitud { get; set; }
-        public DateTime FechaRecepción { get; set; }   
+        public DateTime FechaRecepción { get; set; }
+
+        public bool Estatus { get; set; }
     }
 
     public class DetalleCompra
