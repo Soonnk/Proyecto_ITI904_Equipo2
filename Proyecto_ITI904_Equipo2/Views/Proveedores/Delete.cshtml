@@ -67,6 +67,7 @@
                 </td>
                 <td>
                     @Html.EditorFor(model => model.Nota, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nota, "", new { @class = "text-danger" })
                 </td>
             </tr>
         </table>
@@ -82,3 +83,7 @@
         <i class="glyphicon glyphicon-log-out"></i> Salir
     </button>
 </form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
