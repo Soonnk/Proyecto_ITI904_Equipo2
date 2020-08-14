@@ -6,11 +6,13 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNet.Identity;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Compras;
 using Proyecto_ITI904_Equipo2.Models.Inventario;
@@ -354,7 +356,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             for (int i = 0; i < ids.Count; i++)
             {
                 var material = db.Materiales.Find(ids[i]);
-                subTotal += (Convert.ToInt32(costo) * Cantidades[i]);
+                subTotal += (Convert.ToDouble(costo) * Cantidades[i]);
             }
             return subTotal;
         }
@@ -408,15 +410,19 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
         public ActionResult AgregarNuevaCompra()
         {
+
+            var idUsuario = User.Identity.GetUserId();
+            
             var idProveedor = Convert.ToInt32(Session["IdProveedor"].ToString());
 
             db.Database.ExecuteSqlCommand("Insert into Compras " +
-                                                "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id)" +
-                                                "values (@Recibida, @FechaSolicitud, @FechaRecepción, @Proveedor_Id)",
+                                                "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id, Encargado_Id)" +
+                                                "values (@Recibida, @FechaSolicitud, @FechaRecepción, @Proveedor_Id, @Encargado_Id)",
                                                 new SqlParameter("@Recibida", false),
                                                 new SqlParameter("@FechaSolicitud", DateTime.Now),
                                                 new SqlParameter("@FechaRecepción", DateTime.Now),
-                                                new SqlParameter("@Proveedor_Id", idProveedor));
+                                                new SqlParameter("@Proveedor_Id", idProveedor),
+                                                new SqlParameter("@Encargado_Id", idUsuario));
             db.SaveChanges();
 
             var idCompra = db.Compras.Max(x => x.Id); // Obtener el ID del último dato insertado
