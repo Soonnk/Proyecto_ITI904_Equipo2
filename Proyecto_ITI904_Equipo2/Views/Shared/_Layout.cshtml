@@ -57,7 +57,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbars-rs-food">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">@Html.ActionLink(linkText: "Inicio", actionName: "Index", controllerName: "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("Menú", "Index", "Menu", null, new { @class = "nav-link" })</li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Otros sitios</a>
@@ -82,20 +81,57 @@
         </nav>
     </header>
     <!-- End header -->
-
     <!-- Start Sidebar -->
-   @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Empleado")))
+    @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Empleado")))
     {
-    <div id="mySidenav" class="sidenav">
-        @Html.ActionLink("Ventas", "Index", "Venta", null, null)
-        @Html.ActionLink("Compras", "Index", "Compras", null, null)
-        @Html.ActionLink("Recetas", "Index", "Recetas", null, null)
-        @Html.ActionLink("Inventario","Index", "Materiales", null, null)
-        @Html.ActionLink("Proveedores", "Index", "Proveedores", null, null)
-    </div>
-
-    <!-- Use any element to open the sidenav -->
-    <span onclick="openNav()" id="NavBarDisplayer">open</span>
+        <div class="area"></div>
+        <nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="@Url.Action("Index","Venta")">
+                        <i class="fa fa-money fa-lg"></i>
+                        <span class="nav-text">Ventas</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="@Url.Action("Index","Compras")">
+                        <i class="fa fa-shopping-bag fa-lg"></i>
+                        <span class="nav-text">Compras</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Recetas")">
+                        <i class="fa fa-list-ol fa-lg"></i>
+                        <span class="nav-text">Recetas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Materiales")">
+                        <i class="fa fa-shopping-basket fa-lg"></i>
+                        <span class="nav-text">Inventario</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Proveedores")">
+                        <i class="fa fa-truck fa-lg"></i>
+                        <span class="nav-text">Proveedores</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("UnderConstruction","Home")">
+                        <i class="fa fa-users fa-lg"></i>
+                        <span class="nav-text">Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @*<div id="mySidenav" class="sidenav">
+                @Html.ActionLink("Ventas", "Index", "Venta", null, null)
+                @Html.ActionLink("Compras", "Index", "Compras", null, null)
+                @Html.ActionLink("Recetas", "Index", "Recetas", null, null)
+                @Html.ActionLink("Inventario","Index", "Materiales", null, null)
+                @Html.ActionLink("Proveedores", "Index", "Proveedores", null, null)
+            </div>*@
 
     }
     <!-- End Sidebar -->
@@ -138,12 +174,12 @@
                             </form>
                         </div>
                         @*<ul class="list-inline f-social">
-                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        </ul>*@
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            </ul>*@
                     </div>
                 </div>
             </div>

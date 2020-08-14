@@ -1,0 +1,23 @@
+﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
+
+<div class="col-lg-4 col-md-6 special-grid drinks">
+    <div class="gallery-single fix">
+        @{ 
+            string image;
+            if (String.IsNullOrEmpty(Model.Imagen))
+            {
+                image = Url.Content("~/images/img-not-found.jpg");
+            }
+            else
+            {
+                image = "data:image/jpg; base64," + Model.Imagen;
+            }
+        }
+        <img src="@image" class="img-fluid" alt="Imagen">
+        <a class="why-text" href="@Url.Action("Details","Recetas",new { id = Model.Id})">
+            <h4>@Model.Nombre</h4>
+            <p></p>
+            <h5> $@Model.Precio</h5>
+        </a>
+    </div>
+</div>

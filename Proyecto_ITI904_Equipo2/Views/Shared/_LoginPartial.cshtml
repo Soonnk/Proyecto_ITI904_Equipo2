@@ -1,15 +1,16 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <li class="nav-item">
+        <a href="~/Venta/Index" class="nav-link"><i class="fa fa-shopping-cart fa-cart"></i></a>
+        @*<a href="~/Home/UnderConstruction" class="nav-link">@Html.Raw(File.ReadAllText(Server.MapPath("~/images/icon_cart.svg")))</a>*@
+    </li>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
         @*<ul class="nav navbar-nav navbar-right">*@
-        <li class="nav-item">
-            <a href="~/Venta/Index" class="nav-link"><img src="~/images/icon_cart.svg" style="height:24px;width:24px"/></a>
-            @*<a href="~/Home/UnderConstruction" class="nav-link">@Html.Raw(File.ReadAllText(Server.MapPath("~/images/icon_cart.svg")))</a>*@
-        </li>
+
         <li class="nav-item dropdown">
             @*<a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName()</a>*@
             <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">Angel</a>

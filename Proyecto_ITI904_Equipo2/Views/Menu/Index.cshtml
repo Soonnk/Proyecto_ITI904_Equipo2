@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Recetas.Receta>
 @{
     ViewBag.Title = "Index";
 }
@@ -38,6 +38,10 @@
         </div>
 
         <div class="row special-list">
+            @foreach (var item in Model)
+            {
+                Html.RenderPartial("_MenuRecipePartial", item);
+            }
             <div class="col-lg-4 col-md-6 special-grid drinks">
                 <div class="gallery-single fix">
                     <img src="images/img-01.jpg" class="img-fluid" alt="Image">
