@@ -360,10 +360,12 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 return subTotal;
             subTotal = 0;
             Cantidades = Session["Cantidades"] as List<int>;
+            Costos = Session["Costos"] as List<double>;
+            Costos.Add(Convert.ToDouble(costo));
             for (int i = 0; i < ids.Count; i++)
             {
                 var material = db.Materiales.Find(ids[i]);
-                subTotal += (Convert.ToDouble(costo) * Cantidades[i]); //CREAR SESSION Y GUARDAR LOS COSTOS 
+                subTotal += (Costos[i] * Cantidades[i]); //CREAR SESSION Y GUARDAR LOS COSTOS 
             } // CON EL SESSION PASAR LOS COSTOS PERSONALIZADOS A LA VISTA DEL CARRITO
             return subTotal;
         }
@@ -398,17 +400,20 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 ListaMateriales = Session["IdMaterialesAgregados"] as List<int>;
                 Cantidades = Session["Cantidades"] as List<int>;
                 Costos = Session["Costos"] as List<double>;
+                Materiales = Session["Materiales"] as List<Material>;
                 //Importe = Session["TotalCompra"] as List<double>;
                 var index = ListaMateriales.IndexOf(Convert.ToInt32(idM));
 
                 ListaMateriales.RemoveAt(index);
                 Cantidades.RemoveAt(index);
                 Costos.RemoveAt(index);
+                Materiales.RemoveAt(index);
                 //Importe.RemoveAt(index);
 
                 ListaMateriales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Cantidades.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Costos.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
+                Materiales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 //Importe.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
             }
         }
@@ -417,14 +422,8 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
         public ActionResult AgregarNuevaCompra(int id)
         {
-
             var idEncargado = User.Identity.GetUserId();
             var idProveedor = id;
-            //var idProveedor = Convert.ToInt32(Session["IdProveedor"].ToString());
-
-            //db.Database.ExecuteSqlCommand("Insert into Compras " +
-            //                                    "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id, Encargado_Id, Estatus)" +
-            //                                    "values (" + 0 + ", " + DateTime.Now + ", " + DateTime.Now + ", " + idProveedor + ", " + idEncargado + ", " + 1 + ")");
 
             db.Database.ExecuteSqlCommand("Insert into Compras " +
                                                 "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id, Encargado_Id, Estatus)" +
