@@ -10,15 +10,19 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNet.Identity;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Compras;
 using Proyecto_ITI904_Equipo2.Models.Inventario;
+using Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
+    [Authorize(Roles = "Empleado,Admin")]
     public class ComprasController : Controller
     {
         public List<Material> Materiales;
@@ -63,7 +67,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Recibida,FechaSolicitud,FechaRecepción,Proveedor_Id")] Compra compra)
+        public ActionResult Edit([Bind(Include = "Id,Recibida,FechaSolicitud,FechaRecepción,Proveedor_Id,Encargado_Id")] Compra compra, DateTime? FechaSolicitada)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +78,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     List<Material> modeloMateriales = new List<Material>();
                     for (int i = 0; i < modeloDetalleCompras.Count; i++) {
                         var vistaMateriales = db.Database.SqlQuery<Material>("Select * from Materials where Id = " + modeloDetalleCompras[i].Material_Id);
-                        modeloMateriales.Add(vistaMateriales.ToList()[i]);
+                        modeloMateriales.Add(vistaMateriales.ToList()[0]);
                     }
 
                     for (int i = 0; i < modeloMateriales.Count; i++)
@@ -85,6 +89,8 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                         db.SaveChanges();
                     }
 
+                    compra.FechaRecepción = Convert.ToDateTime(FechaSolicitada);
+                    compra.Estatus = true;
                     db.Entry(compra).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("MostrarCompras");
@@ -291,6 +297,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                             val++;
                         }
                         var listaMate = db.Materiales.Where(x => MaterialesLista.Contains(x.Id));
+                        ViewBag.idProveedor = id;
 
                         return View("_MostrarProveedoresMateriales", listaMate.ToList());
                     }
@@ -353,11 +360,13 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 return subTotal;
             subTotal = 0;
             Cantidades = Session["Cantidades"] as List<int>;
+            Costos = Session["Costos"] as List<double>;
+            Costos.Add(Convert.ToDouble(costo));
             for (int i = 0; i < ids.Count; i++)
             {
                 var material = db.Materiales.Find(ids[i]);
-                subTotal += (Convert.ToDouble(costo) * Cantidades[i]);
-            }
+                subTotal += (Costos[i] * Cantidades[i]); //CREAR SESSION Y GUARDAR LOS COSTOS 
+            } // CON EL SESSION PASAR LOS COSTOS PERSONALIZADOS A LA VISTA DEL CARRITO
             return subTotal;
         }
 
@@ -391,38 +400,41 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 ListaMateriales = Session["IdMaterialesAgregados"] as List<int>;
                 Cantidades = Session["Cantidades"] as List<int>;
                 Costos = Session["Costos"] as List<double>;
+                Materiales = Session["Materiales"] as List<Material>;
                 //Importe = Session["TotalCompra"] as List<double>;
                 var index = ListaMateriales.IndexOf(Convert.ToInt32(idM));
 
                 ListaMateriales.RemoveAt(index);
                 Cantidades.RemoveAt(index);
                 Costos.RemoveAt(index);
+                Materiales.RemoveAt(index);
                 //Importe.RemoveAt(index);
 
                 ListaMateriales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Cantidades.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Costos.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
+                Materiales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 //Importe.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
             }
         }
 
 
 
-        public ActionResult AgregarNuevaCompra()
+        public ActionResult AgregarNuevaCompra(int id)
         {
-
-            var idUsuario = User.Identity.GetUserId();
-            
-            var idProveedor = Convert.ToInt32(Session["IdProveedor"].ToString());
+            var idEncargado = User.Identity.GetUserId();
+            var idProveedor = id;
 
             db.Database.ExecuteSqlCommand("Insert into Compras " +
-                                                "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id, Encargado_Id)" +
-                                                "values (@Recibida, @FechaSolicitud, @FechaRecepción, @Proveedor_Id, @Encargado_Id)",
+                                                "(Recibida, FechaSolicitud, FechaRecepción, Proveedor_Id, Encargado_Id, Estatus)" +
+                                                "values (@Recibida, @FechaSolicitud, @FechaRecepción, @Proveedor_Id, @Encargado_Id, @Estatus)",
                                                 new SqlParameter("@Recibida", false),
                                                 new SqlParameter("@FechaSolicitud", DateTime.Now),
                                                 new SqlParameter("@FechaRecepción", DateTime.Now),
                                                 new SqlParameter("@Proveedor_Id", idProveedor),
-                                                new SqlParameter("@Encargado_Id", idUsuario));
+                                                new SqlParameter("@Estatus", true),
+                                                new SqlParameter("@Encargado_Id", idEncargado)                                      
+                                                );
             db.SaveChanges();
 
             var idCompra = db.Compras.Max(x => x.Id); // Obtener el ID del último dato insertado
@@ -440,7 +452,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                                                                     new SqlParameter("@MaterialId", Materiales[i].Id),
                                                                     new SqlParameter("@CompraId", idCompra));
                 db.SaveChanges();
-            }
+            } // checar porque materiales no elimina los datos que uno le quita cuando le presiona a quitar
             //db.SaveChanges();
 
             Session["Cantidades"] = null;
@@ -464,6 +476,44 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             totalCompra = 0;
 
             return View("Index");
+        }
+
+        public ActionResult DescargarOrdenCompra(int idCompra)
+        {
+            try
+            {
+                var rptH = new ReportClass();
+                rptH.FileName = Server.MapPath("/Views/Compras/ReportesCompras/OrdenCompra.rpt");
+                rptH.Load();
+
+                rptH.SetParameterValue("IdCompra", idCompra);
+
+                var connInfo = CrystalReportCnn.GetConnectionInfo();
+                TableLogOnInfo logOnInfo = new TableLogOnInfo();
+                Tables tables;
+                tables = rptH.Database.Tables;
+                foreach (Table table in tables)
+                {
+                    logOnInfo = table.LogOnInfo;
+                    logOnInfo.ConnectionInfo = connInfo;
+                    table.ApplyLogOnInfo(logOnInfo);
+                }
+
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+                Stream stream = rptH.ExportToStream(ExportFormatType.PortableDocFormat);
+                rptH.Dispose();
+                rptH.Close();
+
+                return new FileStreamResult(stream, "application/pdf");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         #endregion
 

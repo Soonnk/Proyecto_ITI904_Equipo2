@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <input type="hidden" name="Detalles" id="Detalles" value="@ViewBag.Detalle" />
 
 @if (Model == null)
@@ -26,10 +25,10 @@ else
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Precio)
+                @Html.DisplayNameFor(model => model.Contenido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DisponibleAPublico)
+                Unidad inventario
             </th>
             <th>
                 Acciones
@@ -46,10 +45,10 @@ else
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    $ @Html.DisplayFor(modelItem => item.Precio)
+                    @Html.DisplayFor(modelItem => item.Contenido)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DisponibleAPublico)
+                    @Html.DisplayFor(modelItem => item.UnidadInventario)
                 </td>
                 <td>
                     <!--Dependiendo del valor de detalle se mostrará la opción de quitar el material o no-->

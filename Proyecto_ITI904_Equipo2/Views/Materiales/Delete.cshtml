@@ -1,7 +1,5 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Inventario.Material
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Dar baja material</b></h1>
 
 <h3 style="text-align:center"><b>¿Seguro que quieres inhabilitar este material?</b></h3>
@@ -50,6 +48,22 @@
         </tr>
         <tr>
             <td>
+                @Html.DisplayNameFor(model => model.Contenido)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Contenido)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UnidadInventario)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.UnidadInventario)
+            </td>
+        </tr>
+        <tr>
+            <td>
                 @Html.DisplayNameFor(model => model.Existencia)
             </td>
             <td>
@@ -66,7 +80,12 @@
     <div class="form-actions no-color">
         <input type="submit" value="Dar Baja" class="btn btn-primary" />
         <br />
-        @Html.ActionLink("Salir", "Index")
     </div>
 }
 
+<form action="~/Materiales/Index" method="post">
+    <input type="hidden" name="mostrar" id="mostrar" value="1" />
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        Salir
+    </button>
+</form>

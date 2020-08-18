@@ -1,7 +1,5 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Inventario.Material
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Detalles del material</b></h1>
 
 <div class="row">
@@ -92,6 +90,9 @@
     </div>
 </div>
 
-<p>
-    @Html.ActionLink("Salir", "Index")
-</p>
+<form action="~/Materiales/Index" method="post">
+    <input type="hidden" name="mostrar" id="mostrar" value="1" />
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        Salir
+    </button>
+</form>

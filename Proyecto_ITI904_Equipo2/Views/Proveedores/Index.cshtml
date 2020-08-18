@@ -1,9 +1,19 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Compras.Proveedor>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <input type="hidden" name="Ocultar" value="@ViewBag.Ocultar" />
 
 <h1 style="text-align:center"><b>Proveedores</b></h1>
+
+<form action="~/Proveedores/Create" method="get">
+    <button type="submit" name="btnOpcion" class="btn btn-primary btn-sm">
+        Agregar nuevo proveedor
+    </button>
+</form>
+
+@*<button onclick="location.href='@Url.Action("Create", "Proveedores")';return false;" class="btn btn-primary btn-sm">Agregar nuevo proveedor</button>*@
+<br />
+<input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+<br />
 
 @if (ViewBag.Ocultar == 1)
 {
@@ -11,7 +21,7 @@
     <form action="~/Proveedores/Index" method="post">
         <input type="hidden" name="mostrar" id="mostrar" value="1" />
         <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
-            <i class="glyphicon glyphicon-eye-open"></i> Mostrar proveedores no disponibles
+            Mostrar proveedores no disponibles
         </button>
     </form>
 }
@@ -21,14 +31,12 @@ else
     <form action="~/Proveedores/Index" method="post">
         <input type="hidden" name="mostrar" id="mostrar" value="0" />
         <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
-            <i class="glyphicon glyphicon-eye-close"></i> Ocultar proveedores no disponibles
+            Ocultar proveedores no disponibles
         </button>
     </form>
 }
 
-<input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />
-<h4><b>@Html.ActionLink("Agregar nuevo proveedor", "Create")</b></h4>
 <table class="table" id="TablaProveedor">
     <tr>
         <th width="15%">
@@ -58,7 +66,7 @@ else
     {
         <tr>
             <td width="15%">
-                @Html.DisplayFor(modelItem => item.Nombre)
+                <b>@Html.DisplayFor(modelItem => item.Nombre)</b>
             </td>
             <td width="5%">
                 @Html.DisplayFor(modelItem => item.RFC)
@@ -76,18 +84,16 @@ else
                 @Html.DisplayFor(modelItem => item.Nota)
             </td>
             <td width="9%">
-                @Html.ActionLink("Modificar", "Edit", new { id = item.Id })
-
-                @*<form action="~/Proveedores/Edit" method="post">
+                <form action="~/Proveedores/Edit" method="get">
                     <input type="hidden" name="id" id="id" value="@item.Id" />
                     <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
-                        <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        |Modificar
                     </button>
-                </form>*@
+                </form>
                 <form action="~/Proveedores/Details" method="post">
                     <input type="hidden" name="id" id="id" value="@item.Id" />
                     <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
-                        <i class="glyphicon glyphicon-exclamation-sign"></i> . Detalles
+                        | Detalles
                     </button>
                 </form>
                 <!--Con esto evitamos dar de baja los proveedores que ya estén dados de baja-->
@@ -96,14 +102,14 @@ else
                 }
                 else
                 {
-                    @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+                    @*@Html.ActionLink("Dar baja", "Delete", new { id = item.Id })*@
 
-                    @*<form action="~/Proveedores/Delete" method="post">
+                    <form action="~/Proveedores/Delete" method="post">
                         <input type="hidden" name="id" id="id" value="@item.Id" />
                         <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
-                            <i class="glyphicon glyphicon-minus"></i> .. Dar baja
+                            | Dar baja
                         </button>
-                    </form>*@
+                    </form>
                 }
             </td>
         </tr>

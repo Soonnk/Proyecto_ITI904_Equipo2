@@ -1,8 +1,7 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Compra
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Detalles de la Compra</b></h1>
+<input type="hidden" name="idCompras" id="idCompras" value="@Model.Id" />
 
 <div>
     <br />
@@ -30,7 +29,7 @@
                 @Html.DisplayFor(model => model.FechaSolicitud)
             </td>
             <td>
-                @Html.DisplayFor(model => model.FechaRecepción)
+                -
             </td>
             <td>
                 @Html.DisplayFor(model => model.Proveedor.Nombre)
@@ -39,21 +38,34 @@
                 @Html.DisplayFor(model => model.Recibida)
             </td>
             <td>
-                @Html.ActionLink("Orden de compra", "pdf")
+                @*<button class="btn btn-primary" onclick="Descargar()">
+                    Mostrar orden de compra
+                </button>*@
+                @Html.ActionLink("Mostrar orden de compra", "DescargarOrdenCompra", new { idCompra = Model.Id})
             </td>
         </tr>
     </table>
 
     <br />
+</div>
 
-    <div>
-        @{Html.RenderAction("MostrarDetCompra", new { id = Model.Id }); }
-    </div>
+<div>
+    @{Html.RenderAction("MostrarDetCompra", new { id = Model.Id }); }
 </div>
 
 <form action="~/Compras/MostrarCompras" method="post">
-    <input type="hidden" name="mostrar" id="mostrar" value="0" />
+    <input type="hidden" name="mostrar" id="mostrar" value="1" />
     <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
-        <i class="glyphicon glyphicon-log-out"></i> Salir
+        Salir
     </button>
 </form>
+
+@section scripts {
+    <script>
+        var id = $("#idCompras");
+        function Descargar() {
+            window.open("/Compras/DescargarOrdenCompra/" + @Model.Id);
+        }
+    </script>    
+
+}

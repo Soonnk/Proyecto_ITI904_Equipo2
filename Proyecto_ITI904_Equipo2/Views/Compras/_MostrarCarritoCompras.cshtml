@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 @{var i = 0;
   var y =0;
   Double total = 0;}
@@ -74,7 +72,8 @@
     </div>
 
     <form method="post" action="~/Compras/AgregarNuevaCompra">
-        <button type="submit" class="btn btn-primary btn-lg" >
+        <input type="hidden" name="id" id="id" value="@ViewBag.idProveedor" />
+        <button type="submit" class="btn btn-primary btn-lg">
             Confirmar Compra
         </button>
     </form>

@@ -72,6 +72,8 @@ namespace Proyecto_ITI904_Equipo2.Models.Inventario
         /// </summary>
         public bool EnUso { get; set; }
 
+        public bool Estatus { get; set; }
+
         public virtual ICollection<Compras.Proveedor> Proveedores { get; set; }
     }
 

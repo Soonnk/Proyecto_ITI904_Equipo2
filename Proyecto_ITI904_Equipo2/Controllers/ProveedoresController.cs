@@ -78,7 +78,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     var i = file.InputStream.Read(bytes, 0, file.ContentLength);
 
                     proveedor.ImageUrl = Convert.ToBase64String(bytes);
-
+                    proveedor.Estatus = true;
                     db.Proveedores.Add(proveedor);
                     db.SaveChanges();
                     return RedirectToAction("Details", "Proveedores", new { proveedor.Id });
@@ -129,7 +129,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                         var i = file.InputStream.Read(bytes, 0, file.ContentLength);
 
                         proveedor.ImageUrl = Convert.ToBase64String(bytes);
-
+                        proveedor.Estatus = true;
                         db.Entry(proveedor).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");
@@ -173,7 +173,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
 
 
         // POST: Proveedores/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, string nota)
         {
@@ -189,6 +189,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             }
             return View(proveedor);
         }
+
 
         protected override void Dispose(bool disposing)
         {

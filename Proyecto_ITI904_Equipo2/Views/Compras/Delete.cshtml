@@ -1,7 +1,5 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Compra
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Dar baja la compra</b></h1>
 
 <h3 style="text-align:center"><b>¿Está seguro de dar de baja la siguiente compra?</b></h3>
@@ -47,23 +45,20 @@
     <div>
         @{Html.RenderAction("MostrarDetCompra", new { id = Model.Id }); }
     </div>
-
-    @*<div>
-                @Html.Action("MostrarProveedores")
-        </div>*@
 </div>
 
-   @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-    <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
-        <i class="glyphicon glyphicon-minus"></i> Dar baja
+<button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+    <i class="glyphicon glyphicon-minus"></i> Dar baja
+</button>
+}
+
+<form action="~/Compras/MostrarCompras" method="post">
+    <input type="hidden" name="mostrar" id="mostrar" value="1" />
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+        Salir
     </button>
-
-    <form action="~/Compras/MostrarCompras" method="post">
-        <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
-            <i class="glyphicon glyphicon-log-out"></i> Salir
-        </button>
-    </form>
-    }
+</form>

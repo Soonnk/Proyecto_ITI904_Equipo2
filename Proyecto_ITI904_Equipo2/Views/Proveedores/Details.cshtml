@@ -1,11 +1,10 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Detalles del proveedor</b></h1>
 
 <div class="row">
     <div class="col-lg-12">
+
         <table class="table">
             <tr>
                 <td>
@@ -75,18 +74,22 @@
             <h1 style="text-align:center"><b>Materiales que proporciona</b></h1>
             <hr />
             <!--Añadimos el id del modelo y que det es igual a 1 para que no muestre la opción de quitar material
-                al momento de mostrar los detalles y evitar que los quiten ahí-->
+            al momento de mostrar los detalles y evitar que los quiten ahí-->
             @{Html.RenderAction("MostrarProveedoresMateriales", new { Model.Id, det = 1 }); }
         </div>
 
     </div>
 </div>
 
+<form action="~/Proveedores/Edit" method="get">
+    <input type="hidden" name="id" id="id" value="@Model.Id" />
+    <input type="submit" name="btnOpcion" id="btnOpcion" class="btn btn-info btn-sm" value="Editar proveedor" /> 
+</form>
+
 <br />
 
 <form action="~/Proveedores/Index" method="post">
-    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
-        <i class="glyphicon glyphicon-log-out"></i> Salir
+    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">Salir
     </button>
 </form>
 
