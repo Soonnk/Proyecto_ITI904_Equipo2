@@ -39,6 +39,15 @@ namespace Proyecto_ITI904_Equipo2.Models
         public string ConfirmPassword { get; set; }
     }
 
+    /// <summary>
+    /// Extiende el modelo de SetPasswordViewModel para incluir el id del usuario
+    /// en caso de tener que establecer la contraseña de un usuario adicional
+    /// </summary>
+    public class SetUserPasswordModel : SetPasswordViewModel
+    {
+        public string UserId { get; set; }
+    }
+
     public class ChangePasswordViewModel
     {
         [Required]

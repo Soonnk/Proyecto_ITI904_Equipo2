@@ -18,6 +18,12 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
     /// </remarks>
     public class Receta 
     {
+        public Receta()
+        {
+            // Para evitar null reference
+            this.Ingredientes = new List<IngredienteDeReceta>();
+        }
+
         public int Id { get; set; }
         public int Preparacion_Id { get; set; }
         [ForeignKey("Preparacion_Id")]
@@ -61,6 +67,8 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
         public double Costo {
             get {
                 double costo = 0;
+                // Corregido :)
+                if (this.Ingredientes == null) return 0;
                 foreach (var ing in this.Ingredientes)
                 {
                     costo += ing.Costo;

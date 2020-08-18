@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework;
+
+@model IEnumerable<Proyecto_ITI904_Equipo2.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    List<IdentityRole> roles = ViewBag.Roles as List<IdentityRole>;
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Nuevo empleado", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Tipo
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @roles.FirstOrDefault(x => x.Id == item.Roles.ElementAt(0).RoleId).Name
+            </td>
+            <td>
+                @Html.ActionLink("Ascender", "Ascender", new { userId = item.Id }) |
+                @Html.ActionLink("Restringir", "Restringir", new { userId = item.Id }) |
+                @Html.ActionLink("Restablecer contraseña", "SetPassword", new { userId = item.Id})
+            </td>
+        </tr>
+    }
+
+</table>

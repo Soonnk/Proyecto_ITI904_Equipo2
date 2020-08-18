@@ -528,6 +528,7 @@
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
     <Compile Include="Controllers\TiposPreparacionController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -786,6 +787,9 @@
     <Content Include="Views\Compras\_MostrarProveedoresMateriales.cshtml" />
     <Content Include="Views\Compras\_MostrarDetCompra.cshtml" />
     <Content Include="Views\Menu\_MenuRecipePartial.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\SetPassword.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,42 +1,41 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Nombre;
 }
-
-<h2>Details</h2>
-
 <div>
-    <h4>Receta</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
+    <div class="row">
+        <h1 class="col-lg-6 col-md-12">
             @Html.DisplayFor(model => model.Nombre)
-        </dd>
+        </h1>
+        <div class="col-lg-6 col-md-12">
+            @Html.ActionLink("Agregar al carrito","AddToCart","Recetas",new { id = Model.Id}, new { @class = "btn btn-primary btn-sm", type="button"})
+            @Html.ActionLink("Personalizar", "Customize", "Recetas", new { id = Model.Id }, new { @class = "btn btn-secondary btn-sm" })
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Instrucciones)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Instrucciones)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TiempoPreparacionAlmacenado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TiempoPreparacionAlmacenado)
-        </dd>
-
-    </dl>
+    @{
+        string image;
+        if (String.IsNullOrEmpty(Model.Imagen))
+        {
+            image = Url.Content("~/images/img-not-found.jpg");
+        }
+        else
+        {
+            image = "data:image/jpg; base64," + Model.Imagen;
+        }
+    }
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="@image" class="img-fluid rounded" alt="Imagen" />
+        </div>
+        <div class="col-lg-6">
+            <p>
+                @Html.DisplayFor(model => Model.Instrucciones)
+            </p>
+        </div>
+    </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Ir al menú", "Index", "Menu", null, null)
 </p>

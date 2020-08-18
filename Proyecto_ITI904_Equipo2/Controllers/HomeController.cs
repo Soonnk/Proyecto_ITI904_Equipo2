@@ -10,6 +10,8 @@ namespace Proyecto_ITI904_Equipo2.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin") || User.IsInRole("Empleado"))
+                return RedirectToAction("Index", "Compras");
             return View();
         }
 

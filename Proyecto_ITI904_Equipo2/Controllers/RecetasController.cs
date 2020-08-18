@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Recetas;
+using Proyecto_ITI904_Equipo2.Models.Ventas;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
@@ -63,12 +64,6 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             var i = file.InputStream.Read(bytes, 0, file.ContentLength);
 
             receta.Imagen = Convert.ToBase64String(bytes);
-
-            //byte[] bytes = new byte[imagenSubida.ContentLength];
-
-            //imagenSubida.InputStream.Read(bytes, 0, imagenSubida.ContentLength);
-
-            //receta.Imagen = bytes;
 
             if (ModelState.IsValid)
             {
@@ -175,6 +170,28 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             db.Recetas.Remove(receta);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddToCart(int id)
+        {
+            List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado>;
+
+            ProductoPreparado producto = new ProductoPreparado() {
+                RecetaBase = db.Recetas.Find(id),
+            };
+            foreach (IngredienteDeReceta i in producto.RecetaBase.Ingredientes)
+            {
+                IngredienteDeProductoVendido newIng = new IngredienteDeProductoVendido();
+                newIng.Material = i.Material;
+                newIng.Cantidad = i.Cantidad;
+                newIng.Precio = i.Precio;
+                newIng.Costo = i.Costo;
+
+            }
+
+            Session["ProductosPreparados"] = productos;
+            return RedirectToAction("Ventas", "Index");
         }
 
         public async Task<ActionResult> LoadIngrediente(string name, int index, double? cantidad)

@@ -71,7 +71,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 {
                     var vistaDetalleCompras = db.Database.SqlQuery<DetalleCompra>("Select * from DetalleCompras where Compra_Id = " + compra.Id);
                     var modeloDetalleCompras = vistaDetalleCompras.ToList();
-                    List<Material> modeloMateriales = null;
+                    List<Material> modeloMateriales = new List<Material>();
                     for (int i = 0; i < modeloDetalleCompras.Count; i++) {
                         var vistaMateriales = db.Database.SqlQuery<Material>("Select * from Materials where Id = " + modeloDetalleCompras[i].Material_Id);
                         modeloMateriales.Add(vistaMateriales.ToList()[i]);

@@ -2,7 +2,7 @@
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item">
-        <a href="~/Venta/Index" class="nav-link"><i class="fa fa-shopping-cart fa-cart"></i></a>
+        <a href="@Url.Action("Index","Venta",null)" class="nav-link"><i class="fa fa-shopping-cart fa-cart"></i></a>
         @*<a href="~/Home/UnderConstruction" class="nav-link">@Html.Raw(File.ReadAllText(Server.MapPath("~/images/icon_cart.svg")))</a>*@
     </li>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -12,8 +12,7 @@
         @*<ul class="nav navbar-nav navbar-right">*@
 
         <li class="nav-item dropdown">
-            @*<a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName()</a>*@
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">Angel</a>
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown-b" data-toggle="dropdown">@User.Identity.GetUserName().Split('@')[0]</a>
             <div class="dropdown-menu" aria-labelledby="dropdown-b">
                 <ul>
                     <li class="dropdown-item">
