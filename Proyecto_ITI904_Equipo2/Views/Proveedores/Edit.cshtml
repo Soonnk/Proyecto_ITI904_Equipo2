@@ -1,7 +1,5 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <div class="row">
     <div class="col-lg-5">
         @using (Html.BeginForm("Edit", "Proveedores", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -48,7 +46,7 @@
 
                 <div class="form-group">
                     <input name="Image" class="fa-file-image-o" type="file" class="btn btn-default btn-sm">
-                    @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
                     <img src="@Url.Content("data:image/png;base64," + Model.ImageUrl)" alt="Imagen" width="150px" height="150px" />
                 </div>
 
@@ -102,9 +100,9 @@
 </div>*@
 
 <form action="~/Proveedores/Index" method="post">
-    <input type="hidden" name="idProv" id="idProv" value="@Model.Id" />
+    <input type="hidden" name="mostrar" id="mostrar" value="1" />
     <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
-        <i class="glyphicon glyphicon-log-out"></i> Salir
+        Salir
     </button>
 </form>
 

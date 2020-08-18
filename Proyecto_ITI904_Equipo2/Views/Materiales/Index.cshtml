@@ -1,13 +1,35 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Materiales</b></h1>
 
-<h4><b>@Html.ActionLink("Añadir material", "Create")</b></h4>
-<br />
+<form action="~/Materiales/Create" method="get">
+    <button type="submit" name="btnOpcion" class="btn btn-primary btn-sm">
+        Añadir material
+    </button>
+</form>
 
-<table class="table">
+<input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
+
+@if (ViewBag.Ocultar == 1)
+{
+    <form action="~/Materiales/Index" method="post">
+        <input type="hidden" name="mostrar" id="mostrar" value="1" />
+        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+            Mostrar materiales no disponibles
+        </button>
+    </form>
+}
+else
+{
+    <form action="~/Materiales/Index" method="post">
+        <input type="hidden" name="mostrar" id="mostrar" value="0" />
+        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+            Ocultar materiales no disponibles
+        </button>
+    </form>
+}
+<br />
+<table class="table" id="TablaMaterial">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -26,6 +48,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Existencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnidadInventario)
         </th>
         <th></th>
     </tr>
@@ -52,11 +77,61 @@
                 @Html.DisplayFor(modelItem => item.Existencia)
             </td>
             <td>
-                @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Mostrar detalles", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Dar baja", "Delete", new { id = item.Id })
+                @Html.DisplayFor(modelItem => item.UnidadInventario)
+            </td>
+            <td>
+                <form action="~/Materiales/Edit" method="get">
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
+                        |Modificar
+                    </button>
+                </form>
+                <form action="~/Materiales/Details" method="post">
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                        | Detalles
+                    </button>
+                </form>
+                @if (item.Estatus == false){}
+                else
+                {
+                    <form action="~/Materiales/Delete" method="get">
+                        <input type="hidden" name="id" id="id" value="@item.Id" />
+                        <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
+                            | Dar baja
+                        </button>
+                    </form>
+                }
             </td>
         </tr>
     }
 
 </table>
+
+<script type="text/javascript">
+    document.querySelector("#buscar").onkeyup = function () {
+        $TableFilter("#TablaMaterial", this.value);
+    }
+
+    $TableFilter = function (id, value) {
+        var rows = document.querySelectorAll(id + ' tbody tr');
+
+        for (var i = 0; i < rows.length; i++) {
+            var showRow = false;
+
+            var row = rows[i];
+            row.style.display = 'none';
+
+            for (var x = 0; x < row.childElementCount; x++) {
+                if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                row.style.display = null;
+            }
+        }
+    }
+</script>

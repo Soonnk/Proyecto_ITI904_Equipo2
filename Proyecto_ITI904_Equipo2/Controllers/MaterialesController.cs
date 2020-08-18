@@ -17,9 +17,21 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Materiales
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? mostrar)
         {
-            return View(await db.Materiales.ToListAsync());
+            var vista = db.Database.SqlQuery<Material>("Select * from Materials where Estatus = 1");
+
+            if (mostrar == 1)
+            {
+                ViewBag.Ocultar = 0;
+                return View(db.Materiales.ToList());
+            }
+            else
+            {
+                ViewBag.Ocultar = 1;
+                return View(vista.ToList());
+            }
+            //return View(await db.Materiales.ToListAsync());
         }
 
         // GET: Materiales/Details/5
@@ -52,21 +64,23 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Contenido, UnidadInventario, UnidadVenta")] Material material, int? vistaIdProveedor)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nombre,Descripcion,Precio,Costo,DisponibleAPublico,Contenido,UnidadInventario, UnidadVenta")] Material material, int? vistaIdProveedor)
         {
             if (ModelState.IsValid)
             {
                 if (vistaIdProveedor > 0 && vistaIdProveedor != null)
                 {
+                    material.Estatus = true;
                     db.Materiales.Add(material);
                     await db.SaveChangesAsync();
 
                     /*Creamos esta condicional de forma de que cuando se use este método desde materiales
                       sin usarlo desde proveedores*/
-                    return RedirectToAction("Edit", "Proveedores", new { id = vistaIdProveedor });
+                    return RedirectToAction("MostrarMateriales", "Proveedores", new { idProv = vistaIdProveedor });
                 }
                 else
                 {
+                    material.Estatus = true;
                     db.Materiales.Add(material);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -99,6 +113,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         {
             if (ModelState.IsValid)
             {
+                material.Estatus = true;
                 db.Entry(material).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -127,9 +142,15 @@ namespace Proyecto_ITI904_Equipo2.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Material material = await db.Materiales.FindAsync(id);
-            db.Materiales.Remove(material);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                material.Estatus = false;
+                db.Entry(material).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(material);
         }
 
         protected override void Dispose(bool disposing)

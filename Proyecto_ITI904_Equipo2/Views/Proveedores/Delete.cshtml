@@ -1,11 +1,9 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Compras.Proveedor
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 <h1 style="text-align:center"><b>Dar baja proveedor</b></h1>
 
 <h3 style="text-align:center"><b>¿Seguro que quieres inhabilitar a este proveedor?</b></h3>
-@using (Html.BeginForm("Delete", "Proveedores", FormMethod.Post))
+@using (Html.BeginForm("DeleteConfirmed", "Proveedores", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -72,6 +70,9 @@
             </tr>
         </table>
     </div>
+
+    <input type="hidden" name="id" id="id" value="@Model.Id" />
+    <input type="hidden" name="nota" id="nota" value="@Model.Nota" />
 
     <button type="submit" name="btnOpcion" class="btn btn-danger btn-sm">
         <i class="glyphicon glyphicon-minus"></i> Dar baja

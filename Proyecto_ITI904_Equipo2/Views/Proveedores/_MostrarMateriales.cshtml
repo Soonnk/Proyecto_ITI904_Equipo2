@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
 @{int? idP = ViewBag.idProveedor; }
 
 <h1 style="text-align:center"><b>Agregar material al proveedor</b></h1>
@@ -33,10 +31,13 @@
             @Html.DisplayNameFor(model => model.Costo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DisponibleAPublico)
+            Disponible al público
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Existencia)
+            Contenido neto
+        </th>
+        <th>
+            Unidad medida
         </th>
         <th></th>
     </tr>
@@ -51,16 +52,19 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Precio)
+                $ @Html.DisplayFor(modelItem => item.Precio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Costo)
+                $ @Html.DisplayFor(modelItem => item.Costo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DisponibleAPublico)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Existencia)
+                @Html.DisplayFor(modelItem => item.Contenido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnidadInventario)
             </td>
             <td>
                 <form action="~/Proveedores/InsertarProveedoresMateriales" method="post">
@@ -76,11 +80,7 @@
 
 </table>
 
-<div>
-    @Html.ActionLink("Salir", "Edit", new { id = ViewBag.idProveedor })
-</div>
-
-<form action="~/Proveedores/Edit" method="post">
+<form action="~/Proveedores/Edit" method="get">
     <input type="hidden" name="id" id="id" value="@idP" />
     <button type="submit" name="btnOpcion" class="btn btn-warning btn-sm">
         <i class="glyphicon glyphicon-log-out"></i> Salir
