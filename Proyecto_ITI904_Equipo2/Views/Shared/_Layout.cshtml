@@ -36,6 +36,12 @@
             background: url(/images/icon_cart.svg);
             background-size: 100px 82px;
         }
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            border-radius: 3px
+        }
     </style>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -93,7 +99,7 @@
                         <span class="nav-text">Ventas</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="@Url.Action("Index","Compras")">
                         <i class="fa fa-shopping-bag fa-lg"></i>
                         <span class="nav-text">Compras</span>
@@ -118,9 +124,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="@Url.Action("UnderConstruction","Home")">
+                    <a href="@Url.Action("Index","Users")">
                         <i class="fa fa-users fa-lg"></i>
                         <span class="nav-text">Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("UnderContruction","Home")">
+                        <i class="fa fa-lg fa-"></i>
                     </a>
                 </li>
             </ul>

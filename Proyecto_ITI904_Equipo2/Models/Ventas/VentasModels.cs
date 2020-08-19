@@ -58,18 +58,34 @@ namespace Proyecto_ITI904_Equipo2.Models.Ventas
         public virtual double Cantidad { get; set; }
         public virtual double Precio { get; set; }
         public virtual double Costo { get; set; }
-        
+     
+        [NotMapped]
+        public abstract string Descripcion { get; }
+
+        [NotMapped]
+        public virtual double Importe { get => this.Precio*this.Cantidad; }
     }
 
     [Table("Productos")]
     public class Producto : DetalleVenta
     {
         public virtual Inventario.Material Material { get; set; }
+
+        [NotMapped]
+        public override string Descripcion { get => Material?.Descripcion; }
     }
 
     [Table("ProductosPreparados")]
     public class ProductoPreparado : DetalleVenta
     {
+        public ProductoPreparado()
+        {
+            this.Ingredientes = new List<Recetas.IngredienteDeProductoVendido>();
+        }
+
+        public int RecetaBase_Id { get; set; }
+
+        [ForeignKey("RecetaBase_Id")]
         public virtual Recetas.Receta RecetaBase { get; set; }
 
         public virtual Recetas.Sabores Sabor { get; set; }
@@ -78,6 +94,9 @@ namespace Proyecto_ITI904_Equipo2.Models.Ventas
 
         public virtual ICollection<Recetas.IngredienteDeProductoVendido> Ingredientes { get; set; }
 
+
+        [NotMapped]
+        public override string Descripcion { get => RecetaBase?.Nombre + (Alterado ? " (Personalizado)": ""); }
     }
 
     public enum EstadosDePedido : Int16

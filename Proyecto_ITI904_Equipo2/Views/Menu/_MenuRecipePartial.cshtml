@@ -1,7 +1,7 @@
 ﻿@model Proyecto_ITI904_Equipo2.Models.Recetas.Receta
 
 <div class="col-lg-4 col-md-6 special-grid drinks">
-    <div class="gallery-single fix">
+    <div class="gallery-single fix @Model.Preparacion.Nombre">
         @{ 
             string image;
             if (String.IsNullOrEmpty(Model.Imagen))

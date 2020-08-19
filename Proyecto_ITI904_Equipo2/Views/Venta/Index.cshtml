@@ -1,10 +1,63 @@
-﻿@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
+﻿@using Proyecto_ITI904_Equipo2.Models.Ventas
+@model IEnumerable<Proyecto_ITI904_Equipo2.Models.Inventario.Material>
 
-<h1 style="text-align:center"><b>Ventas</b></h1>
+@{ 
+    List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado> ?? new List<ProductoPreparado>();
+    double Total = 0;
+}
+<h1 style="text-align:center"><b>En carrito</b></h1>
+<div class="container">
+    <table class="blueTable">
+        <thead>
+            <tr>
+                <th>Bebida</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+
+       @foreach (ProductoPreparado prod in productos)
+        {
+            <tr>
+                <td>@Html.DisplayFor(p => prod.Descripcion)</td>
+                <td>
+                    @using (Html.BeginForm("ChangeQuantity","Venta",FormMethod.Post))
+                    {
+                        <input type="hidden" name="index" value="@productos.IndexOf(prod)" />
+                        <input type="number" name="cantidad" value="@prod.Cantidad"/>
+                        <input type="submit" class="btn btn-success btn-sm" value="Cambiar"/>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(p => prod.Precio)
+                </td>
+                <td>@Html.DisplayFor(p => prod.Importe)</td>
+            </tr>
+           Total += prod.Importe;
+       }
+       @if (productos.Count == 0)
+        {
+            <tr><td colspan="4">No hay bebidas en el carrito</td></tr>
+        }
+        else 
+        {
+            <tr>
+                <td colspan="3" style="text-align:right"><b>Total</b></td>
+                <td>@Total</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<hr />
+<h1 style="text-align:center"><b>Preparalos tu mismo</b></h1>
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
 <br />
 <table class="table blueTable" id="TablaMaterial">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -21,8 +74,8 @@
         <th>
             Agregar al carrito
         </th>
-        <th></th>
     </tr>
+    </thead>
 
     @foreach (var item in Model)
     {
@@ -64,7 +117,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-6" style="margin-bottom:50px">
-                                    <input type="number" name="cantidad" id="cantidad" class="form-text font-weight-bold" />
+                                    <input type="number" name="cantidad" id="cantidad"/>
                                 </div>
                                 <div class="col-6">
                                     <input type="submit" value="Añadir" name="btnOpcion" class="btn btn-success btn-sm" />
@@ -92,7 +145,7 @@
                 }
             </div>
             <div class="col-lg-6">
-                @if (ViewBag.Total != null)
+                @if (ViewBag.Total != null || productos.Count != 0)
                 {
                     <input type="submit" value="Guardar" class="btn btn-success btn-sm pull-right" />
                 }

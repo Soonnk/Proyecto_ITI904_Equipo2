@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Recetas;
+using Proyecto_ITI904_Equipo2.Models.Ventas;
 using CrystalDecisions.CrystalReports.Engine;
 using Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras;
 using CrystalDecisions.Shared;
@@ -67,12 +68,6 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             var i = file.InputStream.Read(bytes, 0, file.ContentLength);
 
             receta.Imagen = Convert.ToBase64String(bytes);
-
-            //byte[] bytes = new byte[imagenSubida.ContentLength];
-
-            //imagenSubida.InputStream.Read(bytes, 0, imagenSubida.ContentLength);
-
-            //receta.Imagen = bytes;
 
             if (ModelState.IsValid)
             {
@@ -179,6 +174,42 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             db.Recetas.Remove(receta);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AddToCart(int id, int? cantidad = 1)
+        {
+            List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado> ?? new List<ProductoPreparado>();
+
+            ProductoPreparado producto = new ProductoPreparado() {
+                RecetaBase_Id = id
+            };
+
+            Receta receta = db.Recetas.Find(id);
+            foreach (IngredienteDeReceta i in receta.Ingredientes)
+            {
+                IngredienteDeProductoVendido newIng = new IngredienteDeProductoVendido
+                {
+                    Material_Id = i.Material_Id,
+                    Cantidad = i.Cantidad,
+                    Precio = i.Precio,
+                    Costo = i.Costo
+                };
+
+
+                producto.Ingredientes.Add(newIng);
+            }
+            producto.RecetaBase = receta;
+
+            db.Entry(receta).State = EntityState.Unchanged;
+
+            producto.Cantidad = cantidad.Value;
+            producto.Precio = receta.Precio;
+            producto.Costo = receta.Costo;
+
+            productos.Add(producto);
+
+            Session["ProductosPreparados"] = productos;
+            return RedirectToAction("Index", "Venta");
         }
 
         public async Task<ActionResult> LoadIngrediente(string name, int index, double? cantidad)

@@ -35,8 +35,8 @@ namespace Proyecto_ITI904_Equipo2.Models
         public DbSet<Recetas.Receta> Recetas { get; set; }
         public DbSet<Ventas.DetalleVenta> DetalleVenta { get; set; }
         public DbSet<Recetas.IngredienteDeReceta> IngredienteDeRecetas { get; set; }
-        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
-        public System.Data.Entity.DbSet<Proyecto_ITI904_Equipo2.Models.Ventas.Producto> Productoes { get; set; }
+        public DbSet<Proyecto_ITI904_Equipo2.Models.Recetas.TipoPreparacion> TipoPreparacions { get; set; }
+        public DbSet<Proyecto_ITI904_Equipo2.Models.Ventas.Producto> Productoes { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

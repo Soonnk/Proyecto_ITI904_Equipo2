@@ -115,6 +115,16 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     FechaSolicitada = Convert.ToDateTime(FechaSolicitada),
                     FechaEntrega = DateTime.Now,
                 };
+                List<ProductoPreparado> productosPreparados = Session["ProductosPreparados"] as List<ProductoPreparado>;
+
+                NuevaVenta.Productos = NuevaVenta.Productos ?? new List<DetalleVenta>();
+
+                foreach (var prod in productosPreparados)
+                {
+                    db.Entry(prod.RecetaBase).State = System.Data.Entity.EntityState.Unchanged;
+                    NuevaVenta.Productos.Add(prod);
+                }
+
                 db.Ventas.Add(NuevaVenta);
                 await db.SaveChangesAsync();
                 var UltimaVenta = db.Ventas.Max(x => x.Id);
@@ -140,10 +150,20 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                     e++;
                     db.Database.ExecuteSqlCommand(query);
                 }
+
+                foreach (var prod in productosPreparados)
+                {
+                    foreach (var ing in prod.Ingredientes) {
+                        string query = $"UPDATE Materials SET Existencia = Existencia - ({ing.Cantidad} * {prod.Cantidad}) WHERE Id =  {ing.Material.Id}";
+                        db.Database.ExecuteSqlCommand(query);
+                    }
+                }
+
                 await db.SaveChangesAsync();
                 Session["Cantidades"] = null;
                 Session["Materiales"] = null;
                 Session["IdMaterialesAgregados"] = null;
+                Session["ProductosPreparados"] = null;
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
@@ -202,6 +222,18 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 ListaMateriales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Cantidades.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
             }
+        }
+
+        [HttpPost]
+        public ActionResult ChangeQuantity(int index, int cantidad)
+        {
+            List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado>;
+
+            productos[index].Cantidad = cantidad;
+
+            Session["ProductosPreparados"] = productos;
+
+            return RedirectToAction("Index");
         }
     }
 }
