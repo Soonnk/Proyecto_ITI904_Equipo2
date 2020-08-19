@@ -172,26 +172,40 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddToCart(int id)
+        public ActionResult AddToCart(int id, int? cantidad = 1)
         {
-            List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado>;
+            List<ProductoPreparado> productos = Session["ProductosPreparados"] as List<ProductoPreparado> ?? new List<ProductoPreparado>();
 
             ProductoPreparado producto = new ProductoPreparado() {
-                RecetaBase = db.Recetas.Find(id),
+                RecetaBase_Id = id
             };
-            foreach (IngredienteDeReceta i in producto.RecetaBase.Ingredientes)
-            {
-                IngredienteDeProductoVendido newIng = new IngredienteDeProductoVendido();
-                newIng.Material = i.Material;
-                newIng.Cantidad = i.Cantidad;
-                newIng.Precio = i.Precio;
-                newIng.Costo = i.Costo;
 
+            Receta receta = db.Recetas.Find(id);
+            foreach (IngredienteDeReceta i in receta.Ingredientes)
+            {
+                IngredienteDeProductoVendido newIng = new IngredienteDeProductoVendido
+                {
+                    Material_Id = i.Material_Id,
+                    Cantidad = i.Cantidad,
+                    Precio = i.Precio,
+                    Costo = i.Costo
+                };
+
+
+                producto.Ingredientes.Add(newIng);
             }
+            producto.RecetaBase = receta;
+
+            db.Entry(receta).State = EntityState.Unchanged;
+
+            producto.Cantidad = cantidad.Value;
+            producto.Precio = receta.Precio;
+            producto.Costo = receta.Costo;
+
+            productos.Add(producto);
 
             Session["ProductosPreparados"] = productos;
-            return RedirectToAction("Ventas", "Index");
+            return RedirectToAction("Index", "Venta");
         }
 
         public async Task<ActionResult> LoadIngrediente(string name, int index, double? cantidad)

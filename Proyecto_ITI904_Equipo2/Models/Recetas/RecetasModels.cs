@@ -111,7 +111,11 @@ namespace Proyecto_ITI904_Equipo2.Models.Recetas
     public class IngredienteDeProductoVendido
     {
         public long Id { get; set; }
-        public Inventario.Material Material { get; set; }
+
+        public int Material_Id { get; set; }
+
+        [ForeignKey("Material_Id")]
+        public virtual Inventario.Material Material { get; set; }
         public double Cantidad { get; set; }
         public double Costo { get; set; }
         public double Precio { get; set; }
