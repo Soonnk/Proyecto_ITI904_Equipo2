@@ -9,6 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto_ITI904_Equipo2.Models;
 using Proyecto_ITI904_Equipo2.Models.Recetas;
+using CrystalDecisions.CrystalReports.Engine;
+using Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras;
+using CrystalDecisions.Shared;
+using System.IO;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
@@ -201,6 +205,50 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+        public ActionResult Reportes()
+        {
+            return View("_Reportes");
+
+        }
+
+        public ActionResult DescargarVentaProductos()
+        {
+            try
+            {
+                var rptH = new ReportClass();
+                rptH.FileName = Server.MapPath("/Reportes/ReportesProductos/VentaProductos.rpt");
+                rptH.Load();
+
+                var connInfo = CrystalReportCnn.GetConnectionInfo();
+                TableLogOnInfo logOnInfo = new TableLogOnInfo();
+                Tables tables;
+                tables = rptH.Database.Tables;
+                foreach (Table table in tables)
+                {
+                    logOnInfo = table.LogOnInfo;
+                    logOnInfo.ConnectionInfo = connInfo;
+                    table.ApplyLogOnInfo(logOnInfo);
+                }
+
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+                Stream stream = rptH.ExportToStream(ExportFormatType.PortableDocFormat);
+                rptH.Dispose();
+                rptH.Close();
+
+                return new FileStreamResult(stream, "application/pdf");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

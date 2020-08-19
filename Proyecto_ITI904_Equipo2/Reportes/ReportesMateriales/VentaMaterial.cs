@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
+namespace Proyecto_ITI904_Equipo2.Reportes.ReportesMateriales {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class OrdenCompra : ReportClass {
+    public class VentaMaterial : ReportClass {
         
-        public OrdenCompra() {
+        public VentaMaterial() {
         }
         
         public override string ResourceName {
             get {
-                return "OrdenCompra.rpt";
+                return "VentaMaterial.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         
         public override string FullResourceName {
             get {
-                return "Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras.OrdenCompra.rpt";
+                return "Proyecto_ITI904_Equipo2.Reportes.ReportesMateriales.VentaMaterial.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection2 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,7 +82,7 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection3 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -90,17 +90,57 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_IdCompra {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
-                return this.DataDefinition.ParameterFields[0];
+                return this.ReportDefinition.Sections[5];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection3 {
+            get {
+                return this.ReportDefinition.Sections[6];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection2 {
+            get {
+                return this.ReportDefinition.Sections[7];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
+            get {
+                return this.ReportDefinition.Sections[8];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+            get {
+                return this.ReportDefinition.Sections[9];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+            get {
+                return this.ReportDefinition.Sections[10];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedOrdenCompra : Component, ICachedReport {
+    public class CachedVentaMaterial : Component, ICachedReport {
         
-        public CachedOrdenCompra() {
+        public CachedVentaMaterial() {
         }
         
         [Browsable(false)]
@@ -137,7 +177,7 @@ namespace Proyecto_ITI904_Equipo2.Views.Compras.ReportesCompras {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            OrdenCompra rpt = new OrdenCompra();
+            VentaMaterial rpt = new VentaMaterial();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -18,6 +18,7 @@ using Proyecto_ITI904_Equipo2.Models.Inventario;
 
 namespace Proyecto_ITI904_Equipo2.Controllers
 {
+    [Authorize(Roles = "Empleado,Admin")]
     public class ProveedoresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -541,15 +541,25 @@
     <Compile Include="Models\Recetas\RecetasModels.cs" />
     <Compile Include="Models\Ventas\VentasModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\RecetasServices.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="Views\Compras\ReportesCompras\CrystalReportCnn.cs" />
-    <Compile Include="Views\Compras\ReportesCompras\OrdenCompra.cs">
+    <Compile Include="Reportes\ReportesProductos\VentaProductos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VentaProductos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReportesCompras\OrdenCompra.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OrdenCompra.rpt</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\ReportesMateriales\VentaMaterial.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VentaMaterial.rpt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\RecetasServices.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Reportes\CrystalReportCnn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
@@ -793,6 +803,8 @@
     <Content Include="Views\Compras\_MostrarProveedoresMateriales.cshtml" />
     <Content Include="Views\Compras\_MostrarDetCompra.cshtml" />
     <Content Include="Views\Menu\_MenuRecipePartial.cshtml" />
+    <Content Include="Views\Materiales\_Reportes.cshtml" />
+    <Content Include="Views\Recetas\_Reportes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -819,9 +831,17 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Compras\ReportesCompras\OrdenCompra.rpt">
+    <EmbeddedResource Include="Reportes\ReportesProductos\VentaProductos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>VentaProductos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReportesCompras\OrdenCompra.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>OrdenCompra.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReportesMateriales\VentaMaterial.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>VentaMaterial.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

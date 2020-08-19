@@ -7,28 +7,41 @@
         Añadir material
     </button>
 </form>
+<br />
 
 <input id="buscar" type="text" class="form-control" placeholder="Filtro de búsqueda" />
-
-@if (ViewBag.Ocultar == 1)
-{
-    <form action="~/Materiales/Index" method="post">
-        <input type="hidden" name="mostrar" id="mostrar" value="1" />
-        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
-            Mostrar materiales no disponibles
-        </button>
-    </form>
-}
-else
-{
-    <form action="~/Materiales/Index" method="post">
-        <input type="hidden" name="mostrar" id="mostrar" value="0" />
-        <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
-            Ocultar materiales no disponibles
-        </button>
-    </form>
-}
 <br />
+
+<div class="row">
+    <div class="col-lg-6">
+        @if (ViewBag.Ocultar == 1)
+        {
+            <form action="~/Materiales/Index" method="post">
+                <input type="hidden" name="mostrar" id="mostrar" value="1" />
+                <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                    Mostrar materiales no disponibles
+                </button>
+            </form>
+        }
+        else
+        {
+            <form action="~/Materiales/Index" method="post">
+                <input type="hidden" name="mostrar" id="mostrar" value="0" />
+                <button type="submit" name="btnOpcion" class="btn btn-info btn-sm">
+                    Ocultar materiales no disponibles
+                </button>
+            </form>
+        }
+    </div>
+    <div class="col-lg-6">
+        <form action="~/Materiales/Reportes" method="get">
+            <button type="submit" name="btnOpcion" class="btn btn-success btn-sm">
+                Reportes de materiales
+            </button>
+        </form>
+    </div>
+</div>
+
 <table class="table" id="TablaMaterial">
     <tr>
         <th>
@@ -52,7 +65,9 @@ else
         <th>
             @Html.DisplayNameFor(model => model.UnidadInventario)
         </th>
-        <th></th>
+        <th>
+            Acciones
+        </th>
     </tr>
 
     @foreach (var item in Model)

@@ -415,6 +415,11 @@ namespace Proyecto_ITI904_Equipo2.Controllers
                 Costos.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 Materiales.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
                 //Importe.RemoveAll(cadena => string.IsNullOrEmpty(Convert.ToString(cadena)));
+
+                if (ListaMateriales.Count == 0)
+                {
+                    Session["IdMaterialesAgregados"] = null;
+                }
             }
         }
 
@@ -483,7 +488,7 @@ namespace Proyecto_ITI904_Equipo2.Controllers
             try
             {
                 var rptH = new ReportClass();
-                rptH.FileName = Server.MapPath("/Views/Compras/ReportesCompras/OrdenCompra.rpt");
+                rptH.FileName = Server.MapPath("/Reportes/ReportesCompras/OrdenCompra.rpt");
                 rptH.Load();
 
                 rptH.SetParameterValue("IdCompra", idCompra);
